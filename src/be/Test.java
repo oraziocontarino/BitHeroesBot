@@ -1,11 +1,15 @@
-package core;
+package be;
 
 import java.awt.AWTException;
+
+import lib.CustomRobot;
 
 public class Test {
 	static CustomRobot robot;
     public static void main(String... args) throws Exception {
-    	 test1();
+    	Mission mission = new Mission();
+    	mission.start();
+    	//test1();
     }
     
 

@@ -1,4 +1,4 @@
-package core;
+package lib;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -10,21 +10,15 @@ import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.util.logging.LogManager;
-
 import javax.imageio.ImageIO;
 
-import org.jnativehook.GlobalScreen;
-import org.jnativehook.NativeHookException;
-import org.jnativehook.keyboard.NativeKeyEvent;
-import org.jnativehook.keyboard.NativeKeyListener;
-
-public class CustomRobot extends Robot implements NativeKeyListener{
+public class CustomRobot extends Robot{
 	private static CustomRobot instance;
 	  
 	private CustomRobot() throws AWTException {
 		super();
-		initKeyBinding();
+		KeyBindingManager.getInstance();
+		
 	}
     
 	public static CustomRobot getInstance() throws AWTException{
@@ -90,47 +84,5 @@ public class CustomRobot extends Robot implements NativeKeyListener{
         }
         return false;
     }
-    
-    /* KEY EVENTS */
-    
-	public void initKeyBinding() {
-		try {
-			LogManager.getLogManager().reset();
-			GlobalScreen.registerNativeHook();
-		}
-		catch (NativeHookException ex) {
-			System.err.println("There was a problem registering the native hook.");
-			System.err.println(ex.getMessage());
-			System.exit(1);
-		}
-
-		GlobalScreen.addNativeKeyListener(this);
-	}
-
-	@Override
-	public void nativeKeyPressed(NativeKeyEvent e) {
-		System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
-
-		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
-			try {
-				GlobalScreen.unregisterNativeHook();
-				System.exit(1);
-			} catch (NativeHookException ex) {
-				ex.printStackTrace();
-			}
-		}
-	}
-
-	@Override
-	public void nativeKeyReleased(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void nativeKeyTyped(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}   
     
 }

@@ -1,41 +1,44 @@
-package core;
+package be;
 
 import java.awt.AWTException;
+import java.awt.Color;
+
+import lib.CustomRobot;
 
 public class BitHeroesGlobal {
-	private int state;
-	private String fishingBarColor;
-	private String fishingCaputureColor;
-	private int[] topLeftCorner;
-	private int[] bottomRightCorner;
-	private int width; 
-	private int height;
-	private int[] center;
-	private int stepStartTime;
+	protected int state;
+	protected Color fishingBarColor;
+	protected Color fishingCaputureColor;
+	protected int[] topLeftCorner;
+	protected int[] bottomRightCorner;
+	protected int width; 
+	protected int height;
+	protected int[] center;
+	protected int stepStartTime;
 	
-	private static BitHeroesGlobal instance;
 		
-	private BitHeroesGlobal() {
+	protected BitHeroesGlobal() {
 		state = 0;
-		fishingBarColor = "236BA7";
-		fishingCaputureColor = "0x4DFE00";
+		//Color "236BA7"
+		fishingBarColor = new Color(35, 107, 167);
+		
+		//Color "0x4DFE00"
+		fishingCaputureColor = new Color(77, 254, 0);
+		
 		topLeftCorner[0] = 18;
 		topLeftCorner[1] = 458;
+		
 		bottomRightCorner[0] = 817;
 		bottomRightCorner[1] = 970;
+		
 		width = bottomRightCorner[0] - topLeftCorner[0];
 		height = bottomRightCorner[1] - topLeftCorner[1];
+		
 		center[0] = (int) (topLeftCorner[0] + (width*0.50));
 		center[1] = (int) (topLeftCorner[1] + (height*0.50));
+		
 		stepStartTime = 0;
 	}
-	
-	public static BitHeroesGlobal getInstance(){
-        if(instance == null){
-            instance = new BitHeroesGlobal();
-        }
-        return instance;
-    }
 	
 	public int getTimestamp() {
 		return (int) (System.currentTimeMillis() / 1000);
@@ -66,19 +69,19 @@ public class BitHeroesGlobal {
 		this.state ++;
 	}
 
-	public String getFishingBarColor() {
+	public Color getFishingBarColor() {
 		return fishingBarColor;
 	}
 
-	public void setFishingBarColor(String fishingBarColor) {
+	public void setFishingBarColor(Color fishingBarColor) {
 		this.fishingBarColor = fishingBarColor;
 	}
 
-	public String getFishingCaputureColor() {
+	public Color getFishingCaputureColor() {
 		return fishingCaputureColor;
 	}
 
-	public void setFishingCaputureColor(String fishingCaputureColor) {
+	public void setFishingCaputureColor(Color fishingCaputureColor) {
 		this.fishingCaputureColor = fishingCaputureColor;
 	}
 
