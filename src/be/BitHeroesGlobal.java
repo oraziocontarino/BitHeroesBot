@@ -2,6 +2,7 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Point;
 
 import lib.CustomRobot;
 
@@ -9,11 +10,11 @@ public class BitHeroesGlobal {
 	protected int state;
 	protected Color fishingBarColor;
 	protected Color fishingCaputureColor;
-	protected int[] topLeftCorner;
-	protected int[] bottomRightCorner;
+	protected Point topLeftCorner;
+	protected Point bottomRightCorner;
 	protected int width; 
 	protected int height;
-	protected int[] center;
+	protected Point center;
 	protected int stepStartTime;
 	
 		
@@ -21,21 +22,21 @@ public class BitHeroesGlobal {
 		state = 0;
 		//Color "236BA7"
 		fishingBarColor = new Color(35, 107, 167);
-		
+
 		//Color "0x4DFE00"
 		fishingCaputureColor = new Color(77, 254, 0);
 		
-		topLeftCorner[0] = 18;
-		topLeftCorner[1] = 458;
+		topLeftCorner = new Point(17, 454);
 		
-		bottomRightCorner[0] = 817;
-		bottomRightCorner[1] = 970;
+		bottomRightCorner = new Point(817, 976);
 		
-		width = bottomRightCorner[0] - topLeftCorner[0];
-		height = bottomRightCorner[1] - topLeftCorner[1];
+		width = bottomRightCorner.x - topLeftCorner.x;
+		height = bottomRightCorner.y - topLeftCorner.y;
 		
-		center[0] = (int) (topLeftCorner[0] + (width*0.50));
-		center[1] = (int) (topLeftCorner[1] + (height*0.50));
+		center = new Point(
+				(int) (topLeftCorner.x + (width*0.50)),
+				(int) (topLeftCorner.y + (height*0.50))
+		);
 		
 		stepStartTime = 0;
 	}
@@ -85,19 +86,19 @@ public class BitHeroesGlobal {
 		this.fishingCaputureColor = fishingCaputureColor;
 	}
 
-	public int[] getTopLeftCorner() {
+	public Point getTopLeftCorner() {
 		return topLeftCorner;
 	}
 
-	public void setTopLeftCorner(int[] topLeftCorner) {
+	public void setTopLeftCorner(Point topLeftCorner) {
 		this.topLeftCorner = topLeftCorner;
 	}
 
-	public int[] getBottomRightCorner() {
+	public Point getBottomRightCorner() {
 		return bottomRightCorner;
 	}
 
-	public void setBottomRightCorner(int[] bottomRightCorner) {
+	public void setBottomRightCorner(Point bottomRightCorner) {
 		this.bottomRightCorner = bottomRightCorner;
 	}
 
@@ -117,11 +118,11 @@ public class BitHeroesGlobal {
 		this.height = height;
 	}
 
-	public int[] getCenter() {
+	public Point getCenter() {
 		return center;
 	}
 
-	public void setCenter(int[] center) {
+	public void setCenter(Point center) {
 		this.center = center;
 	}
 

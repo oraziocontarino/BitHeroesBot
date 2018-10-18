@@ -1,30 +1,35 @@
 package be;
 
 import java.awt.AWTException;
+import java.awt.Point;
 
 import lib.CustomRobot;
 
 public class Raid extends Dungeon {
-	private int[] raidButton;
-	private int[] evocaButton;
+	private Point raidButton;
+	private Point evocaButton;
 			
 	private Raid()  throws AWTException{
-		this.raidButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.05));
-		this.raidButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.65));
+		this.raidButton = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.05)),
+				(int) (this.topLeftCorner.y + (this.height*0.65))
+		);
 		
-		this.evocaButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.65));
-		this.evocaButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.75));
+		this.evocaButton = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.65)),
+				(int) (this.topLeftCorner.y + (this.height*0.75))
+		);
 	}
 	
 
 	public void state0() throws InterruptedException, AWTException {
-		this.customRobot.mouseClick(this.raidButton[0], this.raidButton[1]);
+		this.customRobot.mouseClick(this.raidButton.x, this.raidButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);
 	}
 	
 	public void state1() throws InterruptedException, AWTException {
-		this.customRobot.mouseClick(this.evocaButton[0], this.evocaButton[1]);
+		this.customRobot.mouseClick(this.evocaButton.x, this.evocaButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);
 	}

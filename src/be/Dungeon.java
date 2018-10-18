@@ -2,50 +2,66 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Point;
+import java.util.ArrayList;
+import java.util.List;
 
 import lib.CustomRobot;
 
 public class Dungeon extends BitHeroesGlobal {
 	protected Color refuseButtonColor;
-	protected int[] eroicoButton;
-	protected int[] accettaSquadraButton;
-	protected int[] autoBox;
+	protected Point eroicoButton;
+	protected Point accettaSquadraButton;
+	protected Point[] autoBox;
 	protected Color autoBoxEnabledColor;
-	protected int[] refuseButton;
+	protected Point refuseButton;
 	protected CustomRobot customRobot;
+	protected Point refuseExitDungeon;
 	protected Dungeon() throws AWTException {
 		this.customRobot = CustomRobot.getInstance();
 		
-		this.eroicoButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.75));
-		this.eroicoButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.45));
+		this.eroicoButton = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.75)),
+				(int) (this.topLeftCorner.y + (this.height*0.45))
+		);
 		
-		this.accettaSquadraButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.75));
-		this.accettaSquadraButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.90));
-		
-		this.autoBox[0] = (int) (this.topLeftCorner[0] + (this.width*0.95));
-		this.autoBox[1] = (int) (this.topLeftCorner[1] + (this.height*0.45));
-		this.autoBox[2] = (int) (this.topLeftCorner[0] + (this.width*0.99));
-		this.autoBox[3] = (int) (this.topLeftCorner[1] + (this.height*0.55));
+		this.accettaSquadraButton = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.75)),
+				(int) (this.topLeftCorner.y + (this.height*0.90))
+		);
+		this.autoBox = new Point[2];
+		this.autoBox[0] = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.95)),
+				(int) (this.topLeftCorner.y + (this.height*0.45))
+		);
+		this.autoBox[1] = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.99)),
+				(int) (this.topLeftCorner.y + (this.height*0.55))
+		);
+		this.refuseExitDungeon = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.60)),
+				(int) (this.topLeftCorner.y + (this.height*0.70))
+		);
 		
 		//autoBoxEnabledColor = "0x8dd61d";
 		this.autoBoxEnabledColor = new Color(141, 214, 29);
 		
 		//refuseButtonColor = "0xf49745";
-		this.autoBoxEnabledColor = new Color(244, 141, 53);
+		this.refuseButtonColor = new Color(244, 141, 53);
 		
-		this.refuseButton[0] = 0;
-		this.refuseButton[1] = 0;
+		//TODO: set coords!	
+		this.refuseButton = new Point(0, 0);
 		
 	}
 	
 	protected void state2() throws InterruptedException, AWTException {
-		this.customRobot.mouseClick(this.eroicoButton[0], this.eroicoButton[1]);
+		this.customRobot.mouseClick(this.eroicoButton.x, this.eroicoButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);
 	}
 
 	protected void state3() throws InterruptedException, AWTException {
-		this.customRobot.mouseClick(this.accettaSquadraButton[0], this.accettaSquadraButton[1]);
+		this.customRobot.mouseClick(this.accettaSquadraButton.x, this.accettaSquadraButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);
 		this.updateStepStartTime();
@@ -63,16 +79,20 @@ public class Dungeon extends BitHeroesGlobal {
 		boolean autoDisabled = true;
 		int maxTries = 20;
 		int currentTry = 0;
+		refuseEventCheck();
+		this.customRobot.sleep(1000);
+		
 		this.customRobot.send("{enter}");
 		this.customRobot.sleep(500);
-		
+
 		while(autoDisabled && currentTry < maxTries) {
-			if(this.customRobot.pixelSearch(this.autoBox[0], this.autoBox[1], this.autoBox[2], this.autoBox[3], this.autoBoxEnabledColor)) {
+			if(this.customRobot.pixelSearch(this.autoBox[0].x, this.autoBox[0].y, this.autoBox[1].x, this.autoBox[1].y, this.autoBoxEnabledColor, 10) != null) {
 				autoDisabled = false;
 			}else {
-				refuseEventCheck();
+				this.customRobot.sleep(500);
 				this.customRobot.send("{enter}");
 				this.customRobot.sleep(500);
+				currentTry++;
 			}
 		}
 	   if(currentTry == maxTries) {
@@ -83,12 +103,34 @@ public class Dungeon extends BitHeroesGlobal {
 	}
 	
 	protected void refuseEventCheck() throws AWTException, InterruptedException {
-		//local acoord = pixelsearch(this.topLeftCorner[0], this.topLeftCorner[1], this.bottomRightCorner[0], this.bottomRightCorner[1], refuse_button_color, 10, 5)
-		if(this.customRobot.pixelSearch(this.topLeftCorner[0], this.topLeftCorner[1], this.bottomRightCorner[0], this.bottomRightCorner[1], this.refuseButtonColor)){
-			this.customRobot.mouseClick(this.refuseButton[0], this.refuseButton[1]);
-			this.customRobot.sleep(500);
+		Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+		if(searchedPixel != null){
+			System.out.println("FOUND! at: ["+searchedPixel.x+", "+searchedPixel.y+"]");
+			this.customRobot.mouseClick(searchedPixel.x, searchedPixel.y);
+			this.customRobot.sleep(1000);
+			this.customRobot.send("{enter}");
+			this.customRobot.sleep(1000);
+			this.customRobot.send("{esc}");
+			this.customRobot.sleep(1000);
+			this.customRobot.mouseMove(0, 0);
+			this.customRobot.sleep(1000);
+			searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+			if(searchedPixel != null) {
+				//Familar Capture
+				this.customRobot.send("{enter}");
+				this.customRobot.sleep(1000);
+				this.customRobot.send("{enter}");
+				this.customRobot.sleep(1000);
+			}else {
+				this.customRobot.mouseClick(this.refuseExitDungeon.x, this.refuseExitDungeon.y);
+				this.customRobot.sleep(1000);
+			}
+		}else {
+			System.out.println("NOT FOUND!");
 		}
 	}
+	
+
 	
 }
 
