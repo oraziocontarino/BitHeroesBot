@@ -8,7 +8,7 @@ public class Raid extends Dungeon {
 	private int[] raidButton;
 	private int[] evocaButton;
 			
-	private Raid() {
+	private Raid()  throws AWTException{
 		this.raidButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.05));
 		this.raidButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.65));
 		
@@ -18,21 +18,21 @@ public class Raid extends Dungeon {
 	
 
 	public void state0() throws InterruptedException, AWTException {
-		CustomRobot.getInstance().mouseClick(raidButton[0], raidButton[1]);
+		this.customRobot.mouseClick(this.raidButton[0], this.raidButton[1]);
 		this.state++;
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	public void state1() throws InterruptedException, AWTException {
-		CustomRobot.getInstance().mouseClick(evocaButton[0], evocaButton[1]);
+		this.customRobot.mouseClick(this.evocaButton[0], this.evocaButton[1]);
 		this.state++;
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	public void state5() throws InterruptedException, AWTException {
 		System.out.println("restart! 0");
 		this.state++;
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	

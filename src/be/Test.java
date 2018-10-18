@@ -1,22 +1,16 @@
 package be;
 
 import java.awt.AWTException;
+import java.awt.Point;
 
 import lib.CustomRobot;
 
 public class Test {
-	static CustomRobot robot;
+	
     public static void main(String... args) throws Exception {
+    	Point location = new Point(4, 13);
     	Mission mission = new Mission();
     	mission.start();
-    	//test1();
-    }
-    
-
-    public static void test1() throws InterruptedException, AWTException {
-        while (true) {
-        	CustomRobot.getInstance().getMousePosition();
-        }
     }
 
 }

@@ -8,36 +8,36 @@ public class Mission extends Dungeon {
 private int[] missionButton;
 private int[] ashvaleMission2;
 
-	public Mission() {
-		missionButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.05));
-		missionButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.05));
+	public Mission()  throws AWTException{
+		this.missionButton[0] = (int) (this.topLeftCorner[0] + (this.width*0.05));
+		this.missionButton[1] = (int) (this.topLeftCorner[1] + (this.height*0.05));
 	
-		ashvaleMission2[0] = (int) (this.topLeftCorner[0] + (this.width*0.30));
-		ashvaleMission2[1] = (int) (this.topLeftCorner[1] + (this.height*0.35));
+		this.ashvaleMission2[0] = (int) (this.topLeftCorner[0] + (this.width*0.30));
+		this.ashvaleMission2[1] = (int) (this.topLeftCorner[1] + (this.height*0.35));
 	}
 	
 	
 	private void state0() throws InterruptedException, AWTException {
-		CustomRobot.getInstance().mouseClick(missionButton[0], missionButton[1]);
+		this.customRobot.mouseClick(this.missionButton[0], this.missionButton[1]);
 		this.state++;
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	private void state1() throws InterruptedException, AWTException {
-		CustomRobot.getInstance().mouseClick(ashvaleMission2[0], ashvaleMission2[1]);
+		this.customRobot.mouseClick(this.ashvaleMission2[0], this.ashvaleMission2[1]);
 		this.state++;
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	private void state5() throws InterruptedException, AWTException {
 		System.out.println("restart! 0");
-		CustomRobot.getInstance().sleep(1000);
+		this.customRobot.sleep(1000);
 	}
 	
 	public void start() throws InterruptedException, AWTException {
 		while(true) {
 			//debug
-			CustomRobot.getInstance().getMousePosition();
+			this.customRobot.getMousePosition();
 			/*
 			switch(this.state){
 				case 0:
