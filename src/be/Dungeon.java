@@ -61,6 +61,7 @@ public class Dungeon extends BitHeroesGlobal {
 	}
 
 	protected void state3() throws InterruptedException, AWTException {
+		this.customRobot.sleep(1000);
 		this.customRobot.mouseClick(this.accettaSquadraButton.x, this.accettaSquadraButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);

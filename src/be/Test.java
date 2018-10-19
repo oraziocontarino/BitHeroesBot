@@ -12,6 +12,7 @@ public class Test {
     public static void main(String... args) throws Exception {
     	Mission mission = new Mission();
     	Raid raid = new Raid();
+    	//mission.start();
     	raid.start();
     }
 

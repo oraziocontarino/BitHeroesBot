@@ -48,6 +48,7 @@ public class Mission extends Dungeon {
 	
 	public void start() throws InterruptedException, AWTException {
 		this.state=4;
+		this.customRobot.sleep(1000);
 		while(true) {
 			//debug
 			
@@ -80,8 +81,8 @@ public class Mission extends Dungeon {
 				case 5:
 					System.out.println("test state");
 					//this.customRobot.mouseMove(refuseExitDungeon.x, refuseExitDungeon.y);
-					//this.customRobot.getMousePosition();
-					this.refuseEventCheck();
+					this.customRobot.getMousePosition();
+					//this.refuseEventCheck();
 					
 					this.customRobot.sleep(1000);
 					state5();

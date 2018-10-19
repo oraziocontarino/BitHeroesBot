@@ -25,10 +25,14 @@ public class BitHeroesGlobal {
 
 		//Color "0x4DFE00"
 		fishingCaputureColor = new Color(77, 254, 0);
+
+		//HOST
+		//topLeftCorner = new Point(17, 454);
+		//bottomRightCorner = new Point(817, 976);
 		
-		topLeftCorner = new Point(17, 454);
-		
-		bottomRightCorner = new Point(817, 976);
+		//VM
+		topLeftCorner = new Point(13, 391);
+		bottomRightCorner = new Point(819, 910);
 		
 		width = bottomRightCorner.x - topLeftCorner.x;
 		height = bottomRightCorner.y - topLeftCorner.y;

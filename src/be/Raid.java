@@ -42,6 +42,7 @@ public class Raid extends Dungeon {
 	
 	
 	public void start() throws InterruptedException, AWTException {
+		this.customRobot.sleep(1000);
 		while(true) {
 			switch(this.state){
 				case 0:
