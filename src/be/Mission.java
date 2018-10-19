@@ -46,16 +46,20 @@ public class Mission extends Dungeon {
 		this.customRobot.sleep(1000);
 	}
 	
-	public void start() throws InterruptedException, AWTException {
+	public void start(boolean loop) throws InterruptedException, AWTException {
+		this.firstRun = true;
+		//debug
 		this.state=4;
 		this.customRobot.sleep(1000);
 		while(true) {
-			//debug
-			
 			switch(this.state){
 				case 0:
+					if(this.stopDungeon(loop)) {
+						return;
+					}
 					System.out.println("state 0");
 					//click "Mission" button
+					this.firstRun = true;
 					this.state0();
 				break;
 				case 1:

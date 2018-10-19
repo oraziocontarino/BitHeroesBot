@@ -17,6 +17,9 @@ public class Dungeon extends BitHeroesGlobal {
 	protected Point refuseButton;
 	protected CustomRobot customRobot;
 	protected Point refuseExitDungeon;
+	protected boolean firstRun;
+	
+	
 	protected Dungeon() throws AWTException {
 		this.customRobot = CustomRobot.getInstance();
 		
@@ -131,6 +134,9 @@ public class Dungeon extends BitHeroesGlobal {
 		}
 	}
 	
+	protected boolean stopDungeon(boolean loop) {
+		return (!loop && !this.firstRun);
+	}
 
 	
 }

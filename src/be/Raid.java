@@ -41,11 +41,14 @@ public class Raid extends Dungeon {
 	}
 	
 	
-	public void start() throws InterruptedException, AWTException {
-		this.customRobot.sleep(1000);
+	public void start(boolean loop) throws InterruptedException, AWTException {
+		this.firstRun = true;
 		while(true) {
 			switch(this.state){
 				case 0:
+					if(this.stopDungeon(loop)) {
+						return;
+					}
 					System.out.println("state 0");
 					//click "Raid" button
 					this.state0();
