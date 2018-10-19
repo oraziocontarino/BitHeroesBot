@@ -10,7 +10,7 @@ public class Mission extends Dungeon {
 	private Point ashvaleMission2;
 	private Point bitValley2;
 	private Point selectedMission;
-	public Mission()  throws AWTException{
+	public Mission() throws AWTException{
 		this.missionButton = new Point (
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))

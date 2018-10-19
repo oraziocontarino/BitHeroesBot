@@ -9,7 +9,7 @@ public class Raid extends Dungeon {
 	private Point raidButton;
 	private Point evocaButton;
 			
-	private Raid()  throws AWTException{
+	public Raid() throws AWTException{
 		this.raidButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.65))
