@@ -2,7 +2,11 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
 
 import lib.CustomRobot;
 
@@ -16,24 +20,20 @@ public class BitHeroesGlobal {
 	protected int height;
 	protected Point center;
 	protected int stepStartTime;
-	
+	protected CustomRobot customRobot;
 		
-	protected BitHeroesGlobal() {
+	protected BitHeroesGlobal(Point[] coords) throws AWTException {
+		customRobot = CustomRobot.getInstance();
+		
 		state = 0;
-		//Color "236BA7"
+		
 		fishingBarColor = new Color(35, 107, 167);
 
-		//Color "0x4DFE00"
 		fishingCaputureColor = new Color(77, 254, 0);
 
-		//HOST
-		//topLeftCorner = new Point(17, 454);
-		//bottomRightCorner = new Point(817, 976);
-		
-		//VM
-		topLeftCorner = new Point(13, 391);
-		bottomRightCorner = new Point(819, 910);
-		
+		topLeftCorner = coords[0];
+		bottomRightCorner = coords[1];
+
 		width = bottomRightCorner.x - topLeftCorner.x;
 		height = bottomRightCorner.y - topLeftCorner.y;
 		
@@ -50,14 +50,13 @@ public class BitHeroesGlobal {
 	}
 	
 	public void restartGame() throws InterruptedException, AWTException {
-		CustomRobot.getInstance().send("{Esc}");
-		CustomRobot.getInstance().sleep(500);
-		CustomRobot.getInstance().send("{Esc}");
-		CustomRobot.getInstance().sleep(500);
-		CustomRobot.getInstance().send("{Esc}");
-		CustomRobot.getInstance().sleep(500);
-		CustomRobot.getInstance().send("{Esc}");
-		CustomRobot.getInstance().sleep(500);
+		int tries = 5;
+		this.customRobot.mouseClick(this.topLeftCorner.x+5, this.topLeftCorner.y+5);
+		
+		for(int i=0; i<tries; i++) {
+			this.customRobot.sleep(500);
+			this.customRobot.send("{Esc}");
+		}
 		this.state = 0;
 		this.stepStartTime = this.getTimestamp();
 	}

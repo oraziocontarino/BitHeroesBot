@@ -8,7 +8,7 @@ import java.util.List;
 
 import lib.CustomRobot;
 
-public class Dungeon extends BitHeroesGlobal {
+public abstract class Dungeon extends BitHeroesGlobal {
 	protected Color refuseButtonColor;
 	protected Point eroicoButton;
 	protected Point accettaSquadraButton;
@@ -18,9 +18,10 @@ public class Dungeon extends BitHeroesGlobal {
 	protected CustomRobot customRobot;
 	protected Point refuseExitDungeon;
 	protected boolean firstRun;
+	protected boolean running;
 	
-	
-	protected Dungeon() throws AWTException {
+	protected Dungeon(Point[] coords) throws AWTException {
+		super(coords);
 		this.customRobot = CustomRobot.getInstance();
 		
 		this.eroicoButton = new Point(
@@ -56,6 +57,8 @@ public class Dungeon extends BitHeroesGlobal {
 		this.refuseButton = new Point(0, 0);
 		
 	}
+	protected abstract void state0() throws InterruptedException, AWTException;
+	protected abstract void state1() throws InterruptedException, AWTException;
 	
 	protected void state2() throws InterruptedException, AWTException {
 		this.customRobot.mouseClick(this.eroicoButton.x, this.eroicoButton.y);
@@ -73,12 +76,15 @@ public class Dungeon extends BitHeroesGlobal {
 	
 	protected void state4() throws InterruptedException, AWTException {
 		if(isCompleted()) {
+			this.firstRun = false;
 			this.restartGame();
 			this.customRobot.sleep(1000);
 		}else {
 			this.customRobot.sleep(10000);
 		}
 	}
+	protected abstract void state5() throws InterruptedException, AWTException;
+	
 	protected boolean isCompleted() throws InterruptedException, AWTException {
 		boolean autoDisabled = true;
 		int maxTries = 20;
@@ -137,7 +143,25 @@ public class Dungeon extends BitHeroesGlobal {
 	protected boolean stopDungeon(boolean loop) {
 		return (!loop && !this.firstRun);
 	}
-
 	
+	protected abstract void main() throws InterruptedException, AWTException;
+
+	public void start(boolean loop) throws InterruptedException, AWTException {
+		this.firstRun = true;
+		this.customRobot.sleep(1000);
+		this.restartGame();
+		this.running = true;
+		while(running) {
+			if(this.stopDungeon(loop)) {
+				return;
+			}
+			this.main();
+		}
+	}
+	
+	public void stop() {
+		System.out.println("Dungeon stop!");
+		this.running = false;
+	}
 }
 

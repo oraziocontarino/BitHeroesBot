@@ -2,10 +2,12 @@ package lib;
 
 import java.awt.AWTException;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.MouseInfo;
 import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Robot;
+import java.awt.Toolkit;
 import java.awt.event.InputEvent;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
@@ -105,7 +107,7 @@ public class CustomRobot extends Robot{
         	colorInRange(pixelToSearch.getGreen(), minG, maxG) &&
         	colorInRange(pixelToSearch.getBlue(), minB, maxB)
         ) {
-        	System.out.println("COLOR FOUND!");
+        	//System.out.println("COLOR FOUND!");
         	return true;
         }
     	return false;
@@ -114,5 +116,4 @@ public class CustomRobot extends Robot{
     private boolean colorInRange(double colorComponent, double minRange, double maxRange) {
     	return (colorComponent >= minRange && colorComponent <= maxRange);
     }
-    
 }

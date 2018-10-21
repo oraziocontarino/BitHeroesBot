@@ -1,11 +1,14 @@
 package lib;
 
+import java.awt.AWTException;
 import java.util.logging.LogManager;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
+
+import be.BitHeroesBot;
 
 public class KeyBindingManager  implements NativeKeyListener {
 	private static KeyBindingManager instance;
@@ -43,9 +46,10 @@ public class KeyBindingManager  implements NativeKeyListener {
 
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
 			try {
-				GlobalScreen.unregisterNativeHook();
-				System.exit(1);
-			} catch (NativeHookException ex) {
+				BitHeroesBot.getInstance(null).stop();
+				//GlobalScreen.unregisterNativeHook();
+				//System.exit(1);
+			} catch (AWTException | InterruptedException ex) {
 				ex.printStackTrace();
 			}
 		}
