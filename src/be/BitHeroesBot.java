@@ -54,5 +54,9 @@ public class BitHeroesBot {
 		System.out.println("Force stop!");
 	}
 	
+	public void changeMission(String missionKey) {
+		mission.changeMission(missionKey);
+	}
+	
 
 }

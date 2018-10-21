@@ -12,6 +12,7 @@ public class Test {
     public static void main(String... args) throws Exception {
     	int config = 0;
     	Point[] coords = new Point[2];
+    	String mission = "Z2D2";
     	
 		if(config == 0) {
 			//HOST

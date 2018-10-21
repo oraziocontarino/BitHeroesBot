@@ -11,3 +11,4 @@
 # Maven
 log/
 target/
+.class

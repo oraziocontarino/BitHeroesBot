@@ -9,10 +9,15 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
+import java.util.List;
 
+import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JList;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -32,7 +37,7 @@ public class RootJPanel extends ViewElement implements ActionListener {
 	private JLabel[] coordsLabels;
 	private JButton coordsButton;
 	private JButton runBot;
-	
+	private JComboBox<String> missionList;
 	public RootJPanel(Dimension nodeSize) throws AWTException {
 		super(nodeSize);
 		this.nodeWidth = (int) rootNodeSize.getWidth();
@@ -46,6 +51,25 @@ public class RootJPanel extends ViewElement implements ActionListener {
 		this.customRobot = CustomRobot.getInstance();
 		setCoordsSection();
 		setRunBotSection();
+		setSelectMissionSection();
+	}
+	
+	private void setSelectMissionSection() {
+		Dimension selectMissionSize = new Dimension(nodeWidth-(PADDING*4), COORDS_ELEMENT_HEIGHT);
+		List<String> missionlistLabels= new ArrayList<String>();
+		
+		for(int i = 1; i <= 4; i++) {
+			for(int j = 1; j <= 4; j++) {
+				missionlistLabels.add("Z"+i+"D"+j);
+			}
+		}
+
+		missionList = new JComboBox<String>(missionlistLabels.toArray(new String[0]));
+		missionList.setMinimumSize(selectMissionSize);
+		missionList.setSize(selectMissionSize);
+		missionList.setMaximumSize(selectMissionSize);
+		missionList.setLocation(PADDING, (COORDS_ELEMENT_HEIGHT+PADDING)*5);
+		this.add(missionList);
 	}
 	
 	private void setRunBotSection() {
@@ -243,6 +267,8 @@ public class RootJPanel extends ViewElement implements ActionListener {
 			this.paintImmediately(0, 0, nodeWidth, nodeHeight);
 			
 	    	Point[] coords = {topLeftCorner, bottomRightCorner};
+	    	String missionKey = missionList.getSelectedItem().toString();
+	    	BitHeroesBot.getInstance(coords).changeMission(missionKey);
 			BitHeroesBot.getInstance(coords).run();
     		coordsButton.setEnabled(true);
     		runBot.setEnabled(false);

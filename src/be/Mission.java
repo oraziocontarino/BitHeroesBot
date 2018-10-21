@@ -2,31 +2,56 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Point;
+import java.util.HashMap;
 
 import lib.CustomRobot;
 
 public class Mission extends Dungeon {
 	private Point missionButton;
-	private Point ashvaleMission2;
-	private Point bitValley2;
 	private Point selectedMission;
+	private String defaultKey;
+	private HashMap<String, Point> missionList= new HashMap<String, Point>();
+	
 	public Mission(Point[] coords) throws AWTException{
 		super(coords);
+		
 		this.missionButton = new Point (
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
-	
-		this.ashvaleMission2 = new Point(
-				(int) (this.topLeftCorner.x + (this.width*0.30)),
-				(int) (this.topLeftCorner.y + (this.height*0.35))
-		);
-		this.bitValley2 = new Point(
-				(int) (this.topLeftCorner.x + (this.width*0.73)),
-				(int) (this.topLeftCorner.y + (this.height*0.25))
+
+		this.defaultKey = "Z2D2";
+		
+		this.missionList.put(
+				"Z2D2", 
+				new Point(
+					(int) (this.topLeftCorner.x + (this.width*0.30)),
+					(int) (this.topLeftCorner.y + (this.height*0.35))
+				)
 		);
 		
-		this.selectedMission = bitValley2;
+		this.missionList.put(
+				"Z1D2", 
+				new Point(
+					(int) (this.topLeftCorner.x + (this.width*0.73)),
+					(int) (this.topLeftCorner.y + (this.height*0.25))
+				)
+		);
+		
+		this.selectMission(this.defaultKey);
+	}
+	
+	public void selectMission(String missionKey) {
+		missionKey = missionKey.trim().toUpperCase();
+		this.defaultKey = this.defaultKey.trim().toUpperCase();
+		this.selectedMission = this.missionList.containsKey(missionKey) ? this.missionList.get(missionKey) : this.missionList.get(defaultKey);
+	}
+	
+	public void changeMission(String missionKey) {
+		if(missionKey == null) {
+			missionKey = this.defaultKey;
+		}
+		this.selectMission(missionKey);
 	}
 	
 	@Override
