@@ -11,7 +11,7 @@ import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 
 public class BaseJump extends Application {
-    private static final String APPLICATION_PAGE = "/index.html";
+    private static final String APPLICATION_PAGE = "/screens/index.html";
     private static String applicationPagePath;
     
     private enum Anchor { progress, jumbotron, badges, pagination }

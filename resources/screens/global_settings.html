@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="ISO-8859-1">
+	<title>Insert title here</title>
+	<script
+		src="https://code.jquery.com/jquery-3.3.1.min.js"
+		integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+		crossorigin="anonymous">
+	</script>
+	
+	<!-- Latest compiled and minified CSS -->
+	<link 
+		rel="stylesheet" 
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
+		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
+		crossorigin="anonymous">
+	
+	<!-- Optional theme -->
+	<link rel="stylesheet" 
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" 
+		integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" 
+		crossorigin="anonymous">
+	
+	<!-- Latest compiled and minified JavaScript -->
+	<script 
+		src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" 
+		integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" 
+		crossorigin="anonymous">
+	</script>
+	<link rel="stylesheet" type="text/css" href="../css/style.css">
+
+  
+</head>
+<body>
+	<nav class="navbar-primary">
+	  <a href="#" class="btn-expand-collapse">
+	  	<span class="glyphicon glyphicon-menu-left"></span>
+	  	<span class="glyphicon glyphicon-menu-right hidden"></span>
+	  </a>
+	  <ul class="navbar-primary-menu">
+	    <li>
+	      <a href="./index.html" class="index">
+	      	<span class="glyphicon glyphicon-list-alt"></span>
+	      	<span class="nav-label">BitHeroesBot</span>
+	      </a>
+	      <a href="./global_settings.html" class="active global-settings">
+	      	<span class="glyphicon glyphicon-list-alt"></span>
+	      	<span class="nav-label">Global Settings</span>
+	      </a>
+	      <a href="./mission_settings.html" class="mission-settings">
+	      	<span class="glyphicon glyphicon-envelope"></span>
+	      	<span class="nav-label">Mission Setings</span>
+	      </a>
+	      <a href="./raid_settings.html" class="raid-settings">
+	      	<span class="glyphicon glyphicon-cog"></span>
+	      	<span class="nav-label">Raid Settings</span>
+	      </a>
+	      <a href="./coming_soon.html" class="coming-soon">
+	      	<span class="glyphicon glyphicon-film"></span>
+	      	<span class="nav-label">Coming soon...</span>
+	      </a>
+	    </li>
+	  </ul>
+	</nav>
+	
+	<div class="main-content">
+		<h1> I am the main content </h1>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Autem sint assumenda quae aliquid voluptatibus quia, ea, ad natus magni repellat earum, culpa iure tempore. Enim dolor eaque minima voluptas ducimus?</p>
+	</div>
+	<script>
+		$('.btn-expand-collapse').click(function(e) {
+			$('.navbar-primary').toggleClass('collapsed');
+			$('span', $(this)).toggleClass('hidden');
+		});
+		/*
+		$('.navbar-primary-menu li a').on('click', function(e) {
+			$('.navbar-primary-menu a.active').toggleClass('active');
+			$(this).toggleClass('active');
+		});
+		*/
+	</script>
+</body>
+</html>
