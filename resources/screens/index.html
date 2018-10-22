@@ -12,9 +12,7 @@
 	<!-- Latest compiled and minified CSS -->
 	<link 
 		rel="stylesheet" 
-		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" 
-		integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" 
-		crossorigin="anonymous">
+		href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 	
 	<!-- Optional theme -->
 	<link rel="stylesheet" 
@@ -39,23 +37,23 @@
 		</a>
 		<ul class="navbar-primary-menu">
 			<li>
-				<a href="./index.html" class="active index">
+				<a href="#" class="active" tab="index">
 					<span class="glyphicon glyphicon-list-alt"></span>
 					<span class="nav-label">BitHeroesBot</span>
 				</a>
-				<a href="./global_settings.html" class="global-settings">
+				<a href="#" tab="global-settings">
 					<span class="glyphicon glyphicon-list-alt"></span>
 					<span class="nav-label">Global Settings</span>
 				</a>
-				<a href="./mission_settings.html" class="mission-settings">
+				<a href="#" tab="mission-settings">
 					<span class="glyphicon glyphicon-envelope"></span>
 					<span class="nav-label">Mission Setings</span>
 				</a>
-				<a href="./raid_settings.html" class="raid-settings">
+				<a href="#" tab="raid-settings">
 					<span class="glyphicon glyphicon-cog"></span>
 					<span class="nav-label">Raid Settings</span>
 				</a>
-				<a href="./coming_soon.html" class="coming-soon">
+				<a href="#" tab="coming-soon">
 					<span class="glyphicon glyphicon-film"></span>
 					<span class="nav-label">Coming soon...</span>
 				</a>
@@ -63,41 +61,120 @@
 		</ul>
 	</nav>
 	
-	<div class="main-content">
-		<form>
-  <div class="form-row align-items-center">
-    <div class="col-auto">
-      <label class="sr-only" for="inlineFormInput">Name</label>
-      <input type="text" class="form-control mb-2" id="inlineFormInput" placeholder="Jane Doe">
-    </div>
-    <div class="col-auto">
-      <label class="sr-only" for="inlineFormInputGroup">Username</label>
-      <div class="input-group mb-2">
-        <div class="input-group-prepend">
-          <div class="input-group-text">@</div>
-        </div>
-        <input type="text" class="form-control" id="inlineFormInputGroup" placeholder="Username">
-      </div>
-    </div>
-    <div class="col-auto">
-      <div class="form-check mb-2">
-        <input class="form-check-input" type="checkbox" id="autoSizingCheck">
-        <label class="form-check-label" for="autoSizingCheck">
-          Remember me
-        </label>
-      </div>
-    </div>
-    <div class="col-auto">
-      <button type="submit" class="btn btn-primary mb-2">Submit</button>
-    </div>
-  </div>
-</form>
+	<div class="main-content index">
+		<div class="panel panel-default">
+			<div class="panel-heading">Coords management</div>
+			<div class="panel-body">
+				<form>
+					<div class="row form-group">
+						<div class="col-sm-6">
+							<label>Bottom-right:</label>
+							<input type="text" readonly="true" class="form-control" placeholder="">
+						</div>
+						<div class="col-sm-6">
+							<label>Top-Left:</label>
+							<input type="text" readonly="true" class="form-control" placeholder="">
+						</div>
+					</div>
+					<div class="row form-group">	
+						<div class="col-sm-12">
+							<button type="button" class="btn btn-primary btn-block">Calculate coords</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Mission management</div>
+			<div class="panel-body">
+				<form>
+					<div class="row form-group">
+						<div class="col-sm-6">
+							<label>Missions list</label>
+							<select class="form-control">
+							  <option>Select mission</option>
+							  <option>1</option>
+							  <option>2</option>
+							  <option>3</option>
+							  <option>4</option>
+							  <option>5</option>
+							</select>
+						</div>
+						
+						<div class="col-sm-6">
+							<label>Selected mission:</label>
+							<input type="text" readonly="true" class="form-control" placeholder="Z2D2">
+						</div>
+					</div>
+					<div class="row form-group">	
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary btn-block">Update mission</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">Raid management</div>
+			<div class="panel-body">
+				<form>
+					<div class="row form-group">
+						<div class="col-sm-6">
+							<label>Raid list</label>
+							<select class="form-control">
+							  <option>Select raid</option>
+							  <option>1</option>
+							  <option>2</option>
+							  <option>3</option>
+							  <option>4</option>
+							  <option>5</option>
+							</select>
+						</div>
+						
+						<div class="col-sm-6">
+							<label>Selected raid:</label>
+							<input type="text" readonly="true" class="form-control" placeholder="R1">
+						</div>
+					</div>
+					<div class="row form-group">	
+						<div class="col-sm-12">
+							<button type="submit" class="btn btn-primary btn-block">Update raid</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+		
 	</div>
+	
+	<div class="main-content global-settings hidden">	
+	</div>
+	<div class="main-content mission-settings hidden">mission-settings</div>
+	<div class="main-content raid-settings hidden">raid-settings</div>
+	<div class="main-content coming-soon hidden">coming-soon</div>
 	<script>
 		$('.btn-expand-collapse').click(function(e) {
 			$('.navbar-primary').toggleClass('collapsed');
 			$('span', $(this)).toggleClass('hidden');
 		});
+		
+		$('.navbar-primary-menu a').click(function(e) {
+			$('.navbar-primary-menu a.active').removeClass('active');
+			$(this).addClass('active');
+			$('.main-content').addClass('hidden');
+			$(".main-content."+$(this).attr("tab")).removeClass('hidden');
+			sendJavaMessage("test", "123stella");
+		});
+		
+		function sendJavaMessage(action, payload){
+			var message = {
+				action: action,
+				payload: payload
+			}
+			alert(JSON.stringify(message));
+		}
 	</script>
 </body>
 </html>
