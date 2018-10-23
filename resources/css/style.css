@@ -110,3 +110,14 @@
 	.active .glyphicon{
 		color: #fff !important;
 	}
+	
+	#loader{
+	    background-color: #000;
+	    position: absolute;
+	    top: 0px;
+	    right: 0px;
+	    bottom: 0px;
+	    left: 0px;
+	    z-index: 10;
+	    opacity: 0.7;
+    }

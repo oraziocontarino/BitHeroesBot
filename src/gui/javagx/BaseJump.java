@@ -1,5 +1,13 @@
 package gui.javagx;
 
+import java.awt.AWTException;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Point;
+import java.awt.Rectangle;
+import java.awt.Toolkit;
+import java.awt.image.BufferedImage;
+
 import org.json.JSONObject;
 
 import javafx.application.Application;
@@ -13,12 +21,12 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
+import lib.CustomRobot;
 
 @SuppressWarnings("restriction")
 public class BaseJump extends Application {
     private static final String APPLICATION_PAGE = "/screens/index.html";
     private static String applicationPagePath;
-    
     private enum Anchor { progress, jumbotron, badges, pagination }
 
     @Override public void start(Stage stage) throws Exception {
@@ -59,9 +67,12 @@ public class BaseJump extends Application {
                 public void handle(ActionEvent event) {
                     WebEngine engine = webview.getEngine();
                     engine.load(applicationPagePath);
-                    engine.setOnAlert((WebEvent<String> event2) -> ConfigurationRequestManager.handleRequest(event2.getData()));
+                    engine.setOnAlert((WebEvent<String> event2) -> test(engine, event2.getData()));
+                }
+                public void test(WebEngine engine, String s) {
+                	ConfigurationRequestManager.handleRequest(engine, s);
                 }
             });
         }
-    }
+    } 
 }
