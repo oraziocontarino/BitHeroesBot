@@ -13,8 +13,8 @@ import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import netscape.javascript.JSObject;
 
+@SuppressWarnings("restriction")
 public class BaseJump extends Application {
     private static final String APPLICATION_PAGE = "/screens/index.html";
     private static String applicationPagePath;
@@ -59,17 +59,9 @@ public class BaseJump extends Application {
                 public void handle(ActionEvent event) {
                     WebEngine engine = webview.getEngine();
                     engine.load(applicationPagePath);
-                    engine.setOnAlert((WebEvent<String> event2) -> bridge(event2.getData()));
-                    
+                    engine.setOnAlert((WebEvent<String> event2) -> ConfigurationRequestManager.handleRequest(event2.getData()));
                 }
             });
         }
-    }
-    
-    private void bridge(String data) {
-    	JSONObject node = new JSONObject(data);
-    	System.out.println("Data: "+data);
-    	System.out.println("Action: "+node.getString("action"));
-    	System.out.println("Payload: "+node.getString("payload"));
     }
 }
