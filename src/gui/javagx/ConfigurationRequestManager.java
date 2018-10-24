@@ -19,7 +19,6 @@ public class ConfigurationRequestManager {
     	switch(node.getString("action")) {
 			case SET_COORDS_REQUEST:
 				setCoords(engine, node.getJSONObject(PAYLOAD_FIELD));
-                
 			break;
 			case SET_MISSION_REQUEST:
 				setMission(engine, node.getJSONObject(PAYLOAD_FIELD));
@@ -35,16 +34,24 @@ public class ConfigurationRequestManager {
 	public static void setCoords(WebEngine engine, JSONObject payload) {
 		JSONObject topLeft = new JSONObject();
 		JSONObject bottomRight = new JSONObject();
-		boolean error;
+		boolean error = false;
 		try {
 			System.out.println("Action: "+SET_COORDS_REQUEST);
 	    	System.out.println("Payload: "+payload.toString());
 			Point[] coords = Utils.detectGamePoistion();
-			topLeft.put("x", coords[0].x);
-			topLeft.put("y", coords[0].y);
-			bottomRight.put("x", coords[1].x);
-			bottomRight.put("y", coords[1].y);
-			error = false;
+			if(coords[0] == null || coords[1] == null) {
+				topLeft.put("x", "error");
+				topLeft.put("y", "error");
+				bottomRight.put("x", "error");
+				bottomRight.put("y", "error");
+				error = true;	
+			} else {
+				topLeft.put("x", coords[0].x);
+				topLeft.put("y", coords[0].y);
+				bottomRight.put("x", coords[1].x);
+				bottomRight.put("y", coords[1].y);
+				error = false;
+			}
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			topLeft.put("x", "error");

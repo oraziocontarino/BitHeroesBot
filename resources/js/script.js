@@ -27,9 +27,8 @@ function setCoordsMessageCallback(data){
 	configuration.error.coords = data.error;
 	configuration.topLeft = data.topLeft;
 	configuration.bottomRight = data.bottomRight;
-	$('.setTopLeft').val(configuration.topLeft.x+","+configuration.topLeft.y);
-	$('.setBottomRight').val(configuration.bottomRight.x+", "+configuration.bottomRight.y);
 	localStorage.setItem("configuration", JSON.stringify(configuration));
+	loadConfig();
 	setBusy(false);
 }
 
@@ -42,8 +41,9 @@ function setMissionMessage(selectedMission){
 function setMissionMessageCallback(data){
 	var data = JSON.parse(data);
 	configuration.error.mission = data.error;
-	configuration.selectedMission = data.selectedMission;  
-	$('.selectedMission').val(configuration.selectedMission);
+	configuration.selectedMission = data.selectedMission;
+	localStorage.setItem("configuration", JSON.stringify(configuration));  
+	loadConfig();
 	setBusy(false);
 }
 
@@ -58,10 +58,9 @@ function setRaidMessageCallback(data){
 	var data = JSON.parse(data);
 	configuration.error.raid = data.error;
 	configuration.selectedRaid = data.selectedRaid;  
-	$('.selectedRaid').val(configuration.selectedRaid);
+	localStorage.setItem("configuration", JSON.stringify(configuration));
+	loadConfig();
 	setBusy(false);
-
-	sendJavaMessage("dbg", configuration);
 }
 
 function sendJavaMessage(action, payload){
@@ -83,9 +82,21 @@ function setBusy(showLoader){
 		$("#loader").addClass("hidden");
 	}
 }
+
+function loadConfig(){
+	configuration = JSON.parse(localStorage.getItem("configuration"));
+	$('.setTopLeft').val(configuration.topLeft.x+", "+configuration.topLeft.y);
+	$('.setBottomRight').val(configuration.bottomRight.x+", "+configuration.bottomRight.y);
+	$('.selectedMission').val(configuration.selectedMission);  
+	$('.selectedRaid').val(configuration.selectedRaid);
+	
+}
 $(document).ready(function(){
 
-	sendJavaMessage("banana", { "str" : localStorage.getItem("configuration") });
+	//sendJavaMessage("banana", { "str" : localStorage.getItem("configuration") });
+	setBusy(true);
+	loadConfig();
+	
 	$('.btn-expand-collapse').click(function(e) {
 		$('.navbar-primary').toggleClass('collapsed');
 		$('span', $(this)).toggleClass('hidden');
@@ -122,4 +133,5 @@ $(document).ready(function(){
 		setBusy(true);
 		setTimeout(function(){ setRaidMessage(selectedRaid); }, 1000);
 	});
+	setBusy(false);
 });
