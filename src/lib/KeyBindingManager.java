@@ -46,7 +46,7 @@ public class KeyBindingManager  implements NativeKeyListener {
 
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
 			try {
-				BitHeroesBot.getInstance(null).stop();
+				BitHeroesBot.getInstance().stop();
 				//GlobalScreen.unregisterNativeHook();
 				//System.exit(1);
 			} catch (AWTException | InterruptedException ex) {

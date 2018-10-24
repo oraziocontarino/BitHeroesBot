@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import org.json.JSONObject;
 
+import be.BitHeroesBot;
 import javafx.scene.web.WebEngine;
 
 public class ConfigurationRequestManager {
@@ -13,6 +14,8 @@ public class ConfigurationRequestManager {
 	public static final String SET_COORDS_REQUEST = "SET_COORDS_REQUEST";
 	public static final String SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
 	public static final String SET_RAID_REQUEST = "SET_RAID_REQUEST";
+	public static final String SET_BOT_START_REQUEST = "SET_BOT_START_REQUEST";
+	
 	public static void handleRequest(WebEngine engine, String request) {
 		System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
@@ -25,6 +28,9 @@ public class ConfigurationRequestManager {
 			break;
 			case SET_RAID_REQUEST:
 				setRaid(engine, node.getJSONObject(PAYLOAD_FIELD));
+			break;
+			case SET_BOT_START_REQUEST:
+				startBot(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
 			default:
 				System.out.println("Unknown request: "+request);
@@ -71,21 +77,41 @@ public class ConfigurationRequestManager {
 	public static void setMission(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_MISSION_REQUEST);
     	System.out.println("Payload: "+payload.toString());
+    	
+		JSONObject selectedMission = new JSONObject();
+		selectedMission.put("id", payload.getString("selectedMission"));
+		selectedMission.put("label", payload.getString("selectedMission"));
+		
 		JSONObject response = new JSONObject();
 		response.put("error", false);
-		response.put("selectedMission", payload.getString("selectedMission"));
+		response.put("selectedMission", selectedMission);
     	engine.executeScript("setMissionMessageCallback('"+response.toString()+"')");
 	}
 	
 	public static void setRaid(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_RAID_REQUEST);
     	System.out.println("Payload: "+payload.toString());
+    	
+		JSONObject selectedRaid = new JSONObject();
+		selectedRaid.put("id", payload.getString("selectedRaid"));
+		selectedRaid.put("label", payload.getString("selectedRaid"));
+		
 		JSONObject response = new JSONObject();
 		response.put("error", false);
-		response.put("selectedRaid", payload.getString("selectedRaid"));
+		response.put("selectedRaid", selectedRaid);
     	engine.executeScript("setRaidMessageCallback('"+response.toString()+"')");
 	}
 	
-	
+	public static void startBot(WebEngine engine, JSONObject payload) {
+		System.out.println("Action: "+SET_RAID_REQUEST);
+    	System.out.println("Payload: "+payload.toString());
+    	try {
+			BitHeroesBot.getInstance(payload, engine);
+		} catch (AWTException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+	}
 	
 }

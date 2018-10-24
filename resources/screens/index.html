@@ -15,20 +15,17 @@
 <body>
 	<div id="loader" class="hidden"></div>
 	<nav class="navbar-primary">
-		<a href="#" class="btn-expand-collapse">
-			<span class="glyphicon glyphicon-menu-left"></span>
-			<span class="glyphicon glyphicon-menu-right hidden"></span>
-		</a>
 		<ul class="navbar-primary-menu">
 			<li>
 				<a href="#" class="active" tab="index">
-					<span class="glyphicon glyphicon-list-alt"></span>
+					<span class="glyphicon glyphicon-flash"></span>
 					<span class="nav-label">BitHeroesBot</span>
 				</a>
 				<a href="#" tab="global-settings">
-					<span class="glyphicon glyphicon-list-alt"></span>
+					<span class="glyphicon glyphicon-wrench"></span>
 					<span class="nav-label">Global Settings</span>
 				</a>
+				<!-- 
 				<a href="#" tab="mission-settings">
 					<span class="glyphicon glyphicon-envelope"></span>
 					<span class="nav-label">Mission Setings</span>
@@ -37,8 +34,9 @@
 					<span class="glyphicon glyphicon-cog"></span>
 					<span class="nav-label">Raid Settings</span>
 				</a>
+				 -->
 				<a href="#" tab="coming-soon">
-					<span class="glyphicon glyphicon-film"></span>
+					<span class="glyphicon glyphicon-console"></span>
 					<span class="nav-label">Coming soon...</span>
 				</a>
 			</li>
@@ -54,37 +52,33 @@
 						<div class="col-sm-6">
 							<label>Start bot:</label>
 							<button type="button" class="btn btn-primary btn-block startBot">Run!</button>
+							<div class="form-group">
+								<small>*<strong>Global Settings</strong> tab allows bot configuration</small>
+							</div>
 						</div>
-
-					</div>
-					<div class="form-group">
-						<small>*<strong>Global Settings</strong> tab allows bot configuration</small>
+						<div class="col-sm-6">			
+							<form>
+								<div class="col-sm-12 form-group logs">
+									<div class="col-sm-12">
+										<label>Status:</label>
+										<span class="badge">Running</span>
+									</div>
+									<div class="col-sm-12">
+										<label>Current action: </label>
+										<span class="badge">Z1D1</span>
+									</div>
+									<div class="col-sm-12">
+										<label>Next action: </label>
+										<span class="badge">R1</span>
+									</div>
+								</div>
+							</form>			
+						</div>
 					</div>
 				</form>
 			</div>
 		</div>
 		
-		<div class="panel panel-default">
-			<div class="panel-heading">Logs</div>
-			<div class="panel-body">
-				<form>
-					<div class="row form-group">
-						<div class="col-sm-12">
-							<label>Status:</label>
-							<span class="badge">Running</span>
-						</div>
-						<div class="col-sm-12">
-							<label>Current action: </label>
-							<span class="badge">Z1D1</span>
-						</div>
-						<div class="col-sm-12">
-							<label>Next action: </label>
-							<span class="badge">R1</span>
-						</div>
-					</div>
-				</form>
-			</div>
-		</div>
 	</div>
 	
 	<div class="main-content global-settings hidden">	
@@ -116,19 +110,29 @@
 			<div class="panel-body">
 				<form>
 					<div class="row form-group">
-						<div class="col-sm-6">
-							<label>Missions list</label>
-							<select class="form-control setMission">
-							  <option value="">Select mission</option>
-							  <option value="Z1D1">Z1D1</option>
-							  <option value="Z1D2">Z1D2</option>
-							  <option value="Z1D3">Z1D3</option>
-							  <option value="Z1D4">Z1D4</option>
-							  <option value="Z1D5">Z1D5</option>
+						<div class="col-sm-4">
+ 								<label>Zone list</label>
+							<select class="form-control setMissionZone">
+							  <option value="">Select Zone</option>
+							  <option value="Z1">Zone 1</option>
+							  <option value="Z2">Zone 2</option>
+							  <option value="Z3">Zone 3</option>
+							  <option value="Z4">Zone 4</option>
 							</select>
 						</div>
 						
-						<div class="col-sm-6">
+						<div class="col-sm-4">
+ 								<label>Dungeon list</label>
+							<select class="form-control setMissionDungeon">
+							  <option value="">Select dungeon</option>
+							  <option value="D1">Dungeon 1</option>
+							  <option value="D2">Dungeon 2</option>
+							  <option value="D3">Dungeon 3</option>
+							  <option value="D4">Dungeon 4</option>
+							</select>
+						</div>
+						
+						<div class="col-sm-4">
 							<label>Selected mission:</label>
 							<input type="text" readonly="true" class="form-control selectedMission" placeholder="Z2D2">
 						</div>
@@ -151,11 +155,8 @@
 							<label>Raid list</label>
 							<select class="form-control setRaid">
 							  <option value="">Select raid</option>
-							  <option value="R1">R1</option>
-							  <option value="R2">R2</option>
-							  <option value="R3">R3</option>
-							  <option value="R4">R4</option>
-							  <option value="R5">R5</option>
+							  <option value="R1">R1 - Astaroth</option>
+							  <option value="R2">R2 - Kaleido</option>
 							</select>
 						</div>
 						
@@ -182,7 +183,7 @@
 	<script	src="../js/jquery-3.3.1.min.js"></script>
 	
 	<!-- Latest compiled and minified JavaScript -->
-	<script src="../js/bootstrap-3.3.7.js"></script>
+	<script src="../js/bootstrap-3.3.7.min.js"></script>
 	
 	<!--  App script -->
 	<script src="../js/script.js"></script>

@@ -1,6 +1,7 @@
 var SET_COORDS_REQUEST = "SET_COORDS_REQUEST";
 var SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
 var SET_RAID_REQUEST = "SET_RAID_REQUEST";
+var SET_BOT_START_REQUEST = "SET_BOT_START_REQUEST";
 var configuration = {
 	error: {
 		coords: false,
@@ -15,8 +16,14 @@ var configuration = {
 		x : 0,
 		y : 0
 	},
-	selectedMission: "Z1D1",
-	SelectedRaid: "R1"
+	selectedMission: {
+		label: "Z1D1",
+		id: "Z1D1"
+	},
+	selectedRaid: {
+		label: "R1 - Astorath",
+		id: "R1"
+	}
 }
 function setCoordsMessage(){
 	var payload = {}
@@ -63,6 +70,17 @@ function setRaidMessageCallback(data){
 	setBusy(false);
 }
 
+function setBotStartMessage(configuration){
+	var payload = {
+			configuration: configuration
+	}
+	sendJavaMessage(SET_BOT_START_REQUEST, configuration);
+}
+
+function setBotStartMessageCallback(data){
+	//sendJavaMessage(SET_BOT_START_MESSAGE, configuration);
+}
+
 function sendJavaMessage(action, payload){
 	var message = {
 		action: action,
@@ -84,23 +102,31 @@ function setBusy(showLoader){
 }
 
 function loadConfig(){
-	configuration = JSON.parse(localStorage.getItem("configuration"));
-	$('.setTopLeft').val(configuration.topLeft.x+", "+configuration.topLeft.y);
-	$('.setBottomRight').val(configuration.bottomRight.x+", "+configuration.bottomRight.y);
-	$('.selectedMission').val(configuration.selectedMission);  
-	$('.selectedRaid').val(configuration.selectedRaid);
+	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
+	try{
+		setConfigData(storedConfiguration);
+		localStorage.setItem("configuration", JSON.stringify(storedConfiguration));
+		configuration = storedConfiguration;
+	}catch(error){
+		setConfigData(configuration);
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+	}
 	
 }
-$(document).ready(function(){
 
-	//sendJavaMessage("banana", { "str" : localStorage.getItem("configuration") });
+function setConfigData(data){
+	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
+	$('.setBottomRight').val(data.bottomRight.x+", "+data.bottomRight.y);
+	
+	$('.selectedMission').attr("missionId", data.selectedMission.id);  
+	$('.selectedMission').val(data.selectedMission.label);  
+	
+	$('.selectedRaid').attr("raidId", data.selectedRaid.id);
+	$('.selectedRaid').val(data.selectedRaid.label);
+}
+$(document).ready(function(){
 	setBusy(true);
 	loadConfig();
-	
-	$('.btn-expand-collapse').click(function(e) {
-		$('.navbar-primary').toggleClass('collapsed');
-		$('span', $(this)).toggleClass('hidden');
-	});
 
 	$('.navbar-primary-menu a').click(function(e) {
 		$('.navbar-primary-menu a.active').removeClass('active');
@@ -116,11 +142,16 @@ $(document).ready(function(){
 	});
 
 	$('.updateMission').click(function(e) {
-		var selectedMission = $('.setMission').val();
-		if(selectedMission == ""){
+		var selectedMission = {
+				zone: $('.setMissionZone').val(),
+				dungeon: $('.setMissionDungeon').val()
+		};
+		
+		if(selectedMission.zone == "" || selectedMission.dungeon == ""){
 			return;
 		}
 		setBusy(true);
+		selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
 		setTimeout(function(){ setMissionMessage(selectedMission); }, 1000);
 	});
 	
@@ -133,5 +164,19 @@ $(document).ready(function(){
 		setBusy(true);
 		setTimeout(function(){ setRaidMessage(selectedRaid); }, 1000);
 	});
+	
+	$('.startBot').click(function(e) {
+		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
+			return;
+		}
+		
+		//TODO: Disable side menu
+		//TODO: implement status update
+		//TODO: implement bot start
+		//setBusy(true);
+		setTimeout(function(){ setBotStartMessage(configuration); }, 1000);
+	});
+	
+
 	setBusy(false);
 });
