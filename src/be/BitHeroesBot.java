@@ -15,8 +15,9 @@ public class BitHeroesBot {
 	private Mission mission;
 	private Raid raid;
 	private boolean running;
-	private WebEngine webEngine;
 	private JSONObject configuration;
+	
+	private JSONObject logs;
 	/*
 	 * 
 var configuration = {
@@ -43,9 +44,8 @@ var configuration = {
 	}
 }
 	 * */
-	private BitHeroesBot(JSONObject configuration, WebEngine webEngine) throws AWTException, InterruptedException {
+	private BitHeroesBot(JSONObject configuration) throws AWTException, InterruptedException {
 		this.configuration = configuration;
-		this.webEngine = webEngine;
 		Point[] coords = new Point[2];
 		coords[0] = new Point(
 				configuration.getJSONObject("topLeft").getInt("x"), 
@@ -63,11 +63,13 @@ var configuration = {
     	raid = new Raid(coords);
     	
     	running = false;
+    	
+    	logs = new JSONObject();
 	}
     
-	public static BitHeroesBot getInstance(JSONObject configuration, WebEngine webEngine) throws AWTException, InterruptedException{
+	public static BitHeroesBot getInstance(JSONObject configuration) throws AWTException, InterruptedException{
         if(instance == null){
-            instance = new BitHeroesBot(configuration, webEngine);
+            instance = new BitHeroesBot(configuration);
         }
         return instance;
     }
@@ -107,6 +109,7 @@ var configuration = {
 	public void changeMission(String missionKey) {
 		mission.changeMission(missionKey);
 	}
+	
 	
 
 }

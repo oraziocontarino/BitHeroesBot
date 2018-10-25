@@ -30,7 +30,7 @@ public class ConfigurationRequestManager {
 				setRaid(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
 			case SET_BOT_START_REQUEST:
-				startBot(engine, node.getJSONObject(PAYLOAD_FIELD));
+				startBot(node.getJSONObject(PAYLOAD_FIELD));
 			break;
 			default:
 				System.out.println("Unknown request: "+request);
@@ -102,11 +102,11 @@ public class ConfigurationRequestManager {
     	engine.executeScript("setRaidMessageCallback('"+response.toString()+"')");
 	}
 	
-	public static void startBot(WebEngine engine, JSONObject payload) {
+	public static void startBot(JSONObject payload) {
 		System.out.println("Action: "+SET_RAID_REQUEST);
     	System.out.println("Payload: "+payload.toString());
     	try {
-			BitHeroesBot.getInstance(payload, engine);
+			BitHeroesBot.getInstance(payload);
 		} catch (AWTException | InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
