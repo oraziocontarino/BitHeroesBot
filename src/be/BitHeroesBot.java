@@ -5,6 +5,7 @@ import java.awt.Point;
 
 import org.json.JSONObject;
 
+import global.LogsManager;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebView;
 import lib.CustomRobot;
@@ -17,7 +18,7 @@ public class BitHeroesBot {
 	private boolean running;
 	private JSONObject configuration;
 	
-	private JSONObject logs;
+	private LogsManager logs;
 	/*
 	 * 
 var configuration = {
@@ -57,46 +58,52 @@ var configuration = {
 				configuration.getJSONObject("bottomRight").getInt("y")
 		);
 		//TODO: set mission
-		mission = new Mission(coords);
+		this.mission = new Mission(coords);
 		
 		//TODO: set raid
-    	raid = new Raid(coords);
-    	
-    	running = false;
-    	
-    	logs = new JSONObject();
+		this.raid = new Raid(coords);
+		
+		this.running = false;
+		this.logs = new LogsManager();
 	}
-    
+	
 	public static BitHeroesBot getInstance(JSONObject configuration) throws AWTException, InterruptedException{
-        if(instance == null){
-            instance = new BitHeroesBot(configuration);
-        }
-        return instance;
-    }
+		if(instance == null){
+			instance = new BitHeroesBot(configuration);
+		}
+		return instance;
+	}
 	public static BitHeroesBot getInstance() throws AWTException, InterruptedException{
-        return instance;
-    }
+		return instance;
+	}
 	public void run() throws InterruptedException, AWTException {
 		//CustomRobot.getInstance().detectGamePoistion();
-    	running = true;
+		running = true;
+		logs.setCurrentStatus(LogsManager.RUNNING);
 		while(running) {
-    		//CustomRobot.getInstance().sleep(100);
-			//System.out.println("test");
+			System.out.println("starting raid");
+			logs.setCurrentAction(LogsManager.RAID);
+			logs.setNextAction(LogsManager.MISSION);
+			raid.start(false);
+			if(!running) {
+				return;
+			}
 			
-	    	System.out.println("starting raid");
-	    	raid.start(false);
-	    	if(!running) {
-	    		return;
-	    	}
-	    	System.out.println("starting mission");
-	    	mission.start(false);
-	    	if(!running) {
-	    		return;
-	    	}
-	    	System.out.println("Waiting 10 minutes...");
-	    	CustomRobot.getInstance().sleep(10*60*1000);
-	    	
-    	}
+			System.out.println("starting mission");
+			logs.setCurrentAction(LogsManager.MISSION);
+			logs.setNextAction(LogsManager.RAID);
+			mission.start(false);
+			if(!running) {
+				return;
+			}
+
+			logs.setCurrentAction(LogsManager.NONE);
+			logs.setNextAction(LogsManager.MISSION);
+			logs.setCurrentStatus(LogsManager.WAITING);
+			System.out.println("Waiting 10 minutes...");
+			CustomRobot.getInstance().sleep(10*60*1000);
+		}
+		logs.setCurrentStatus(LogsManager.IDLE);
 	}
 	
 	public void stop() {
@@ -110,6 +117,8 @@ var configuration = {
 		mission.changeMission(missionKey);
 	}
 	
+	public String getLogs() {
+		return this.logs.getLogs().toString();
+	}
 	
-
 }

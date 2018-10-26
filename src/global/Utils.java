@@ -1,4 +1,4 @@
-package gui.javagx;
+package global;
 
 import java.awt.AWTException;
 import java.awt.Color;

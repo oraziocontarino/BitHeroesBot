@@ -6,6 +6,7 @@ import java.awt.Point;
 import org.json.JSONObject;
 
 import be.BitHeroesBot;
+import global.Utils;
 import javafx.scene.web.WebEngine;
 
 public class ConfigurationRequestManager {
@@ -15,7 +16,7 @@ public class ConfigurationRequestManager {
 	public static final String SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
 	public static final String SET_RAID_REQUEST = "SET_RAID_REQUEST";
 	public static final String SET_BOT_START_REQUEST = "SET_BOT_START_REQUEST";
-	
+	//TODO: change class from statick to singletone and use Thread thread for bot management (start/interuput)
 	public static void handleRequest(WebEngine engine, String request) {
 		System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
@@ -105,13 +106,21 @@ public class ConfigurationRequestManager {
 	public static void startBot(JSONObject payload) {
 		System.out.println("Action: "+SET_RAID_REQUEST);
     	System.out.println("Payload: "+payload.toString());
-    	try {
-			BitHeroesBot.getInstance(payload);
-		} catch (AWTException | InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-    	
+		Thread thread = new Thread() {
+			public void run() {
+				try {
+					BitHeroesBot.getInstance(payload).run();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (AWTException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+		};
+		thread.run();
+		//thread.interrupt();
 	}
 	
 }
