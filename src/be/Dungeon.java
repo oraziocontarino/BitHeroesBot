@@ -14,7 +14,6 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected Point accettaSquadraButton;
 	protected Point[] autoBox;
 	protected Color autoBoxEnabledColor;
-	protected Point refuseButton;
 	protected CustomRobot customRobot;
 	protected Point refuseExitDungeon;
 	protected boolean firstRun;
@@ -52,9 +51,6 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		
 		//refuseButtonColor = "0xf49745";
 		this.refuseButtonColor = new Color(244, 141, 53);
-		
-		//TODO: set coords!	
-		this.refuseButton = new Point(0, 0);
 		
 	}
 	protected abstract void state0() throws InterruptedException, AWTException;

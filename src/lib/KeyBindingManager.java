@@ -59,15 +59,11 @@ public class KeyBindingManager  implements NativeKeyListener {
 	}
 
 	@Override
-	public void nativeKeyReleased(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void nativeKeyReleased(NativeKeyEvent e) {	
 	}
 
 	@Override
-	public void nativeKeyTyped(NativeKeyEvent e) {
-		// TODO Auto-generated method stub
-		
+	public void nativeKeyTyped(NativeKeyEvent e) {	
 	}   
     
 

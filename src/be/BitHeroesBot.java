@@ -82,7 +82,7 @@ var configuration = {
 		while(running) {
 			System.out.println("starting raid");
 			logs.update(LogsManager.RUNNING, LogsManager.RAID, LogsManager.MISSION);
-			raid.start(false);
+			//raid.start(false);
 			if(!running) {
 				System.out.println("Exit raid");
 				break;
@@ -113,7 +113,7 @@ var configuration = {
 	}
 	
 	public void changeMission(String missionKey) {
-		mission.changeMission(missionKey);
+		mission.setMission(missionKey);
 	}
 	
 	public JSONObject getLogs() {

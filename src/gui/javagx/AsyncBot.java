@@ -31,7 +31,6 @@ public class AsyncBot {
 	        	try {
 					BitHeroesBot.getInstance(configuration).run();
 				} catch (AWTException | InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 	        }

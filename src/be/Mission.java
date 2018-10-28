@@ -9,8 +9,7 @@ import lib.CustomRobot;
 public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
-	private String defaultKey;
-	private HashMap<String, Point> missionList= new HashMap<String, Point>();
+	private MissionList missionList;
 	
 	public Mission(Point[] coords) throws AWTException{
 		super(coords);
@@ -20,38 +19,13 @@ public class Mission extends Dungeon {
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
 
-		this.defaultKey = "Z2D2";
+		this.missionList = new MissionList(this.topLeftCorner, this.width, this.height);
 		
-		this.missionList.put(
-				"Z2D2", 
-				new Point(
-					(int) (this.topLeftCorner.x + (this.width*0.30)),
-					(int) (this.topLeftCorner.y + (this.height*0.35))
-				)
-		);
-		
-		this.missionList.put(
-				"Z1D2", 
-				new Point(
-					(int) (this.topLeftCorner.x + (this.width*0.73)),
-					(int) (this.topLeftCorner.y + (this.height*0.25))
-				)
-		);
-		
-		this.selectMission(this.defaultKey);
+		this.setMission(null);
 	}
-	
-	public void selectMission(String missionKey) {
-		missionKey = missionKey.trim().toUpperCase();
-		this.defaultKey = this.defaultKey.trim().toUpperCase();
-		this.selectedMission = this.missionList.containsKey(missionKey) ? this.missionList.get(missionKey) : this.missionList.get(defaultKey);
-	}
-	
-	public void changeMission(String missionKey) {
-		if(missionKey == null) {
-			missionKey = this.defaultKey;
-		}
-		this.selectMission(missionKey);
+
+	public void setMission(String missionKey) {
+		this.selectedMission = this.missionList.getMission(null);
 	}
 	
 	@Override

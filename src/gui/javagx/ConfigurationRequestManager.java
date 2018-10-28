@@ -18,8 +18,7 @@ public class ConfigurationRequestManager {
 	public static final String SET_START_BOT_REQUEST = "SET_START_BOT_REQUEST";
 	public static final String SET_STOP_BOT_REQUEST = "SET_STOP_BOT_REQUEST";
 	public static final String SET_GET_LOGS_REQUEST = "SET_GET_LOGS_REQUEST";
-	private AsyncBot asyncBot;
-	//TODO: change class from statick to singletone and use Thread thread for bot management (start/interuput)
+
 	public void handleRequest(WebEngine engine, String request) {
 		//System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
@@ -69,7 +68,6 @@ public class ConfigurationRequestManager {
 				error = false;
 			}
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
 			topLeft.put("x", "error");
 			topLeft.put("y", "error");
 			bottomRight.put("x", "error");

@@ -93,9 +93,6 @@ $(document).ready(function(){
 		}
 		
 		//TODO: Disable side menu
-		//TODO: implement status update
-		//TODO: implement bot start
-		//setBusy(true);
 		setBusy(true);
 		setTimeout(function(){ setStartBotMessage(configuration); }, 1000);
 	});
@@ -106,9 +103,6 @@ $(document).ready(function(){
 		}
 		
 		//TODO: Disable side menu
-		//TODO: implement status update
-		//TODO: implement bot start
-		//setBusy(true);
 		setBusy(true);
 		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
 	});
