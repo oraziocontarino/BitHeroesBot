@@ -50,8 +50,9 @@
 				<form>
 					<div class="row form-group">
 						<div class="col-sm-6">
-							<label>Start bot:</label>
-							<button type="button" class="btn btn-primary btn-block startBot">Run!</button>
+							<label>BitHeroesBot launcher</label>
+							<button type="button" class="btn btn-primary btn-block launcher startBot">Start</button>
+							<button type="button" class="btn btn-primary btn-block launcher stopBot hidden">Stop</button>
 							<div class="form-group">
 								<small>*<strong>Global Settings</strong> tab allows bot configuration</small>
 							</div>
@@ -61,15 +62,15 @@
 								<div class="col-sm-12 form-group logs">
 									<div class="col-sm-12">
 										<label>Status:</label>
-										<span class="badge">Running</span>
+										<span class="badge currentStatus">Running</span>
 									</div>
 									<div class="col-sm-12">
 										<label>Current action: </label>
-										<span class="badge">Z1D1</span>
+										<span class="badge currentAction">Z1D1</span>
 									</div>
 									<div class="col-sm-12">
 										<label>Next action: </label>
-										<span class="badge">R1</span>
+										<span class="badge nextAction">R1</span>
 									</div>
 								</div>
 							</form>			
@@ -185,6 +186,8 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="../js/bootstrap-3.3.7.min.js"></script>
 	
+	<!--  App script -->
+	<script src="../js/JavaMessages.js"></script>
 	<!--  App script -->
 	<script src="../js/script.js"></script>
 </body>

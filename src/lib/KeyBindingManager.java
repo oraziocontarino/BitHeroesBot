@@ -9,6 +9,7 @@ import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import be.BitHeroesBot;
+import gui.javagx.AsyncBot;
 
 public class KeyBindingManager  implements NativeKeyListener {
 	private static KeyBindingManager instance;
@@ -46,9 +47,11 @@ public class KeyBindingManager  implements NativeKeyListener {
 
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
 			try {
+				//Stop bot
 				BitHeroesBot.getInstance().stop();
+				//Stop thread
+				AsyncBot.getInstance().interrupt();
 				//GlobalScreen.unregisterNativeHook();
-				//System.exit(1);
 			} catch (AWTException | InterruptedException ex) {
 				ex.printStackTrace();
 			}

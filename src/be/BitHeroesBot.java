@@ -79,31 +79,29 @@ var configuration = {
 	public void run() throws InterruptedException, AWTException {
 		//CustomRobot.getInstance().detectGamePoistion();
 		running = true;
-		logs.setCurrentStatus(LogsManager.RUNNING);
 		while(running) {
 			System.out.println("starting raid");
-			logs.setCurrentAction(LogsManager.RAID);
-			logs.setNextAction(LogsManager.MISSION);
+			logs.update(LogsManager.RUNNING, LogsManager.RAID, LogsManager.MISSION);
 			raid.start(false);
 			if(!running) {
-				return;
+				System.out.println("Exit raid");
+				break;
 			}
 			
 			System.out.println("starting mission");
-			logs.setCurrentAction(LogsManager.MISSION);
-			logs.setNextAction(LogsManager.RAID);
+			logs.update(LogsManager.RUNNING, LogsManager.MISSION, LogsManager.RAID);
 			mission.start(false);
 			if(!running) {
-				return;
+				System.out.println("Exit mission");
+				break;
 			}
 
-			logs.setCurrentAction(LogsManager.NONE);
-			logs.setNextAction(LogsManager.MISSION);
-			logs.setCurrentStatus(LogsManager.WAITING);
 			System.out.println("Waiting 10 minutes...");
+			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);
 			CustomRobot.getInstance().sleep(10*60*1000);
 		}
-		logs.setCurrentStatus(LogsManager.IDLE);
+		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
+		System.out.println("THREAD DIED!");
 	}
 	
 	public void stop() {
@@ -111,14 +109,15 @@ var configuration = {
 		raid.stop();
 		mission.stop();
 		System.out.println("Force stop!");
+		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
 	}
 	
 	public void changeMission(String missionKey) {
 		mission.changeMission(missionKey);
 	}
 	
-	public String getLogs() {
-		return this.logs.getLogs().toString();
+	public JSONObject getLogs() {
+		return this.logs.getLogs();
 	}
 	
 }

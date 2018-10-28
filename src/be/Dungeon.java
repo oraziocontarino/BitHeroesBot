@@ -96,6 +96,9 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.customRobot.sleep(500);
 
 		while(autoDisabled && currentTry < maxTries) {
+			if(!this.running) {
+				return true;
+			}
 			if(this.customRobot.pixelSearch(this.autoBox[0].x, this.autoBox[0].y, this.autoBox[1].x, this.autoBox[1].y, this.autoBoxEnabledColor, 10) != null) {
 				autoDisabled = false;
 			}else {

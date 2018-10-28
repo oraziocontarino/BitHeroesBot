@@ -15,10 +15,13 @@ public class ConfigurationRequestManager {
 	public static final String SET_COORDS_REQUEST = "SET_COORDS_REQUEST";
 	public static final String SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
 	public static final String SET_RAID_REQUEST = "SET_RAID_REQUEST";
-	public static final String SET_BOT_START_REQUEST = "SET_BOT_START_REQUEST";
+	public static final String SET_START_BOT_REQUEST = "SET_START_BOT_REQUEST";
+	public static final String SET_STOP_BOT_REQUEST = "SET_STOP_BOT_REQUEST";
+	public static final String SET_GET_LOGS_REQUEST = "SET_GET_LOGS_REQUEST";
+	private AsyncBot asyncBot;
 	//TODO: change class from statick to singletone and use Thread thread for bot management (start/interuput)
-	public static void handleRequest(WebEngine engine, String request) {
-		System.out.println("Request: "+request);
+	public void handleRequest(WebEngine engine, String request) {
+		//System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
     	switch(node.getString("action")) {
 			case SET_COORDS_REQUEST:
@@ -30,15 +33,21 @@ public class ConfigurationRequestManager {
 			case SET_RAID_REQUEST:
 				setRaid(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SET_BOT_START_REQUEST:
-				startBot(node.getJSONObject(PAYLOAD_FIELD));
+			case SET_START_BOT_REQUEST:
+				startBot(engine, node.getJSONObject(PAYLOAD_FIELD));
+			break;
+			case SET_STOP_BOT_REQUEST:
+				stopBot(engine, node.getJSONObject(PAYLOAD_FIELD));
+			break;
+			case SET_GET_LOGS_REQUEST:
+				getLogs(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
 			default:
 				System.out.println("Unknown request: "+request);
     	}
 	}
 	
-	public static void setCoords(WebEngine engine, JSONObject payload) {
+	public void setCoords(WebEngine engine, JSONObject payload) {
 		JSONObject topLeft = new JSONObject();
 		JSONObject bottomRight = new JSONObject();
 		boolean error = false;
@@ -75,7 +84,7 @@ public class ConfigurationRequestManager {
     	engine.executeScript("setCoordsMessageCallback('"+response.toString()+"')");
 	}
 
-	public static void setMission(WebEngine engine, JSONObject payload) {
+	public void setMission(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_MISSION_REQUEST);
     	System.out.println("Payload: "+payload.toString());
     	
@@ -89,7 +98,7 @@ public class ConfigurationRequestManager {
     	engine.executeScript("setMissionMessageCallback('"+response.toString()+"')");
 	}
 	
-	public static void setRaid(WebEngine engine, JSONObject payload) {
+	public void setRaid(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_RAID_REQUEST);
     	System.out.println("Payload: "+payload.toString());
     	
@@ -103,24 +112,34 @@ public class ConfigurationRequestManager {
     	engine.executeScript("setRaidMessageCallback('"+response.toString()+"')");
 	}
 	
-	public static void startBot(JSONObject payload) {
-		System.out.println("Action: "+SET_RAID_REQUEST);
+	public void startBot(WebEngine engine, JSONObject payload) {
+		System.out.println("Action: "+SET_START_BOT_REQUEST);
     	System.out.println("Payload: "+payload.toString());
-		Thread thread = new Thread() {
-			public void run() {
-				try {
-					BitHeroesBot.getInstance(payload).run();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (AWTException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
-		};
-		thread.run();
-		//thread.interrupt();
+		AsyncBot.getInstance(payload).run();
+    	System.out.println("freeeeeeeee: "+payload.toString());
+    	engine.executeScript("setStartBotMessageCallback()");
+	}
+
+	public void stopBot(WebEngine engine, JSONObject payload) {
+		System.out.println("Action: "+SET_STOP_BOT_REQUEST);
+    	System.out.println("Payload: "+payload.toString());
+    	AsyncBot.getInstance().interrupt();
+    	engine.executeScript("setStopBotMessageCallback()");
 	}
 	
+	public void getLogs(WebEngine engine, JSONObject payload) {
+		//System.out.println("Action: "+SET_STOP_BOT_REQUEST);
+    	//System.out.println("Payload: "+payload.toString());
+    	try {
+    		if(AsyncBot.getInstance() == null) {
+    			return;
+    		}
+			JSONObject logs = BitHeroesBot.getInstance().getLogs();
+			System.out.println(logs.toString());
+	    	engine.executeScript("setGetLogsMessageCallback('"+logs.toString()+"')");
+		} catch (InterruptedException | AWTException e) {
+	    	engine.executeScript("setGetLogsMessageCallback('{}')");
+			e.printStackTrace();
+		}
+	}
 }

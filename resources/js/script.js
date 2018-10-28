@@ -1,7 +1,3 @@
-var SET_COORDS_REQUEST = "SET_COORDS_REQUEST";
-var SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
-var SET_RAID_REQUEST = "SET_RAID_REQUEST";
-var SET_BOT_START_REQUEST = "SET_BOT_START_REQUEST";
 var configuration = {
 	error: {
 		coords: false,
@@ -25,81 +21,7 @@ var configuration = {
 		id: "R1"
 	}
 }
-function setCoordsMessage(){
-	var payload = {}
-	sendJavaMessage(SET_COORDS_REQUEST, payload);
-}
-function setCoordsMessageCallback(data){
-	var data = JSON.parse(data);
-	configuration.error.coords = data.error;
-	configuration.topLeft = data.topLeft;
-	configuration.bottomRight = data.bottomRight;
-	localStorage.setItem("configuration", JSON.stringify(configuration));
-	loadConfig();
-	setBusy(false);
-}
 
-function setMissionMessage(selectedMission){
-	var payload = {
-			selectedMission: selectedMission
-	}
-	sendJavaMessage(SET_MISSION_REQUEST, payload);
-}
-function setMissionMessageCallback(data){
-	var data = JSON.parse(data);
-	configuration.error.mission = data.error;
-	configuration.selectedMission = data.selectedMission;
-	localStorage.setItem("configuration", JSON.stringify(configuration));  
-	loadConfig();
-	setBusy(false);
-}
-
-function setRaidMessage(selectedRaid){
-	var payload = {
-			selectedRaid: selectedRaid
-	}
-	sendJavaMessage(SET_RAID_REQUEST, payload);
-}
-
-function setRaidMessageCallback(data){
-	var data = JSON.parse(data);
-	configuration.error.raid = data.error;
-	configuration.selectedRaid = data.selectedRaid;  
-	localStorage.setItem("configuration", JSON.stringify(configuration));
-	loadConfig();
-	setBusy(false);
-}
-
-function setBotStartMessage(configuration){
-	var payload = {
-			configuration: configuration
-	}
-	sendJavaMessage(SET_BOT_START_REQUEST, configuration);
-}
-
-function setBotStartMessageCallback(data){
-	//sendJavaMessage(SET_BOT_START_MESSAGE, configuration);
-}
-
-function sendJavaMessage(action, payload){
-	var message = {
-		action: action,
-		payload: payload
-	}
-	alert(JSON.stringify(message));
-}
-
-function testCallFramJava(){
-	sendJavaMessage("banana", {});
-}
-
-function setBusy(showLoader){
-	if(showLoader){
-		$("#loader").removeClass("hidden");
-	}else{
-		$("#loader").addClass("hidden");
-	}
-}
 
 function loadConfig(){
 	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
@@ -164,7 +86,7 @@ $(document).ready(function(){
 		setBusy(true);
 		setTimeout(function(){ setRaidMessage(selectedRaid); }, 1000);
 	});
-	
+
 	$('.startBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 			return;
@@ -174,9 +96,23 @@ $(document).ready(function(){
 		//TODO: implement status update
 		//TODO: implement bot start
 		//setBusy(true);
-		setTimeout(function(){ setBotStartMessage(configuration); }, 1000);
+		setBusy(true);
+		setTimeout(function(){ setStartBotMessage(configuration); }, 1000);
 	});
 	
-
+	$('.stopBot').click(function(e) {
+		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
+			return;
+		}
+		
+		//TODO: Disable side menu
+		//TODO: implement status update
+		//TODO: implement bot start
+		//setBusy(true);
+		setBusy(true);
+		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
+	});
+	
+	setInterval(setGetLogsMessage, 1000);
 	setBusy(false);
 });

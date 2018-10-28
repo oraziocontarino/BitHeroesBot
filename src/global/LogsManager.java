@@ -33,6 +33,11 @@ public class LogsManager {
 		this.setStatus(NEXT_ACTION, value);
 	}
 	
+	public void update(String currentStatus, String currentAction, String nextAction) {
+		this.setCurrentStatus(currentStatus);
+		this.setCurrentAction(currentAction);
+		this.setNextAction(nextAction);
+	}
 	
 	public String getCurrentStatus(String value) {
 		return this.getStatus(CURRENT_STATUS);

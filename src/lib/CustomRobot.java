@@ -59,8 +59,12 @@ public class CustomRobot extends Robot{
     	this.keyRelease(keyCode);
     }
     
-    public void sleep(int millis) throws InterruptedException {
-        Thread.sleep(millis);
+    public void sleep(int millis) {
+    	try {
+    		Thread.sleep(millis);
+    	}catch(Exception e) {
+    		//...
+    	}
     }
     
     public void test() {

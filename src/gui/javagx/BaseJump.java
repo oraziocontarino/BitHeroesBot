@@ -14,7 +14,7 @@ import javafx.stage.StageStyle;
 public class BaseJump extends Application {
 	private static final String APPLICATION_PAGE = "/screens/index.html";
 	private static String applicationPagePath;
-
+	
 	@Override public void start(Stage stage) throws Exception {
 		final WebView webview = new WebView();
 
@@ -29,7 +29,8 @@ public class BaseJump extends Application {
 		
 		WebEngine engine = webview.getEngine();
 		engine.load(applicationPagePath);
-		engine.setOnAlert((WebEvent<String> event2) -> test(engine, event2.getData()));
+		ConfigurationRequestManager requestManager = new ConfigurationRequestManager();
+		engine.setOnAlert((WebEvent<String> event2) -> requestManager.handleRequest(engine, event2.getData()));
 		
 
 		Scene scene = new Scene(layout);
@@ -47,9 +48,5 @@ public class BaseJump extends Application {
 		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
 		System.out.println(applicationPagePath);
 		launch(args); 
-	}
-
-	public void test(WebEngine engine, String s) {
-		ConfigurationRequestManager.handleRequest(engine, s);
 	}
 }

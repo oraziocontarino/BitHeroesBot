@@ -85,7 +85,7 @@ public class Mission extends Dungeon {
 			case 1:
 				System.out.println("state 1");
 				//click "Evoca" button
-			this.state1();
+				this.state1();
 			break;
 				case 2:
 				System.out.println("state 2");
