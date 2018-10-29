@@ -46,6 +46,18 @@ function setConfigData(data){
 	$('.selectedRaid').attr("raidId", data.selectedRaid.id);
 	$('.selectedRaid').val(data.selectedRaid.label);
 }
+
+function showBitHeroesBotPanelWarning(message){
+	$(".bit-heroes-bot-warning .alert-message").text(message);
+	$(".bit-heroes-bot-warning").removeClass("hidden");
+}
+
+function hideBitHeroesBotPanelWarning(){
+	$(".bit-heroes-bot-warning").removeClass("hidden");
+	$(".bit-heroes-bot-warning").addClass("hidden");
+}
+
+
 $(document).ready(function(){
 	setBusy(true);
 	loadConfig();
@@ -70,6 +82,7 @@ $(document).ready(function(){
 		};
 		
 		if(selectedMission.zone == "" || selectedMission.dungeon == ""){
+			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
 		setBusy(true);
@@ -80,6 +93,7 @@ $(document).ready(function(){
 	$('.updateRaid').click(function(e) {
 		var selectedRaid = $('.setRaid').val();
 		if(selectedRaid == ""){
+			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
 
@@ -89,6 +103,7 @@ $(document).ready(function(){
 
 	$('.startBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
+			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
 			return;
 		}
 		
@@ -99,6 +114,7 @@ $(document).ready(function(){
 	
 	$('.stopBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
+			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
 			return;
 		}
 		
@@ -107,6 +123,7 @@ $(document).ready(function(){
 		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
 	});
 	
-	setInterval(setGetLogsMessage, 1000);
+	//setInterval(setGetLogsMessage, 1000);
 	setBusy(false);
 });
+

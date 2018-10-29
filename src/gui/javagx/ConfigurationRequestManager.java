@@ -21,7 +21,7 @@ public class ConfigurationRequestManager {
 	public static final String SET_GET_LOGS_REQUEST = "SET_GET_LOGS_REQUEST";
 
 	public void handleRequest(WebEngine engine, String request) {
-		//System.out.println("Request: "+request);
+		System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
     	switch(node.getString("action")) {
 			case SET_COORDS_REQUEST:
@@ -86,6 +86,7 @@ public class ConfigurationRequestManager {
 	public void setMission(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_MISSION_REQUEST);
     	System.out.println("Payload: "+payload.toString());
+    	//TODO: set given mission from configuration to bot
     	
 		JSONObject selectedMission = new JSONObject();
 		selectedMission.put("id", payload.getString("selectedMission"));
@@ -100,6 +101,7 @@ public class ConfigurationRequestManager {
 	public void setRaid(WebEngine engine, JSONObject payload) {
     	System.out.println("Action: "+SET_RAID_REQUEST);
     	System.out.println("Payload: "+payload.toString());
+    	//TODO: set given raid from configuration to bot
     	
 		JSONObject selectedRaid = new JSONObject();
 		selectedRaid.put("id", payload.getString("selectedRaid"));
@@ -115,7 +117,15 @@ public class ConfigurationRequestManager {
 		System.out.println("Action: "+SET_START_BOT_REQUEST);
     	System.out.println("Payload: "+payload.toString());
 		AsyncBot.getInstance(payload).run();
-    	System.out.println("freeeeeeeee: "+payload.toString());
+		
+		try {
+			JSONObject logs = BitHeroesBot.getInstance().getLogs();
+			//if(logs.get(""))
+		} catch (AWTException | InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
     	engine.executeScript("setStartBotMessageCallback()");
 	}
 

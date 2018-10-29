@@ -127,3 +127,7 @@
 	    border: solid 2px;
 	    border-radius: 5px;
     }
+    
+    .alert{
+    	z-index: 100000;
+    }

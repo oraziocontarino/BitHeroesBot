@@ -64,7 +64,7 @@ function setStartBotMessageCallback(data){
 		$(".launcher.startBot").addClass("hidden");
 	}
 	setBusy(false);
-	//sendJavaMessage(SET_BOT_START_MESSAGE, configuration);
+	sendJavaMessage(SET_BOT_START_MESSAGE, configuration);
 }
 
 function setStopBotMessage(configuration){
@@ -111,10 +111,6 @@ function sendJavaMessage(action, payload){
 		payload: payload
 	}
 	alert(JSON.stringify(message));
-}
-
-function testCallFramJava(){
-	sendJavaMessage("banana", {});
 }
 
 function setBusy(showLoader){
