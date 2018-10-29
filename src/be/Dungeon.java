@@ -3,8 +3,6 @@ package be;
 import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Point;
-import java.util.ArrayList;
-import java.util.List;
 
 import lib.CustomRobot;
 

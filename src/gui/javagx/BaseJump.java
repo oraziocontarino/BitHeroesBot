@@ -2,18 +2,17 @@ package gui.javagx;
 
 import javafx.application.Application;
 import javafx.scene.Scene;
-import javafx.scene.control.ToolBar;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.web.WebEngine;
 import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
-import javafx.stage.StageStyle;
 
+@SuppressWarnings("restriction")
 public class BaseJump extends Application {
 	private static final String APPLICATION_PAGE = "/screens/index.html";
 	private static String applicationPagePath;
+	
 	
 	@Override public void start(Stage stage) throws Exception {
 		final WebView webview = new WebView();

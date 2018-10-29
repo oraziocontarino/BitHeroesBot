@@ -9,6 +9,7 @@ import be.BitHeroesBot;
 import global.Utils;
 import javafx.scene.web.WebEngine;
 
+@SuppressWarnings("restriction")
 public class ConfigurationRequestManager {
 	public static final String ACTION_FIELD = "action";
 	public static final String PAYLOAD_FIELD = "payload";

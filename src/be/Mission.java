@@ -2,9 +2,6 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Point;
-import java.util.HashMap;
-
-import lib.CustomRobot;
 
 public class Mission extends Dungeon {
 	private Point missionButton;

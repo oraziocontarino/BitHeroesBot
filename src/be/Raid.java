@@ -3,8 +3,6 @@ package be;
 import java.awt.AWTException;
 import java.awt.Point;
 
-import lib.CustomRobot;
-
 public class Raid extends Dungeon {
 	private Point raidButton;
 	private Point evocaButton;

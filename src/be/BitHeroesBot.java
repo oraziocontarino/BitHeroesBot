@@ -6,10 +6,7 @@ import java.awt.Point;
 import org.json.JSONObject;
 
 import global.LogsManager;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
 import lib.CustomRobot;
-import lib.KeyBindingManager;
 
 public class BitHeroesBot {
 	private static BitHeroesBot instance;
