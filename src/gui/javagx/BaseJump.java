@@ -40,7 +40,7 @@ public class BaseJump extends Application {
 		stage.setMaxWidth(800);
 		stage.setMinWidth(800);
 		stage.setResizable(false);	
-		//TODO: set on close operation
+		stage.setOnCloseRequest( event -> System.exit(0));
 		stage.show();
 	}
 

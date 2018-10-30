@@ -1,4 +1,4 @@
-var configuration = {
+var defaultConfiguration = configuration = {
 	error: {
 		coords: false,
 		mission: false,
@@ -19,12 +19,14 @@ var configuration = {
 	selectedRaid: {
 		label: "R1 - Astorath",
 		id: "R1"
+	},
+	selectedActions: {
+		mission : true,
+		raid: true
 	}
 }
 
-
-function loadConfig(){
-	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
+function updateConfiguration(storedConfiguration){
 	try{
 		setConfigData(storedConfiguration);
 		localStorage.setItem("configuration", JSON.stringify(storedConfiguration));
@@ -32,11 +34,27 @@ function loadConfig(){
 	}catch(error){
 		setConfigData(configuration);
 		localStorage.setItem("configuration", JSON.stringify(configuration));
-	}
-	
+	}	
+}
+
+function loadConfig(){
+	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
+	updateConfiguration(storedConfiguration);
+}
+
+function updateCheckedActions(key, value){
+	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
+	storedConfiguration.selectedActions[key]=value;
+	updateConfiguration(storedConfiguration);
 }
 
 function setConfigData(data){
+	//TAB - Main
+	$.each(data.selectedActions, function(key){
+		$('.bot-action-checkbox.'+key+"-checked").removeClass("hidden");
+	});
+	
+	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
 	$('.setBottomRight').val(data.bottomRight.x+", "+data.bottomRight.y);
 	
@@ -45,6 +63,7 @@ function setConfigData(data){
 	
 	$('.selectedRaid').attr("raidId", data.selectedRaid.id);
 	$('.selectedRaid').val(data.selectedRaid.label);
+	
 }
 
 function showBitHeroesBotPanelWarning(message){
@@ -111,7 +130,7 @@ $(document).ready(function(){
 		setBusy(true);
 		setTimeout(function(){ setStartBotMessage(configuration); }, 1000);
 	});
-	
+
 	$('.stopBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
@@ -122,8 +141,28 @@ $(document).ready(function(){
 		setBusy(true);
 		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
 	});
+
+	$('.bot-action-checkbox').click(function(e) {
+		//setBusy(true);
+		var key = $(this).attr('value');
+		var value = $(this).prop('checked');
+		updateCheckedActions(key, value);
+		//setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
+	});
 	
-	setInterval(setGetLogsMessage, 1000);
+	$('.clearConfiguration').click(function(e) {
+		setBusy(true);
+		//TODO: STOP BOT BEFORE UPDATE!
+		updateConfiguration(defaultConfiguration);
+		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
+		//TODO: convert all setXXX into promise!
+		console.log(configuration);
+		//location.reload();
+		//
+	});
+	
+	//setInterval(setGetLogsMessage, 1000);
 	setBusy(false);
+	//TODO: implement clear-config button
 });
 

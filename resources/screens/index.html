@@ -21,9 +21,9 @@
 					<span class="glyphicon glyphicon-flash"></span>
 					<span class="nav-label">BitHeroesBot</span>
 				</a>
-				<a href="#" tab="global-settings">
+				<a href="#" tab="advanced-settings">
 					<span class="glyphicon glyphicon-wrench"></span>
-					<span class="nav-label">Global Settings</span>
+					<span class="nav-label">Advanced Settings</span>
 				</a>
 				<!-- 
 				<a href="#" tab="mission-settings">
@@ -45,7 +45,9 @@
 	
 	<div class="main-content index">
 		<div class="panel panel-default">
-			<div class="panel-heading">BitHeroes Bot</div>
+			<div class="panel-heading">
+				BitHeroes Bot
+			</div>
 			<div class="panel-body">
 				<div class="bit-heroes-bot-warning alert alert-warning hidden" role="alert">
 					<strong>Warning</strong>&nbsp;<span class="alert-message">123 abc.</span>
@@ -57,36 +59,52 @@
 							<button type="button" class="btn btn-primary btn-block launcher startBot">Start</button>
 							<button type="button" class="btn btn-primary btn-block launcher stopBot hidden">Stop</button>
 							<div class="form-group">
-								<small>*<strong>Global Settings</strong> tab allows bot configuration</small><br>
+								<small>*<strong>Advanced Settings</strong> tab allows bot configuration</small><br>
 								<small>*<strong>Use TAB</strong> key to stop the bot</small>
 							</div>
 						</div>
 						<div class="col-sm-6">			
-							<form>
-								<div class="col-sm-12 form-group logs">
-									<div class="col-sm-12">
-										<label>Status:</label>
-										<span class="badge currentStatus">IDLE</span>
-									</div>
-									<div class="col-sm-12">
-										<label>Current action: </label>
-										<span class="badge currentAction">NONE</span>
-									</div>
-									<div class="col-sm-12">
-										<label>Next action: </label>
-										<span class="badge nextAction">NONE</span>
-									</div>
+							<div class="col-sm-12 form-group logs">
+								<div class="col-sm-12">
+									<label>Status:</label>
+									<span class="badge currentStatus">IDLE</span>
 								</div>
-							</form>			
+								<div class="col-sm-12">
+									<label>Current action: </label>
+									<span class="badge currentAction">NONE</span>
+								</div>
+								<div class="col-sm-12">
+									<label>Next action: </label>
+									<span class="badge nextAction">NONE</span>
+								</div>
+							</div>		
 						</div>
 					</div>
 				</form>
 			</div>
 		</div>
-		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				Bot Actions
+			</div>
+			<div class="panel-body">
+				<div class="col-sm-12">			
+					<div class="form-check form-check-inline">
+						<input class="form-check-input bot-action-checkbox raid-checked hidden" type="checkbox" value="raid" checked>
+						<input class="form-check-input bot-action-checkbox raid-unchecked hidden" type="checkbox" value="raid">
+						<label class="form-check-label" for="inlineCheckbox1">Raid</label>
+					</div>
+					<div class="form-check form-check-inline">
+						<input class="form-check-input bot-action-checkbox mission-checked hidden" type="checkbox" value="mission" checked>
+						<input class="form-check-input bot-action-checkbox mission-unchecked hidden" type="checkbox" value="mission">
+						<label class="form-check-label" for="inlineCheckbox2">Mission</label>
+					</div>
+				</div>	
+			</div>
+		</div>
 	</div>
 	
-	<div class="main-content global-settings hidden">	
+	<div class="main-content advanced-settings hidden">	
 		<div class="panel panel-default">
 			<div class="panel-heading">Coords management</div>
 			<div class="panel-body">
@@ -178,7 +196,18 @@
 				</form>
 			</div>
 		</div>
-		
+		<div class="panel panel-default">
+			<div class="panel-heading">System</div>
+			<div class="panel-body">
+				<form>
+					<div class="row form-group">	
+						<div class="col-sm-12">
+							<button type="button" class="btn btn-primary btn-block clearConfiguration">Clear configuration</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
 	</div>
 	<div class="main-content mission-settings hidden">mission-settings</div>
 	<div class="main-content raid-settings hidden">raid-settings</div>
