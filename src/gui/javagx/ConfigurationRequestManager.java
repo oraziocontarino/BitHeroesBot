@@ -121,11 +121,11 @@ public class ConfigurationRequestManager {
 		try {
 			JSONObject logs = BitHeroesBot.getInstance().getLogs();
 			//if(logs.get(""))
-		} catch (AWTException | InterruptedException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
     	engine.executeScript("setStartBotMessageCallback()");
 	}
 

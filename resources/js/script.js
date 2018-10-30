@@ -123,7 +123,7 @@ $(document).ready(function(){
 		setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
 	});
 	
-	//setInterval(setGetLogsMessage, 1000);
+	setInterval(setGetLogsMessage, 1000);
 	setBusy(false);
 });
 
