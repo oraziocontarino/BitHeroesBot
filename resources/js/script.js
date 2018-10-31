@@ -1,31 +1,3 @@
-var defaultConfiguration = configuration = {
-	error: {
-		coords: false,
-		mission: false,
-		raid: false
-	},
-	topLeft : {
-		x : 0,
-		y : 0
-	},
-	bottomRight : {
-		x : 0,
-		y : 0
-	},
-	selectedMission: {
-		label: "Z1D1",
-		id: "Z1D1"
-	},
-	selectedRaid: {
-		label: "R1 - Astorath",
-		id: "R1"
-	},
-	selectedActions: {
-		mission : true,
-		raid: true
-	}
-}
-
 function updateConfiguration(storedConfiguration){
 	try{
 		setConfigData(storedConfiguration);
@@ -38,6 +10,8 @@ function updateConfiguration(storedConfiguration){
 }
 
 function loadConfig(){
+	//TODO: fix get default config async to sync
+	
 	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
 	updateConfiguration(storedConfiguration);
 }

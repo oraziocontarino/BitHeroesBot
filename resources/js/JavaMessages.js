@@ -1,13 +1,27 @@
-var SET_COORDS_REQUEST = "SET_COORDS_REQUEST";
-var SET_MISSION_REQUEST = "SET_MISSION_REQUEST";
-var SET_RAID_REQUEST = "SET_RAID_REQUEST";
-var SET_START_BOT_REQUEST = "SET_START_BOT_REQUEST";
-var SET_STOP_BOT_REQUEST = "SET_STOP_BOT_REQUEST";
-var SET_GET_LOGS_REQUEST = "SET_GET_LOGS_REQUEST";
+var SEND_COORDS_REQUEST = "SEND_COORDS_REQUEST";
+var SEND_MISSION_REQUEST = "SEND_MISSION_REQUEST";
+var SEND_RAID_REQUEST = "SEND_RAID_REQUEST";
+var SEND_START_BOT_REQUEST = "SEND_START_BOT_REQUEST";
+var SEND_STOP_BOT_REQUEST = "SEND_STOP_BOT_REQUEST";
+var SEND_GET_LOGS_REQUEST = "SEND_GET_LOGS_REQUEST";
+var SEND_GET_DEFAULT_REQUEST = "SEND_GET_DEFAULT_REQUEST";
+var SEND_TEST = "SEND_TEST";
+
+var REQUESTS = {
+	SEND_COORDS_REQUEST: null,
+	SEND_MISSION_REQUEST: null,
+	SEND_RAID_REQUEST: null,
+	SEND_START_BOT_REQUEST: null,
+	SEND_STOP_BOT_REQUEST: null,
+	SEND_GET_LOGS_REQUEST: null,
+	SEND_GET_DEFAULT_REQUEST: null,
+	SEND_TEST: null,
+}
+
 
 function setCoordsMessage(){
 	var payload = {}
-	sendJavaMessage(SET_COORDS_REQUEST, payload);
+	sendJavaMessage(SEND_COORDS_REQUEST, payload);
 }
 function setCoordsMessageCallback(data){
 	var data = JSON.parse(data);
@@ -23,7 +37,7 @@ function setMissionMessage(selectedMission){
 	var payload = {
 			selectedMission: selectedMission
 	}
-	sendJavaMessage(SET_MISSION_REQUEST, payload);
+	sendJavaMessage(SEND_MISSION_REQUEST, payload);
 }
 function setMissionMessageCallback(data){
 	var data = JSON.parse(data);
@@ -38,7 +52,7 @@ function setRaidMessage(selectedRaid){
 	var payload = {
 			selectedRaid: selectedRaid
 	}
-	sendJavaMessage(SET_RAID_REQUEST, payload);
+	sendJavaMessage(SEND_RAID_REQUEST, payload);
 }
 
 function setRaidMessageCallback(data){
@@ -54,7 +68,7 @@ function setStartBotMessage(configuration){
 	var payload = {
 			configuration: configuration
 	}
-	sendJavaMessage(SET_START_BOT_REQUEST, configuration);
+	sendJavaMessage(SEND_START_BOT_REQUEST, configuration);
 }
 
 function setStartBotMessageCallback(data){
@@ -64,14 +78,14 @@ function setStartBotMessageCallback(data){
 		$(".launcher.startBot").addClass("hidden");
 	}
 	setBusy(false);
-	sendJavaMessage(SET_BOT_START_MESSAGE, configuration);
+	sendJavaMessage(SEND_BOT_START_MESSAGE, configuration);
 }
 
 function setStopBotMessage(configuration){
 	var payload = {
 			configuration: configuration
 	}
-	sendJavaMessage(SET_STOP_BOT_REQUEST, configuration);
+	sendJavaMessage(SEND_STOP_BOT_REQUEST, configuration);
 }
 
 function setStopBotMessageCallback(data){
@@ -81,13 +95,13 @@ function setStopBotMessageCallback(data){
 		$(".launcher.stopBot").addClass("hidden");
 	}
 	setBusy(false);
-	//sendJavaMessage(SET_STOP_BOT_REQUEST, configuration);
+	//sendJavaMessage(SEND_STOP_BOT_REQUEST, configuration);
 }
 
 
 function setGetLogsMessage(){
 	var payload = {}
-	sendJavaMessage(SET_GET_LOGS_REQUEST, configuration);
+	sendJavaMessage(SEND_GET_LOGS_REQUEST, configuration);
 }
 
 function setGetLogsMessageCallback(data){
@@ -113,6 +127,13 @@ function sendJavaMessage(action, payload){
 	alert(JSON.stringify(message));
 }
 
+function setGetDefaultConfigurationMessage(data){
+	
+}
+function setGetDefaultConfigurationMessageCallback(data){
+	
+}
+
 function setBusy(showLoader){
 	if(showLoader){
 		$("#loader").removeClass("hidden");
@@ -120,3 +141,54 @@ function setBusy(showLoader){
 		$("#loader").addClass("hidden");
 	}
 }
+
+
+
+function testPromise(isCallback) {
+	var deferred = null;
+	if(isCallback){
+		deferred = REQUESTS.SEND_TEST;
+		//TODO: HANDLE CALLBACK ACTION
+		
+	}else{
+		deferred = {
+			promise: null,
+			resolve: null,
+			reject: null
+		};
+	}
+
+	deferred.promise = new Promise((resolve, reject) => {
+		deferred.resolve = resolve;
+		deferred.reject = reject;
+	});
+
+	return deferred;
+}
+
+/*
+ function defer() {
+	var deferred = {
+		promise: null,
+		resolve: null,
+		reject: null
+	};
+
+	deferred.promise = new Promise((resolve, reject) => {
+		deferred.resolve = resolve;
+		deferred.reject = reject;
+	});
+
+	return deferred;
+}
+
+this.treeBuilt = defer();
+
+// Many, many lines below…
+
+this.treeBuilt.resolve();
+ * 
+ * */
+
+
+

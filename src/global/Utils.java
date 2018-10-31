@@ -8,6 +8,8 @@ import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
 
+import org.json.JSONObject;
+
 import lib.CustomRobot;
 
 public class Utils {
@@ -119,5 +121,40 @@ public class Utils {
     	return coords;
     }
     
+    public static JSONObject getDefaultConfiguration() {
+    	
+    	JSONObject error = new JSONObject()
+    			.put("coords", false)
+    			.put("mission", false)
+    			.put("raid", false);
+
+    	JSONObject topLeft = new JSONObject()
+    			.put("x", 0)
+    			.put("y", 0);
+
+    	JSONObject bottomRight = new JSONObject()
+    			.put("x", 0)
+    			.put("y", 0);
+
+    	JSONObject selectedMission = new JSONObject()
+    			.put("label", "Z1D1")
+    			.put("id", "Z1D1");
+    	
+    	JSONObject selectedRaid = new JSONObject()
+    			.put("label", "R1 - Astorath")
+    			.put("id", "R1");
+    	
+    	JSONObject selectedActions = new JSONObject()
+    			.put("mission", true)
+    			.put("raid", true);
+    	
+    	return new JSONObject()
+    			.put("error", error)
+    			.put("topLeft", topLeft)
+    			.put("bottomRight", bottomRight)
+    			.put("selectedMission", selectedMission)
+    			.put("selectedRaid", selectedRaid)
+    			.put("selectedActions", selectedActions);
+    }
    
 }

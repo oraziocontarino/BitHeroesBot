@@ -5,6 +5,7 @@ import java.awt.AWTException;
 import org.json.JSONObject;
 
 import be.BitHeroesBot;
+import global.Utils;
 
 public class AsyncBot {
 	private static AsyncBot instance;
@@ -18,11 +19,19 @@ public class AsyncBot {
 		if(instance == null){
 			instance = new AsyncBot(configuration);
 		}
+		//update configuration
+		instance.setConfiguration(configuration);
+		
+		//return AsyncBot instance
 		return instance;
 	}
 
 	public static AsyncBot getInstance(){
-		return instance;
+		return getInstance(Utils.getDefaultConfiguration());
+	}
+	
+	public void setConfiguration(JSONObject configuration) {
+		this.configuration = configuration;
 	}
 	
 	public void run() {
@@ -39,14 +48,24 @@ public class AsyncBot {
 	}
 	
 	public void interrupt() {
-		thread.interrupt();
+		if(this.isAlive()) {
+			thread.interrupt();
+		}
 	}
 	
 	public void resume() {
-		thread.notifyAll();
+		if(this.isAlive()) {
+			thread.notifyAll();
+		}
 	}
 	
 	public void pause() throws InterruptedException {
-		thread.wait();
+		if(this.isAlive()) {
+			thread.wait();
+		}
+	}
+	
+	private boolean isAlive() {
+		return (this.thread != null && this.thread.isAlive());
 	}
 }
