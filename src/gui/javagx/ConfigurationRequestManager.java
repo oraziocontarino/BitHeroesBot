@@ -13,37 +13,37 @@ import javafx.scene.web.WebEngine;
 public class ConfigurationRequestManager {
 	public static final String ACTION_FIELD = "action";
 	public static final String PAYLOAD_FIELD = "payload";
-	public static final String SEND_COORDS_REQUEST = "SEND_COORDS_REQUEST";
-	public static final String SEND_MISSION_REQUEST = "SEND_MISSION_REQUEST";
-	public static final String SEND_RAID_REQUEST = "SEND_RAID_REQUEST";
-	public static final String SEND_START_BOT_REQUEST = "SEND_START_BOT_REQUEST";
-	public static final String SEND_STOP_BOT_REQUEST = "SEND_STOP_BOT_REQUEST";
-	public static final String SEND_GET_LOGS_REQUEST = "SEND_GET_LOGS_REQUEST";
-	public static final String SEND_GET_DEFAULT_REQUEST = "SEND_GET_DEFAULT_REQUEST";
+	public static final String SET_COORDS = "SET_COORDS";
+	public static final String SET_MISSION = "SET_MISSION";
+	public static final String SET_RAID = "SET_RAID";
+	public static final String START_BOT = "START_BOT";
+	public static final String STOP_BOT = "STOP_BOT";
+	public static final String GET_LOGS = "GET_LOGS";
+	public static final String GET_DEFAULT_CONFIGURATION = "GET_DEFAULT_CONFIGURATION";
 
 	public void handleRequest(WebEngine engine, String request) {
 		System.out.println("Request: "+request);
     	JSONObject node = new JSONObject(request);
     	switch(node.getString("action")) {
-			case SEND_COORDS_REQUEST:
+			case SET_COORDS:
 				setCoords(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_MISSION_REQUEST:
+			case SET_MISSION:
 				setMission(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_RAID_REQUEST:
+			case SET_RAID:
 				setRaid(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_START_BOT_REQUEST:
+			case START_BOT:
 				startBot(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_STOP_BOT_REQUEST:
+			case STOP_BOT:
 				stopBot(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_GET_LOGS_REQUEST:
+			case GET_LOGS:
 				getLogs(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SEND_GET_DEFAULT_REQUEST:
+			case GET_DEFAULT_CONFIGURATION:
 				getDefaultConfiguration(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
 			default:
@@ -56,7 +56,7 @@ public class ConfigurationRequestManager {
 		JSONObject bottomRight = new JSONObject();
 		boolean error = false;
 		try {
-			System.out.println("Action: "+SEND_COORDS_REQUEST);
+			System.out.println("Action: "+SET_COORDS);
 	    	System.out.println("Payload: "+payload.toString());
 			Point[] coords = Utils.detectGamePoistion();
 			if(coords[0] == null || coords[1] == null) {
@@ -84,11 +84,12 @@ public class ConfigurationRequestManager {
 		response.put("error", error);
 		response.put("topLeft", topLeft);
 		response.put("bottomRight", bottomRight);
-    	engine.executeScript("setCoordsMessageCallback('"+response.toString()+"')");
+
+    	this.runScript(engine, SET_COORDS, response.toString());
 	}
 
 	public void setMission(WebEngine engine, JSONObject payload) {
-    	System.out.println("Action: "+SEND_MISSION_REQUEST);
+    	System.out.println("Action: "+SET_MISSION);
     	System.out.println("Payload: "+payload.toString());
     	//TODO: set given mission from configuration to bot
     	
@@ -99,11 +100,11 @@ public class ConfigurationRequestManager {
 		JSONObject response = new JSONObject();
 		response.put("error", false);
 		response.put("selectedMission", selectedMission);
-    	engine.executeScript("setMissionMessageCallback('"+response.toString()+"')");
+    	this.runScript(engine, SET_MISSION, response.toString());
 	}
 	
 	public void setRaid(WebEngine engine, JSONObject payload) {
-    	System.out.println("Action: "+SEND_RAID_REQUEST);
+    	System.out.println("Action: "+SET_RAID);
     	System.out.println("Payload: "+payload.toString());
     	//TODO: set given raid from configuration to bot
     	
@@ -114,11 +115,11 @@ public class ConfigurationRequestManager {
 		JSONObject response = new JSONObject();
 		response.put("error", false);
 		response.put("selectedRaid", selectedRaid);
-    	engine.executeScript("setRaidMessageCallback('"+response.toString()+"')");
+    	this.runScript(engine, SET_RAID, response.toString());
 	}
 	
 	public void startBot(WebEngine engine, JSONObject payload) {
-		System.out.println("Action: "+SEND_START_BOT_REQUEST);
+		System.out.println("Action: "+START_BOT);
     	System.out.println("Payload: "+payload.toString());
 		AsyncBot.getInstance(payload).run();
 		
@@ -129,36 +130,40 @@ public class ConfigurationRequestManager {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-    	engine.executeScript("setStartBotMessageCallback()");
+    	this.runScript(engine, START_BOT, "");
 	}
 
 	public void stopBot(WebEngine engine, JSONObject payload) {
-		System.out.println("Action: "+SEND_STOP_BOT_REQUEST);
+		System.out.println("Action: "+STOP_BOT);
     	System.out.println("Payload: "+payload.toString());
     	AsyncBot.getInstance().interrupt();
-    	engine.executeScript("setStopBotMessageCallback()");
+    	this.runScript(engine, STOP_BOT, "");
 	}
 	
 	public void getLogs(WebEngine engine, JSONObject payload) {
-		//System.out.println("Action: "+SEND_STOP_BOT_REQUEST);
+		//System.out.println("Action: "+SET_STOP_BOT);
     	//System.out.println("Payload: "+payload.toString());
     	try {
 			JSONObject logs = BitHeroesBot.getInstance().getLogs();
 			System.out.println(logs.toString());
-	    	engine.executeScript("setGetLogsMessageCallback('"+logs.toString()+"')");
+	    	this.runScript(engine, GET_LOGS, logs.toString());
 		} catch (InterruptedException | AWTException e) {
-	    	engine.executeScript("setGetLogsMessageCallback('{}')");
+	    	this.runScript(engine, GET_LOGS, "{}");
 			e.printStackTrace();
 		}
 	}
 	
 	public void getDefaultConfiguration(WebEngine engine, JSONObject payload) {
-		//System.out.println("Action: "+SEND_STOP_BOT_REQUEST);
+		//System.out.println("Action: "+SET_STOP_BOT);
     	//System.out.println("Payload: "+payload.toString());
 		JSONObject defaultConfiguration = Utils.getDefaultConfiguration();
 		System.out.println(defaultConfiguration.toString());
-    	engine.executeScript("setGetDefaultConfigurationMessageCallback('"+defaultConfiguration.toString()+"')");
+		this.runScript(engine, GET_DEFAULT_CONFIGURATION, defaultConfiguration.toString());
 		
 	}
+	
+	private void runScript(WebEngine engine, String action, String payload) {
+		engine.executeScript("resolvePromise('"+action+"', '"+payload+"')");
+	}
+
 }
