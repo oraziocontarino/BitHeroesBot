@@ -3,12 +3,18 @@ package be;
 import java.awt.AWTException;
 import java.awt.Point;
 
+import org.json.JSONObject;
+
 public class Raid extends Dungeon {
 	private Point raidButton;
 	private Point evocaButton;
 			
-	public Raid(Point[] coords) throws AWTException{
-		super(coords);
+	public Raid() throws AWTException{
+		super();
+		this.setRaidCoords();
+
+	}
+	private void setRaidCoords() {
 		this.raidButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.65))
@@ -18,6 +24,12 @@ public class Raid extends Dungeon {
 				(int) (this.topLeftCorner.x + (this.width*0.65)),
 				(int) (this.topLeftCorner.y + (this.height*0.75))
 		);
+	}
+	
+	@Override 
+	public void updateCoords(JSONObject configuration) {
+		super.updateCoords(configuration);
+		this.setRaidCoords();
 	}
 	
 	@Override

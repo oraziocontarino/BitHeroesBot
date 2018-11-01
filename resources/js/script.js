@@ -1,3 +1,5 @@
+var configuration = defaultConfiguration = null;
+
 function updateConfiguration(storedConfiguration){
 	try{
 		setConfigData(storedConfiguration);
@@ -9,9 +11,7 @@ function updateConfiguration(storedConfiguration){
 	}	
 }
 
-function loadConfig(){
-	//TODO: fix get default config async to sync
-	
+function loadConfig(){	
 	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
 	updateConfiguration(storedConfiguration);
 }
@@ -53,10 +53,16 @@ function hideBitHeroesBotPanelWarning(){
 
 $(document).ready(function(){
 	setBusy(true);
+	//TODO: REMOVE AFTER DEBUG
+	localStorage.removeItem("configuration");
 	getDefaultConfiguration().promise.then(function(data){
 		configuration = defaultConfiguration = JSON.parse(data);
+		if(localStorage.getItem("configuration") == null){
+			localStorage.setItem("configuration", data);
+		}
+		loadConfig();
+		setBusy(false);
 	});
-	//loadConfig();
 
 	$('.navbar-primary-menu a').click(function(e) {
 		$('.navbar-primary-menu a.active').removeClass('active');
@@ -95,10 +101,8 @@ $(document).ready(function(){
 		setTimeout(function(){
 			selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
 			setMission(selectedMission).promise.then(function(data){
-				var data = JSON.parse(data);
-				configuration.error.mission = data.error;
-				configuration.selectedMission = data.selectedMission;
-				localStorage.setItem("configuration", JSON.stringify(configuration));  
+				configuration = JSON.parse(data);
+				localStorage.setItem("configuration", data);
 				loadConfig();
 				setBusy(false);
 			});
@@ -155,7 +159,7 @@ $(document).ready(function(){
 		//TODO: Disable side menu
 		setBusy(true);
 		setTimeout(function(){
-			stopBot(configuration).promise.then(function(data){
+			stopBot().promise.then(function(data){
 				//Enable start button
 				$(".launcher.startBot").removeClass("hidden");
 				if(!$(".launcher.stopBot").hasClass("hidden")){
@@ -177,17 +181,23 @@ $(document).ready(function(){
 	
 	$('.clearConfiguration').click(function(e) {
 		setBusy(true);
-		//TODO: STOP BOT BEFORE UPDATE!
-		updateConfiguration(defaultConfiguration);
-		//setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
-		//TODO: convert all setXXX into promise!
-		console.log(configuration);
-		//location.reload();
-		//
+		setTimeout(function(){
+			stopBot(configuration).promise.then(function(data){
+				//Enable start button
+				$(".launcher.startBot").removeClass("hidden");
+				if(!$(".launcher.stopBot").hasClass("hidden")){
+					$(".launcher.stopBot").addClass("hidden");
+				}
+				updateConfiguration(defaultConfiguration);
+				location.reload();
+				setBusy(false);
+			});
+		}, 1000);
 	});
 	
-	/*
+	
 	setInterval(function(){
+		return;
 		getLogs().promise.then(function(data){
 			data = JSON.parse(data);
 			//data = {"CURRENT_ACTION":"RAID","CURRENT_STATUS":"RUNNING","NEXT_ACTION":"MISSION"};
@@ -203,8 +213,5 @@ $(document).ready(function(){
 			}
 		});
 	}, 1000);
-	*/
-	setBusy(false);
-	//TODO: implement clear-config button
 });
 

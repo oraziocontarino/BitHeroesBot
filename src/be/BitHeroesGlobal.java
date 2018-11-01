@@ -4,9 +4,12 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Point;
 
+import org.json.JSONObject;
+
+import global.Utils;
 import lib.CustomRobot;
 
-public class BitHeroesGlobal {
+class BitHeroesGlobal {
 	protected int state;
 	protected Color fishingBarColor;
 	protected Color fishingCaputureColor;
@@ -17,8 +20,7 @@ public class BitHeroesGlobal {
 	protected Point center;
 	protected int stepStartTime;
 	protected CustomRobot customRobot;
-		
-	protected BitHeroesGlobal(Point[] coords) throws AWTException {
+	protected BitHeroesGlobal() throws AWTException {
 		customRobot = CustomRobot.getInstance();
 		
 		state = 0;
@@ -27,20 +29,31 @@ public class BitHeroesGlobal {
 
 		fishingCaputureColor = new Color(77, 254, 0);
 
-		topLeftCorner = coords[0];
-		bottomRightCorner = coords[1];
+		this.updateCoords(Utils.getDefaultConfiguration());
 
-		width = bottomRightCorner.x - topLeftCorner.x;
-		height = bottomRightCorner.y - topLeftCorner.y;
-		
-		center = new Point(
-				(int) (topLeftCorner.x + (width*0.50)),
-				(int) (topLeftCorner.y + (height*0.50))
-		);
 		
 		stepStartTime = 0;
 	}
 	
+	public void updateCoords(JSONObject configuration) {
+		this.topLeftCorner = new Point(
+				configuration.getJSONObject("topLeft").getInt("x"), 
+				configuration.getJSONObject("topLeft").getInt("y")
+		);
+		
+		this.bottomRightCorner = new Point(
+				configuration.getJSONObject("bottomRight").getInt("x"), 
+				configuration.getJSONObject("bottomRight").getInt("y")
+		);
+
+		this.width = this.bottomRightCorner.x - this.topLeftCorner.x;
+		this.height = this.bottomRightCorner.y - this.topLeftCorner.y;
+		
+		this.center = new Point(
+				(int) (this.topLeftCorner.x + (this.width*0.50)),
+				(int) (this.topLeftCorner.y + (this.height*0.50))
+		);
+	}
 	public int getTimestamp() {
 		return (int) (System.currentTimeMillis() / 1000);
 	}

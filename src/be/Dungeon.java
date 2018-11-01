@@ -4,6 +4,8 @@ import java.awt.AWTException;
 import java.awt.Color;
 import java.awt.Point;
 
+import org.json.JSONObject;
+
 import lib.CustomRobot;
 
 public abstract class Dungeon extends BitHeroesGlobal {
@@ -17,10 +19,24 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected boolean firstRun;
 	protected boolean running;
 	
-	protected Dungeon(Point[] coords) throws AWTException {
-		super(coords);
+	protected Dungeon() throws AWTException {
+		super();
 		this.customRobot = CustomRobot.getInstance();
 		
+		
+		//autoBoxEnabledColor = "0x8dd61d";
+		this.autoBoxEnabledColor = new Color(141, 214, 29);
+		
+		//refuseButtonColor = "0xf49745";
+		this.refuseButtonColor = new Color(244, 141, 53);
+		
+		this.setDungeonCoords();
+		
+	}
+	protected abstract void state0() throws InterruptedException, AWTException;
+	protected abstract void state1() throws InterruptedException, AWTException;
+	
+	private void setDungeonCoords() {
 		this.eroicoButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.75)),
 				(int) (this.topLeftCorner.y + (this.height*0.45))
@@ -31,6 +47,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 				(int) (this.topLeftCorner.y + (this.height*0.90))
 		);
 		this.autoBox = new Point[2];
+		
 		this.autoBox[0] = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.95)),
 				(int) (this.topLeftCorner.y + (this.height*0.45))
@@ -43,16 +60,13 @@ public abstract class Dungeon extends BitHeroesGlobal {
 				(int) (this.topLeftCorner.x + (this.width*0.60)),
 				(int) (this.topLeftCorner.y + (this.height*0.70))
 		);
-		
-		//autoBoxEnabledColor = "0x8dd61d";
-		this.autoBoxEnabledColor = new Color(141, 214, 29);
-		
-		//refuseButtonColor = "0xf49745";
-		this.refuseButtonColor = new Color(244, 141, 53);
-		
 	}
-	protected abstract void state0() throws InterruptedException, AWTException;
-	protected abstract void state1() throws InterruptedException, AWTException;
+	
+	@Override 
+	public void updateCoords(JSONObject configuration) {
+		super.updateCoords(configuration);
+		this.setDungeonCoords();
+	}
 	
 	protected void state2() throws InterruptedException, AWTException {
 		this.customRobot.mouseClick(this.eroicoButton.x, this.eroicoButton.y);

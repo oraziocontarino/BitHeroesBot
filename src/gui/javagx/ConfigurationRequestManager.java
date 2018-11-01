@@ -92,15 +92,11 @@ public class ConfigurationRequestManager {
     	System.out.println("Action: "+SET_MISSION);
     	System.out.println("Payload: "+payload.toString());
     	//TODO: set given mission from configuration to bot
-    	
-		JSONObject selectedMission = new JSONObject();
-		selectedMission.put("id", payload.getString("selectedMission"));
-		selectedMission.put("label", payload.getString("selectedMission"));
-		
-		JSONObject response = new JSONObject();
-		response.put("error", false);
-		response.put("selectedMission", selectedMission);
-    	this.runScript(engine, SET_MISSION, response.toString());
+    	String key = payload.getString("selectedMission");
+    	JSONObject selectedMissionNode = Utils.getSelectedMissionConfigurationNode(key, key);
+    	JSONObject configuration = payload.getJSONObject("configuration").put("selectedMission", selectedMissionNode);
+    	AsyncBot.getInstance().setConfiguration(configuration);
+    	this.runScript(engine, SET_MISSION, configuration.toString());
 	}
 	
 	public void setRaid(WebEngine engine, JSONObject payload) {
@@ -121,15 +117,8 @@ public class ConfigurationRequestManager {
 	public void startBot(WebEngine engine, JSONObject payload) {
 		System.out.println("Action: "+START_BOT);
     	System.out.println("Payload: "+payload.toString());
-		AsyncBot.getInstance(payload).run();
-		
-		try {
-			JSONObject logs = BitHeroesBot.getInstance().getLogs();
-			//if(logs.get(""))
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		AsyncBot.getInstance().setConfiguration(payload.getJSONObject("configuration"));
+		AsyncBot.getInstance().run();
     	this.runScript(engine, START_BOT, "");
 	}
 
@@ -145,7 +134,7 @@ public class ConfigurationRequestManager {
     	//System.out.println("Payload: "+payload.toString());
     	try {
 			JSONObject logs = BitHeroesBot.getInstance().getLogs();
-			System.out.println(logs.toString());
+			//System.out.println(logs.toString());
 	    	this.runScript(engine, GET_LOGS, logs.toString());
 		} catch (InterruptedException | AWTException e) {
 	    	this.runScript(engine, GET_LOGS, "{}");

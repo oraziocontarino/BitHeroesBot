@@ -25,6 +25,7 @@ function setCoords(){
 
 function setMission(selectedMission){
 	var payload = {
+			configuration: configuration,
 			selectedMission: selectedMission
 	}
 	return getPromise(ENDPOINTS.SET_MISSION, payload);
@@ -32,6 +33,7 @@ function setMission(selectedMission){
 
 function setRaid(selectedRaid){
 	var payload = {
+			configuration: configuration,
 			selectedRaid: selectedRaid
 	}
 	return getPromise(ENDPOINTS.SET_RAID, payload);
@@ -44,16 +46,14 @@ function startBot(configuration){
 	return getPromise(ENDPOINTS.START_BOT, payload);
 }
 
-function stopBot(configuration){
-	var payload = {
-			configuration: configuration
-	}
-	return getPromise(ENDPOINTS.STOP_BOT, configuration);
+function stopBot(){
+	var payload = {}
+	return getPromise(ENDPOINTS.STOP_BOT, payload);
 }
 
 function getLogs(){
 	var payload = {}
-	return getPromise(ENDPOINTS.GET_LOGS, configuration);
+	return getPromise(ENDPOINTS.GET_LOGS, payload);
 }
 
 function getDefaultConfiguration(){

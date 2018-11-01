@@ -3,26 +3,37 @@ package be;
 import java.awt.AWTException;
 import java.awt.Point;
 
+import org.json.JSONObject;
+
 public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
 	private MissionList missionList;
 	
-	public Mission(Point[] coords) throws AWTException{
-		super(coords);
-		
+	public Mission() throws AWTException{
+		super();
+		this.setMissionCoords();
+	}
+	
+	private void setMissionCoords() {
 		this.missionButton = new Point (
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
 
 		this.missionList = new MissionList(this.topLeftCorner, this.width, this.height);
-		
-		this.setMission(null);
+	}
+	
+	@Override 
+	public void updateCoords(JSONObject configuration) {
+		super.updateCoords(configuration);
+		this.setMissionCoords();
 	}
 
-	public void setMission(String missionKey) {
-		this.selectedMission = this.missionList.getMission(null);
+	public void setMission(JSONObject configuration) {
+		String key = configuration.getJSONObject("selectedMission").getString("id");
+		this.selectedMission = this.missionList.getMission(key);
+		System.out.println("Mission set to: "+key);
 	}
 	
 	@Override

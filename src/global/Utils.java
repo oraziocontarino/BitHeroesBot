@@ -31,6 +31,9 @@ public class Utils {
             		coords[0] = calculateTopLeftMatrix(patternSize, x, y, borderColor, tolerance, image);
             	}else if(coords[1] == null){
             		coords[1] = calculateBottomRightMatrix(patternSize, x, y, borderColor, tolerance, image);
+            		if(coords[1] != null && Math.abs(coords[1].y - coords[0].y) < 100) {
+            			coords[1]=null;
+            		}
             	}
             }
         }
@@ -136,9 +139,7 @@ public class Utils {
     			.put("x", 0)
     			.put("y", 0);
 
-    	JSONObject selectedMission = new JSONObject()
-    			.put("label", "Z1D1")
-    			.put("id", "Z1D1");
+    	JSONObject selectedMission = getSelectedMissionConfigurationNode("Z1D1", "Z1D1");
     	
     	JSONObject selectedRaid = new JSONObject()
     			.put("label", "R1 - Astorath")
@@ -155,6 +156,12 @@ public class Utils {
     			.put("selectedMission", selectedMission)
     			.put("selectedRaid", selectedRaid)
     			.put("selectedActions", selectedActions);
+    }
+    
+    public static JSONObject getSelectedMissionConfigurationNode(String label, String id) {
+    	return new JSONObject()
+		.put("label", label)
+		.put("id", id);
     }
    
 }
