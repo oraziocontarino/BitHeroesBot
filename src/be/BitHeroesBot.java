@@ -37,7 +37,7 @@ public class BitHeroesBot {
 		return instance;
 	}
 
-	public void updateBotConfiguration() {
+	public void updateBotConfiguration() throws Exception {
 		raid.updateCoords(this.configuration);
 		mission.updateCoords(this.configuration);
 		mission.setMission(this.configuration);

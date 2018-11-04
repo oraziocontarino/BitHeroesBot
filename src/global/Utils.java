@@ -163,5 +163,30 @@ public class Utils {
 		.put("label", label)
 		.put("id", id);
     }
-   
+    public static Point getGaneTopLeftCorner(JSONObject configuration) {
+    	return new Point(
+				configuration.getJSONObject("topLeft").getInt("x"), 
+				configuration.getJSONObject("topLeft").getInt("y")
+		);
+    }
+    
+    public static Point getGameBottomRightCorner(JSONObject configuration) {
+    	return new Point(
+				configuration.getJSONObject("bottomRight").getInt("x"), 
+				configuration.getJSONObject("bottomRight").getInt("y")
+		);
+    }
+    
+    public static int getGameWidth(Point bottomRightCorner, Point topLeftCorner) {
+    	return bottomRightCorner.x - topLeftCorner.x;
+    }
+    public static int getGameHeight(Point bottomRightCorner, Point topLeftCorner) {
+    	return bottomRightCorner.y - topLeftCorner.y;
+    }
+    public static Point getGameCenter(Point topLeftCorner, int width, int height) {
+    	return new Point(
+				(int) (topLeftCorner.x + (width*0.50)),
+				(int) (topLeftCorner.y + (height*0.50))
+		);
+    }
 }

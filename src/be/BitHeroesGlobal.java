@@ -36,23 +36,14 @@ class BitHeroesGlobal {
 	}
 	
 	public void updateCoords(JSONObject configuration) {
-		this.topLeftCorner = new Point(
-				configuration.getJSONObject("topLeft").getInt("x"), 
-				configuration.getJSONObject("topLeft").getInt("y")
-		);
+		this.topLeftCorner = Utils.getGaneTopLeftCorner(configuration);
 		
-		this.bottomRightCorner = new Point(
-				configuration.getJSONObject("bottomRight").getInt("x"), 
-				configuration.getJSONObject("bottomRight").getInt("y")
-		);
-
-		this.width = this.bottomRightCorner.x - this.topLeftCorner.x;
-		this.height = this.bottomRightCorner.y - this.topLeftCorner.y;
+		this.bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
 		
-		this.center = new Point(
-				(int) (this.topLeftCorner.x + (this.width*0.50)),
-				(int) (this.topLeftCorner.y + (this.height*0.50))
-		);
+		this.width = Utils.getGameWidth(this.bottomRightCorner, this.topLeftCorner);
+		this.height = Utils.getGameHeight(this.bottomRightCorner, this.topLeftCorner);
+		
+		this.center = Utils.getGameCenter(this.topLeftCorner, this.width, this.height);
 	}
 	public int getTimestamp() {
 		return (int) (System.currentTimeMillis() / 1000);

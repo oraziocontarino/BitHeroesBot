@@ -5,13 +5,15 @@ import java.awt.Point;
 
 import org.json.JSONObject;
 
+import global.Utils;
+
 public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
-	private MissionList missionList;
 	
 	public Mission() throws AWTException{
 		super();
+		this.missionButton = new Point();
 		this.setMissionCoords();
 	}
 	
@@ -20,8 +22,6 @@ public class Mission extends Dungeon {
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
-
-		this.missionList = new MissionList(this.topLeftCorner, this.width, this.height);
 	}
 	
 	@Override 
@@ -30,10 +30,9 @@ public class Mission extends Dungeon {
 		this.setMissionCoords();
 	}
 
-	public void setMission(JSONObject configuration) {
-		String key = configuration.getJSONObject("selectedMission").getString("id");
-		this.selectedMission = this.missionList.getMission(key);
-		System.out.println("Mission set to: "+key);
+	public void setMission(JSONObject configuration) throws Exception {
+		this.selectedMission = MissionList.getMission(configuration);
+		
 	}
 	
 	@Override
@@ -45,6 +44,7 @@ public class Mission extends Dungeon {
 	
 	@Override
 	protected void state1() throws InterruptedException, AWTException {
+		System.out.println("Current mission: "+this.selectedMission);
 		this.customRobot.mouseClick(this.selectedMission.x, this.selectedMission.y);
 		this.state++;
 		this.customRobot.sleep(1000);
