@@ -26,10 +26,20 @@ public class Raid extends Dungeon {
 		);
 	}
 	
+	@Override
+	protected void updateEnabledStatus(JSONObject configuration) {
+		this.enabled = configuration.getJSONObject("stack").getBoolean("raid");
+	}
+	
 	@Override 
-	public void updateCoords(JSONObject configuration) {
+	protected void updateCoords(JSONObject configuration) {
 		super.updateCoords(configuration);
 		this.setRaidCoords();
+	}
+	
+	public void updateConfiguration(JSONObject configuration) {
+		this.updateCoords(configuration);
+		this.updateEnabledStatus(configuration);
 	}
 	
 	@Override

@@ -23,13 +23,14 @@ public class AsyncBot {
 	}
 	
 	public void run() {
+		if(this.thread != null && this.thread.isAlive()) {
+			this.thread.interrupt();
+		}
 		this.thread = new Thread(new Runnable() {
 	        public void run(){
 	        	try {
 	        		System.out.println("Setting configuration...");
-	        		BitHeroesBot.getInstance().setConfiguration(configuration);
-	        		System.out.println("Updating configuration...");
-	        		BitHeroesBot.getInstance().updateBotConfiguration();
+	        		BitHeroesBot.getInstance().updateBotConfiguration(configuration);
 	        		System.out.println("Running bot...");
 					BitHeroesBot.getInstance().run();
 				} catch (Exception e) {
@@ -42,8 +43,10 @@ public class AsyncBot {
 	}
 	
 	public void interrupt() {
-		if(this.isAlive()) {
+		try {
 			thread.interrupt();
+		}catch(Exception e) {
+			//...
 		}
 	}
 	

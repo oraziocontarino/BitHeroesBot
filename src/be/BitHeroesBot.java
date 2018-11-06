@@ -14,15 +14,13 @@ public class BitHeroesBot {
 	private Mission mission;
 	private Raid raid;
 	private boolean running;
-	private JSONObject configuration;
 	
 	private LogsManager logs;
 
 	private BitHeroesBot() throws AWTException, InterruptedException {
-		//TODO: set mission
+
 		this.mission = new Mission();
 		
-		//TODO: set raid
 		this.raid = new Raid();
 		
 		this.logs = new LogsManager();
@@ -37,37 +35,32 @@ public class BitHeroesBot {
 		return instance;
 	}
 
-	public void updateBotConfiguration() throws Exception {
-		raid.updateCoords(this.configuration);
-		mission.updateCoords(this.configuration);
-		mission.setMission(this.configuration);
-	}
-	public void setConfiguration(JSONObject configuration) {
-		this.configuration = configuration;
-	}
-	public JSONObject getConfiguration() {
-		return this.configuration;
+	public void updateBotConfiguration(JSONObject configuration) throws Exception {
+		raid.updateConfiguration(configuration);
+		mission.updateConfiguration(configuration);
 	}
 	
 	public void run() throws InterruptedException, AWTException {
 		//CustomRobot.getInstance().detectGamePoistion();
 		running = true;
 		while(running) {
-			System.out.println("starting raid");
+			System.out.println("Starting raid");
 			logs.update(LogsManager.RUNNING, LogsManager.RAID, LogsManager.MISSION);
-			//raid.start(false);
+			raid.start(false);
 			if(!running) {
 				System.out.println("Exit raid");
 				break;
 			}
+			System.out.println("Raid finished");
 			
-			System.out.println("starting mission");
+			System.out.println("Starting mission");
 			logs.update(LogsManager.RUNNING, LogsManager.MISSION, LogsManager.RAID);
 			mission.start(false);
 			if(!running) {
 				System.out.println("Exit mission");
 				break;
 			}
+			System.out.println("Mission finished");
 
 			System.out.println("Waiting 10 minutes...");
 			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);

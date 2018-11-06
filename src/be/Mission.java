@@ -23,16 +23,31 @@ public class Mission extends Dungeon {
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
 	}
+
+	@Override
+	protected void updateEnabledStatus(JSONObject configuration) {
+		this.enabled = configuration.getJSONObject("stack").getBoolean("mission");
+	}
 	
 	@Override 
-	public void updateCoords(JSONObject configuration) {
+	protected void updateCoords(JSONObject configuration) {
 		super.updateCoords(configuration);
 		this.setMissionCoords();
 	}
 
-	public void setMission(JSONObject configuration) throws Exception {
+	private void setMission(JSONObject configuration) throws Exception {
 		this.selectedMission = MissionList.getMission(configuration);
-		
+	}
+	
+	@Override
+	public void updateConfiguration(JSONObject configuration) {
+		try {
+			this.updateCoords(configuration);
+			this.setMission(configuration);
+			this.updateEnabledStatus(configuration);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
@@ -95,5 +110,6 @@ public class Mission extends Dungeon {
 			break;
 		}
 	}
+
 
 }

@@ -35,7 +35,7 @@ class BitHeroesGlobal {
 		stepStartTime = 0;
 	}
 	
-	public void updateCoords(JSONObject configuration) {
+	protected void updateCoords(JSONObject configuration) {
 		this.topLeftCorner = Utils.getGaneTopLeftCorner(configuration);
 		
 		this.bottomRightCorner = Utils.getGameBottomRightCorner(configuration);

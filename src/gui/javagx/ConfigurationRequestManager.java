@@ -28,12 +28,6 @@ public class ConfigurationRequestManager {
 			case SET_COORDS:
 				setCoords(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
-			case SET_MISSION:
-				setMission(engine, node.getJSONObject(PAYLOAD_FIELD));
-			break;
-			case SET_RAID:
-				setRaid(engine, node.getJSONObject(PAYLOAD_FIELD));
-			break;
 			case START_BOT:
 				startBot(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
@@ -88,32 +82,6 @@ public class ConfigurationRequestManager {
     	this.runScript(engine, SET_COORDS, response.toString());
 	}
 
-	public void setMission(WebEngine engine, JSONObject payload) {
-    	System.out.println("Action: "+SET_MISSION);
-    	System.out.println("Payload: "+payload.toString());
-    	//TODO: set given mission from configuration to bot
-    	String key = payload.getString("selectedMission");
-    	JSONObject selectedMissionNode = Utils.getSelectedMissionConfigurationNode(key, key);
-    	JSONObject configuration = payload.getJSONObject("configuration").put("selectedMission", selectedMissionNode);
-    	AsyncBot.getInstance().setConfiguration(configuration);
-    	this.runScript(engine, SET_MISSION, configuration.toString());
-	}
-	
-	public void setRaid(WebEngine engine, JSONObject payload) {
-    	System.out.println("Action: "+SET_RAID);
-    	System.out.println("Payload: "+payload.toString());
-    	//TODO: set given raid from configuration to bot
-    	
-		JSONObject selectedRaid = new JSONObject();
-		selectedRaid.put("id", payload.getString("selectedRaid"));
-		selectedRaid.put("label", payload.getString("selectedRaid"));
-		
-		JSONObject response = new JSONObject();
-		response.put("error", false);
-		response.put("selectedRaid", selectedRaid);
-    	this.runScript(engine, SET_RAID, response.toString());
-	}
-	
 	public void startBot(WebEngine engine, JSONObject payload) {
 		System.out.println("Action: "+START_BOT);
     	System.out.println("Payload: "+payload.toString());

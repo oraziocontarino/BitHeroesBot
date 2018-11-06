@@ -24,9 +24,16 @@ function updateCheckedActions(key, value){
 
 function setConfigData(data){
 	//TAB - Main
-	$.each(data.selectedActions, function(key){
-		$('.bot-action-checkbox.'+key+"-checked").removeClass("hidden");
-	});
+	if(data.stack.mission == true){
+		$('.bot-action-checkbox.mission-checked').removeClass("hidden");
+	}else{
+		$('.bot-action-checkbox.mission-unchecked').removeClass("hidden");
+	}
+	if(data.stack.raid == true){
+		$('.bot-action-checkbox.raid-checked').removeClass("hidden");
+	}else{
+		$('.bot-action-checkbox.raid-unchecked').removeClass("hidden");
+	}
 	
 	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
@@ -53,8 +60,7 @@ function hideBitHeroesBotPanelWarning(){
 
 $(document).ready(function(){
 	setBusy(true);
-	//TODO: REMOVE AFTER DEBUG
-	localStorage.removeItem("configuration");
+	//localStorage.removeItem("configuration");
 	getDefaultConfiguration().promise.then(function(data){
 		configuration = defaultConfiguration = JSON.parse(data);
 		if(localStorage.getItem("configuration") == null){
@@ -63,7 +69,6 @@ $(document).ready(function(){
 		loadConfig();
 		setBusy(false);
 	});
-
 	$('.navbar-primary-menu a').click(function(e) {
 		$('.navbar-primary-menu a.active').removeClass('active');
 		$(this).addClass('active');
@@ -97,36 +102,24 @@ $(document).ready(function(){
 			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
-		setBusy(true);
-		setTimeout(function(){
-			selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
-			setMission(selectedMission).promise.then(function(data){
-				configuration = JSON.parse(data);
-				localStorage.setItem("configuration", data);
-				loadConfig();
-				setBusy(false);
-			});
-		}, 1000);
+		selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
+		configuration.selectedMission.id=selectedMission;
+		configuration.selectedMission.label=selectedMission;
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		loadConfig();
 	});
 	
 	$('.updateRaid').click(function(e) {
-		var selectedRaid = $('.setRaid').val();
+		var selectedRaid = $('.setRaid').val().toUpperCase();
 		if(selectedRaid == ""){
 			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
 
-		setBusy(true);
-		setTimeout(function(){
-			setRaid(selectedRaid).promise.then(function(data){
-				var data = JSON.parse(data);
-				configuration.error.raid = data.error;
-				configuration.selectedRaid = data.selectedRaid;  
-				localStorage.setItem("configuration", JSON.stringify(configuration));
-				loadConfig();
-				setBusy(false);
-			});
-		}, 1000);
+		configuration.selectedRaid.id=selectedRaid;
+		configuration.selectedRaid.label=selectedRaid;
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		loadConfig();
 	});
 
 	$('.startBot').click(function(e) {
@@ -136,17 +129,17 @@ $(document).ready(function(){
 		}
 		
 		//TODO: Disable side menu
+		sendJavaMessage("test", JSON.stringify(configuration));
+		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
-		setTimeout(function(){
-			startBot(configuration).promise.then(function(data){
-				//Enable stop button
-				$(".launcher.stopBot").removeClass("hidden");
-				if(!$(".launcher.stopBot").hasClass("hidden")){
-					$(".launcher.startBot").addClass("hidden");
-				}
-				setBusy(false);
-			});
-		}, 1000);
+		startBot(configuration).promise.then(function(data){
+			//Enable stop button
+			$(".launcher.stopBot").removeClass("hidden");
+			if(!$(".launcher.stopBot").hasClass("hidden")){
+				$(".launcher.startBot").addClass("hidden");
+			}
+			setBusy(false);
+		});
 
 	});
 
@@ -158,41 +151,38 @@ $(document).ready(function(){
 		
 		//TODO: Disable side menu
 		setBusy(true);
-		setTimeout(function(){
-			stopBot().promise.then(function(data){
-				//Enable start button
-				$(".launcher.startBot").removeClass("hidden");
-				if(!$(".launcher.stopBot").hasClass("hidden")){
-					$(".launcher.stopBot").addClass("hidden");
-				}
-				setBusy(false);
-			});
-		}, 1000);
+		stopBot().promise.then(function(data){
+			//Enable start button
+			$(".launcher.startBot").removeClass("hidden");
+			if(!$(".launcher.stopBot").hasClass("hidden")){
+				$(".launcher.stopBot").addClass("hidden");
+			}
+			setBusy(false);
+		});
 	});
 
 	$('.bot-action-checkbox').click(function(e) {
 		//setBusy(true);
-		var key = $(this).attr('value');
-		var value = $(this).prop('checked');
-		updateCheckedActions(key, value);
-		//TODO: stop bot or live?!
-		//setTimeout(function(){ setStopBotMessage(configuration); }, 1000);
+		var stack = { missionSelector: null, raidSelector: null};
+		stack.missionSelector = $('.bot-action-checkbox.mission-checked').hasClass('hidden') ? '.bot-action-checkbox.mission-unchecked' : '.bot-action-checkbox.mission-checked';
+		stack.raidSelector = $('.bot-action-checkbox.raid-checked').hasClass('hidden') ? '.bot-action-checkbox.raid-unchecked' : '.bot-action-checkbox.raid-checked'; 
+		configuration.stack.mission = $(stack.missionSelector).prop('checked');
+		configuration.stack.raid = $(stack.raidSelector).prop('checked');
+		localStorage.setItem("configuration", JSON.stringify(configuration));
 	});
 	
 	$('.clearConfiguration').click(function(e) {
 		setBusy(true);
-		setTimeout(function(){
-			stopBot(configuration).promise.then(function(data){
-				//Enable start button
-				$(".launcher.startBot").removeClass("hidden");
-				if(!$(".launcher.stopBot").hasClass("hidden")){
-					$(".launcher.stopBot").addClass("hidden");
-				}
-				updateConfiguration(defaultConfiguration);
-				location.reload();
-				setBusy(false);
-			});
-		}, 1000);
+		stopBot(configuration).promise.then(function(data){
+			//Enable start button
+			$(".launcher.startBot").removeClass("hidden");
+			if(!$(".launcher.stopBot").hasClass("hidden")){
+				$(".launcher.stopBot").addClass("hidden");
+			}
+			updateConfiguration(defaultConfiguration);
+			location.reload();
+			setBusy(false);
+		});
 	});
 	
 	

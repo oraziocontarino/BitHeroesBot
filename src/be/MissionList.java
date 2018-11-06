@@ -53,18 +53,31 @@ public class MissionList {
 			case "Z3D4":
 				percentage.setSize(0.75, 0.30);
 			break;
-			//TODO: set coords from Z4D1 to XXXX
+
 			case "Z4D1":
-				percentage.setSize(0.0, 0.0);
+				percentage.setSize(0.40, 0.80);
 			break;
 			case "Z4D2":
-				percentage.setSize(0.0, 0.0);
+				percentage.setSize(0.35, 0.40);
 			break;
 			case "Z4D3":
-				percentage.setSize(0.0, 0.0);
+				percentage.setSize(0.80, 0.40);
 			break;
 			case "Z4D4":
-				percentage.setSize(0.0, 0.0);
+				percentage.setSize(0.50, 0.50);
+			break;
+
+			case "Z5D1":
+				percentage.setSize(0.20, 0.40);
+			break;
+			case "Z5D2":
+				percentage.setSize(0.50, 0.77);
+			break;
+			case "Z5D3":
+				percentage.setSize(0.80, 0.43);
+			break;
+			case "Z5D4":
+				percentage.setSize(0.70, 0.25);
 			break;
 			default:
 				percentage = null;

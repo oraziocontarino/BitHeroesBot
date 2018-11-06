@@ -18,6 +18,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected Point refuseExitDungeon;
 	protected boolean firstRun;
 	protected boolean running;
+	protected boolean enabled;
 	
 	protected Dungeon() throws AWTException {
 		super();
@@ -33,9 +34,11 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.setDungeonCoords();
 		
 	}
+	protected abstract void updateConfiguration(JSONObject configuration);
 	protected abstract void state0() throws InterruptedException, AWTException;
 	protected abstract void state1() throws InterruptedException, AWTException;
 	
+	protected abstract void updateEnabledStatus(JSONObject configuration);
 	private void setDungeonCoords() {
 		this.eroicoButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.75)),
@@ -63,7 +66,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	}
 	
 	@Override 
-	public void updateCoords(JSONObject configuration) {
+	protected void updateCoords(JSONObject configuration) {
 		super.updateCoords(configuration);
 		this.setDungeonCoords();
 	}
@@ -158,6 +161,9 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected abstract void main() throws InterruptedException, AWTException;
 
 	public void start(boolean loop) throws InterruptedException, AWTException {
+		if(!this.enabled) {
+			return;
+		}
 		this.firstRun = true;
 		this.customRobot.sleep(1000);
 		this.restartGame();

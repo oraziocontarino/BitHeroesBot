@@ -23,22 +23,6 @@ function setCoords(){
 	return getPromise(ENDPOINTS.SET_COORDS, payload);
 }
 
-function setMission(selectedMission){
-	var payload = {
-			configuration: configuration,
-			selectedMission: selectedMission
-	}
-	return getPromise(ENDPOINTS.SET_MISSION, payload);
-}
-
-function setRaid(selectedRaid){
-	var payload = {
-			configuration: configuration,
-			selectedRaid: selectedRaid
-	}
-	return getPromise(ENDPOINTS.SET_RAID, payload);
-}
-
 function startBot(configuration){
 	var payload = {
 			configuration: configuration
@@ -99,5 +83,6 @@ function sendJavaMessage(action, payload){
 		payload: payload
 	}
 	alert(JSON.stringify(message));
+	//console.log(JSON.stringify(message));
 }
 

@@ -48,6 +48,7 @@ public class KeyBindingManager  implements NativeKeyListener {
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
 			try {
 				//Stop bot
+				//TODO: remove stop, set status to in 'tobestopped'
 				BitHeroesBot.getInstance().stop();
 				//Stop thread
 				AsyncBot.getInstance().interrupt();

@@ -49,4 +49,4 @@ public class BaseJump extends Application {
 		System.out.println(applicationPagePath);
 		launch(args); 
 	}
-}
+}	
