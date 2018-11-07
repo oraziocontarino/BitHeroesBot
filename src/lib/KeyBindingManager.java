@@ -1,19 +1,22 @@
 package lib;
 
 import java.awt.AWTException;
+
 import java.util.logging.LogManager;
 
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
+import org.jnativehook.SwingDispatchService;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
 
 import be.BitHeroesBot;
 import gui.javagx.AsyncBot;
-
+import gui.javagx.BaseJump;
+@SuppressWarnings("restriction")
 public class KeyBindingManager  implements NativeKeyListener {
 	private static KeyBindingManager instance;
-	
+	private BaseJump application;
 	private KeyBindingManager() {
 		initKeyBinding();
 	}
@@ -26,10 +29,14 @@ public class KeyBindingManager  implements NativeKeyListener {
 	}
 	
 	/* KEY EVENTS */
+    public void setApplication(BaseJump application) {
+    	this.application = application;
+    }
     
 	private void initKeyBinding() {
 		try {
 			LogManager.getLogManager().reset();
+			GlobalScreen.setEventDispatcher(new SwingDispatchService());
 			GlobalScreen.registerNativeHook();
 		}
 		catch (NativeHookException ex) {
@@ -41,20 +48,16 @@ public class KeyBindingManager  implements NativeKeyListener {
 		GlobalScreen.addNativeKeyListener(this);
 	}
 
+	
 	@Override
 	public void nativeKeyPressed(NativeKeyEvent e) {
 		//System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
-			try {
-				//Stop bot
-				//TODO: remove stop, set status to in 'tobestopped'
-				BitHeroesBot.getInstance().stop();
-				//Stop thread
-				AsyncBot.getInstance().interrupt();
+			if(this.application != null) {
+				application.executeStopTask();
+				//TODO: unregister on app close
 				//GlobalScreen.unregisterNativeHook();
-			} catch (AWTException | InterruptedException ex) {
-				ex.printStackTrace();
 			}
 		}
 	}

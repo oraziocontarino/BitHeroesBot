@@ -57,7 +57,23 @@ function hideBitHeroesBotPanelWarning(){
 	$(".bit-heroes-bot-warning").addClass("hidden");
 }
 
-
+function stopBotTask(){
+	if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
+		showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
+		return;
+	}
+	
+	//TODO: Disable side menu
+	setBusy(true);
+	stopBot().promise.then(function(data){
+		//Enable start button
+		$(".launcher.startBot").removeClass("hidden");
+		if(!$(".launcher.stopBot").hasClass("hidden")){
+			$(".launcher.stopBot").addClass("hidden");
+		}
+		setBusy(false);
+	});
+}
 $(document).ready(function(){
 	setBusy(true);
 	//localStorage.removeItem("configuration");
@@ -144,21 +160,7 @@ $(document).ready(function(){
 	});
 
 	$('.stopBot').click(function(e) {
-		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
-			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
-			return;
-		}
-		
-		//TODO: Disable side menu
-		setBusy(true);
-		stopBot().promise.then(function(data){
-			//Enable start button
-			$(".launcher.startBot").removeClass("hidden");
-			if(!$(".launcher.stopBot").hasClass("hidden")){
-				$(".launcher.stopBot").addClass("hidden");
-			}
-			setBusy(false);
-		});
+		stopBotTask();
 	});
 
 	$('.bot-action-checkbox').click(function(e) {

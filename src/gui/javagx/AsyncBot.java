@@ -44,6 +44,7 @@ public class AsyncBot {
 	
 	public void interrupt() {
 		try {
+			BitHeroesBot.getInstance().stop();
 			thread.interrupt();
 		}catch(Exception e) {
 			//...
