@@ -5,7 +5,8 @@ var ENDPOINTS = {
 	"START_BOT": "START_BOT",
 	"STOP_BOT": "STOP_BOT",
 	"GET_LOGS": "GET_LOGS",
-	"GET_DEFAULT_CONFIGURATION": "GET_DEFAULT_CONFIGURATION"	
+	"GET_DEFAULT_CONFIGURATION": "GET_DEFAULT_CONFIGURATION",
+	"TEST": "TEST"
 }
 
 var REQUESTS = {
@@ -16,6 +17,14 @@ var REQUESTS = {
 	"STOP_BOT": null,
 	"GET_LOGS": null,
 	"GET_DEFAULT_CONFIGURATION": null,
+	"TEST": null,
+}
+
+function test(){
+	var payload = {
+			configuration: configuration
+	}
+	return getPromise(ENDPOINTS.TEST, payload);
 }
 
 function setCoords(){

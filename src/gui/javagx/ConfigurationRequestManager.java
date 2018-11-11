@@ -20,6 +20,7 @@ public class ConfigurationRequestManager {
 	public static final String STOP_BOT = "STOP_BOT";
 	public static final String GET_LOGS = "GET_LOGS";
 	public static final String GET_DEFAULT_CONFIGURATION = "GET_DEFAULT_CONFIGURATION";
+	public static final String TEST = "TEST";
 
 	public void handleRequest(WebEngine engine, String request) {
 		System.out.println("Request: "+request);
@@ -40,11 +41,16 @@ public class ConfigurationRequestManager {
 			case GET_DEFAULT_CONFIGURATION:
 				getDefaultConfiguration(engine, node.getJSONObject(PAYLOAD_FIELD));
 			break;
+			case TEST:
+				test(engine, node.getJSONObject(PAYLOAD_FIELD));
+			break;
 			default:
 				System.out.println("Unknown request: "+request);
     	}
 	}
-	
+	public void test(WebEngine engine, JSONObject payload) {
+		
+	}
 	public void setCoords(WebEngine engine, JSONObject payload) {
 		JSONObject topLeft = new JSONObject();
 		JSONObject bottomRight = new JSONObject();

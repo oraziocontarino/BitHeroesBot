@@ -62,8 +62,7 @@ function stopBotTask(){
 		showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
 		return;
 	}
-	
-	//TODO: Disable side menu
+
 	setBusy(true);
 	stopBot().promise.then(function(data){
 		//Enable start button
@@ -84,6 +83,7 @@ $(document).ready(function(){
 		}
 		loadConfig();
 		setBusy(false);
+		//sendJavaMessage("test", configuration);
 	});
 	$('.navbar-primary-menu a').click(function(e) {
 		$('.navbar-primary-menu a.active').removeClass('active');
@@ -92,7 +92,9 @@ $(document).ready(function(){
 		$(".main-content."+$(this).attr("tab")).removeClass('hidden');
 		//sendJavaMessage("test", "123stella");
 	});
-
+	$('#test_btn').click(function(e){
+		test();
+	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);
 		setTimeout(function(){
@@ -115,7 +117,6 @@ $(document).ready(function(){
 		};
 		
 		if(selectedMission.zone == "" || selectedMission.dungeon == ""){
-			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
 		selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
@@ -128,7 +129,6 @@ $(document).ready(function(){
 	$('.updateRaid').click(function(e) {
 		var selectedRaid = $('.setRaid').val().toUpperCase();
 		if(selectedRaid == ""){
-			//TODO: implement setXxxWarning, eg: showBitHeroesBotPanelWarning("banana");
 			return;
 		}
 
@@ -144,8 +144,7 @@ $(document).ready(function(){
 			return;
 		}
 		
-		//TODO: Disable side menu
-		sendJavaMessage("test", JSON.stringify(configuration));
+		//sendJavaMessage("test", JSON.stringify(configuration));
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
 		startBot(configuration).promise.then(function(data){

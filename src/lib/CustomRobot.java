@@ -18,7 +18,7 @@ public class CustomRobot extends Robot{
 	  
 	private CustomRobot() throws AWTException {
 		super();
-		KeyBindingManager.getInstance();
+		//KeyBindingManager.getInstance();
 		
 	}
     
@@ -32,8 +32,18 @@ public class CustomRobot extends Robot{
 	public void getMousePosition() {
     	Point pos = MouseInfo.getPointerInfo().getLocation();
     	Color pixel = this.getPixelColor((int) pos.getX(), (int) pos.getY());
-    	System.out.println("["+pos.getX()+":"+pos.getY()+"] - ["+pixel.getRed()+":"+pixel.getGreen()+":"+pixel.getBlue()+"]");
+    	System.out.println(""
+    			+"["
+    				+pos.getX()+":"+pos.getY()
+    			+"] - ["
+    				+pixel.getRed()+":"+pixel.getGreen()+":"+pixel.getBlue()
+    			+"]"
+    	);
     }
+	public Color getColor(Point pos) {
+    	Color pixel = this.getPixelColor((int) pos.getX(), (int) pos.getY());
+    	return pixel;
+	}
 
     public void mouseClick(int x, int y) throws InterruptedException {
     	this.mouseMove(x, y);

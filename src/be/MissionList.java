@@ -97,7 +97,7 @@ public class MissionList {
 		if(percentage == null) {
 			throw new Exception("INVALID MISSION KEY!");
 		}
-		Point topLeftCorner = Utils.getGaneTopLeftCorner(configuration);
+		Point topLeftCorner = Utils.getGameTopLeftCorner(configuration);
 		Point bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
 		int width = Utils.getGameWidth(bottomRightCorner, topLeftCorner);
 		int height = Utils.getGameHeight(bottomRightCorner, topLeftCorner);
@@ -109,4 +109,8 @@ public class MissionList {
 		);
 	}
 	
+	public static String getZone(JSONObject configuration) throws Exception{
+		String key = configuration.getJSONObject("selectedMission").getString("id");
+		return key.trim().toUpperCase().split("D")[0];
+	}
 }

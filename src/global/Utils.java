@@ -7,13 +7,39 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import org.json.JSONObject;
 
 import lib.CustomRobot;
 
 public class Utils {
-    
+	
+	public static boolean checkFeature(JSONObject configuration, float xFeaturePercentage, float yFeaturePercentage, Color targetFeaturePercentage) {
+		boolean success = false;
+		try {
+			Point topLeftCorner = Utils.getGameTopLeftCorner(configuration);
+			Point bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
+			int width = Utils.getGameWidth(bottomRightCorner, topLeftCorner);
+			int height = Utils.getGameHeight(bottomRightCorner, topLeftCorner);
+			
+			Point position = new Point (
+					(int) (topLeftCorner.x + (width*xFeaturePercentage)),
+					(int) (topLeftCorner.y + (height*yFeaturePercentage))
+			);
+	
+				Color pixel = CustomRobot.getInstance().getColor(position);
+				success = CustomRobot.getInstance().comparePixel(pixel, targetFeaturePercentage, 0);
+			} catch (AWTException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+				success = false;
+			}
+		return success;
+	}
+	
     public static Point[] detectGamePoistion() throws AWTException{
         System.out.println("Loading game position...");
     	Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -168,7 +194,7 @@ public class Utils {
 		.put("label", label)
 		.put("id", id);
     }
-    public static Point getGaneTopLeftCorner(JSONObject configuration) {
+    public static Point getGameTopLeftCorner(JSONObject configuration) {
     	return new Point(
 				configuration.getJSONObject("topLeft").getInt("x"), 
 				configuration.getJSONObject("topLeft").getInt("y")

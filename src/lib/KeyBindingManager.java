@@ -56,8 +56,6 @@ public class KeyBindingManager  implements NativeKeyListener {
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
 			if(this.application != null) {
 				application.executeStopTask();
-				//TODO: unregister on app close
-				//GlobalScreen.unregisterNativeHook();
 			}
 		}
 	}

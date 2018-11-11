@@ -1,8 +1,11 @@
 package global;
 
+import java.awt.Color;
+
 public class GameDimension {
 	private double width;
 	private double height;
+	private Color color;
 	
 	public double getWidth() {
 		return width;
@@ -22,4 +25,10 @@ public class GameDimension {
 		this.height = height;
 	}
 	
+	public Color getColor() {
+		return color;
+	}
+	public void setColor(Color color) {
+		this.color = color;
+	}
 }

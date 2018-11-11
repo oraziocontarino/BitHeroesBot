@@ -2,28 +2,52 @@ package be;
 
 import java.awt.AWTException;
 import java.awt.Point;
-
 import org.json.JSONObject;
-
-import global.Utils;
 
 public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
+	private String selectedZone;
+	private Point backZoneButton;
+	private Point nextZoneButton;
 	
 	public Mission() throws AWTException{
 		super();
 		this.missionButton = new Point();
+		this.selectedMission = new Point();
+		this.backZoneButton = new Point();
+		this.nextZoneButton = new Point();
 		this.setMissionCoords();
 	}
 	
 	private void setMissionCoords() {
-		this.missionButton = new Point (
+		if(this.missionButton == null) {
+			this.missionButton = new Point();
+		}
+		if(this.selectedMission == null) {
+			this.selectedMission = new Point();
+		}
+		if(this.backZoneButton == null) {
+			this.backZoneButton = new Point();
+		}
+		if(this.nextZoneButton == null) {
+			this.nextZoneButton = new Point();
+		}
+		this.missionButton.setLocation(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
+		this.backZoneButton.setLocation(
+				(int) (this.topLeftCorner.x + (this.width*0.07)),
+				(int) (this.topLeftCorner.y + (this.height*0.53))
+		);
+		this.nextZoneButton.setLocation(
+				(int) (this.topLeftCorner.x + (this.width*0.92)),
+				(int) (this.topLeftCorner.y + (this.height*0.53))
+		);
+		
 	}
-
+    
 	@Override
 	protected void updateEnabledStatus(JSONObject configuration) {
 		this.enabled = configuration.getJSONObject("stack").getBoolean("mission");
@@ -37,6 +61,7 @@ public class Mission extends Dungeon {
 
 	private void setMission(JSONObject configuration) throws Exception {
 		this.selectedMission = MissionList.getMission(configuration);
+		this.selectedZone = MissionList.getZone(configuration);
 	}
 	
 	@Override
@@ -54,7 +79,17 @@ public class Mission extends Dungeon {
 	protected void state0() throws InterruptedException, AWTException {
 		this.customRobot.mouseClick(this.missionButton.x, this.missionButton.y);
 		this.state++;
-		this.customRobot.sleep(1000);
+		this.customRobot.sleep(500);
+		for(int i = 0; i < 10; i++) {
+			this.customRobot.mouseClick(this.backZoneButton.x, this.backZoneButton.y);
+			this.customRobot.sleep(500);
+		}
+		String tmp = this.selectedZone.split("Z")[1];
+		int index = Integer.valueOf(tmp);
+		for(int i = 0; i < index-1; i++) {
+			this.customRobot.mouseClick(this.nextZoneButton.x, this.nextZoneButton.y);
+			this.customRobot.sleep(500);
+		}
 	}
 	
 	@Override
@@ -111,5 +146,5 @@ public class Mission extends Dungeon {
 		}
 	}
 
-
+	
 }

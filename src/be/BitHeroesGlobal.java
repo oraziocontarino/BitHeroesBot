@@ -36,7 +36,7 @@ class BitHeroesGlobal {
 	}
 	
 	protected void updateCoords(JSONObject configuration) {
-		this.topLeftCorner = Utils.getGaneTopLeftCorner(configuration);
+		this.topLeftCorner = Utils.getGameTopLeftCorner(configuration);
 		
 		this.bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
 		

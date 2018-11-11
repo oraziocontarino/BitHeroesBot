@@ -16,7 +16,8 @@ public class BitHeroesBot {
 	private boolean running;
 	
 	private LogsManager logs;
-
+	private final static int WAIT_TIME = 0;
+	//private final static int WAIT_TIME = 10*60*1000;
 	private BitHeroesBot() throws AWTException, InterruptedException {
 
 		this.mission = new Mission();
@@ -61,12 +62,14 @@ public class BitHeroesBot {
 				break;
 			}
 			System.out.println("Mission finished");
-
+			
 			System.out.println("Waiting 10 minutes...");
 			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);
-			CustomRobot.getInstance().sleep(10*60*1000);
+			CustomRobot.getInstance().sleep(WAIT_TIME);
 		}
 		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
+		raid.reset();
+		mission.reset();
 		System.out.println("THREAD DIED!");
 	}
 	

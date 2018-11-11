@@ -17,7 +17,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected CustomRobot customRobot;
 	protected Point refuseExitDungeon;
 	protected boolean firstRun;
-	protected boolean running;
+	protected int running;
 	protected boolean enabled;
 	
 	protected Dungeon() throws AWTException {
@@ -32,6 +32,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.refuseButtonColor = new Color(244, 141, 53);
 		
 		this.setDungeonCoords();
+		this.reset();
 		
 	}
 	protected abstract void updateConfiguration(JSONObject configuration);
@@ -107,7 +108,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.customRobot.sleep(500);
 
 		while(autoDisabled && currentTry < maxTries) {
-			if(!this.running) {
+			if(this.running <= 0) {
 				return true;
 			}
 			if(this.customRobot.pixelSearch(this.autoBox[0].x, this.autoBox[0].y, this.autoBox[1].x, this.autoBox[1].y, this.autoBoxEnabledColor, 10) != null) {
@@ -167,8 +168,8 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.firstRun = true;
 		this.customRobot.sleep(1000);
 		this.restartGame();
-		this.running = true;
-		while(running) {
+		this.running +=1;
+		while(this.running > 0) {
 			if(this.stopDungeon(loop)) {
 				return;
 			}
@@ -177,8 +178,10 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	}
 	
 	public void stop() {
-		System.out.println("Dungeon stop!");
-		this.running = false;
+		this.running =- 10;
+	}
+	public void reset() {
+		this.running = 0;
 	}
 }
 

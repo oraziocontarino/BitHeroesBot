@@ -3,6 +3,9 @@ package gui.javagx;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import org.jnativehook.GlobalScreen;
+import org.jnativehook.NativeHookException;
+
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.layout.VBox;
@@ -43,7 +46,14 @@ public class BaseJump extends Application {
 		stage.setMaxWidth(800);
 		stage.setMinWidth(800);
 		stage.setResizable(false);
-		stage.setOnCloseRequest(event -> System.exit(0));
+		stage.setOnCloseRequest(event -> {
+			try {
+				GlobalScreen.unregisterNativeHook();
+			} catch (NativeHookException e) {
+				e.printStackTrace();
+			}
+			System.exit(0);
+		});
 		stage.show();		
 		KeyBindingManager.getInstance().setApplication(this);
 	}	
@@ -58,16 +68,16 @@ public class BaseJump extends Application {
 		testTask = new StopBotTask();
 
 		testTask.setOnRunning((succeesesEvent) -> {
-			System.out.println("RUNNING");
+			//...
 		});
 
 		testTask.setOnSucceeded((succeededEvent) -> {
-			//System.out.println("FINISHED: " + testTask.getValue());
 			engine.executeScript("stopBotTask()");
-			//TODO: fix force close, may ignore hotkey, ignoring force stop request.
 		});
 		this.executorService = Executors.newFixedThreadPool(1);
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}
+	//TODO: bug update raid multiple checkboxes
+	//TODO: handle bot change boss for raid selection
 }
