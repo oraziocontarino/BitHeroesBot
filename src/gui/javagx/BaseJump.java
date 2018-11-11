@@ -79,5 +79,5 @@ public class BaseJump extends Application {
 		this.executorService.shutdown();
 	}
 	//TODO: bug update raid multiple checkboxes
-	//TODO: handle bot change boss for raid selection
+	//TODO: implement Test function in utils to select raid, it works!
 }

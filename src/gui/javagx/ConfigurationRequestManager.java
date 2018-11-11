@@ -49,7 +49,7 @@ public class ConfigurationRequestManager {
     	}
 	}
 	public void test(WebEngine engine, JSONObject payload) {
-		
+		Utils.test(payload.getJSONObject("configuration"));
 	}
 	public void setCoords(WebEngine engine, JSONObject payload) {
 		JSONObject topLeft = new JSONObject();
