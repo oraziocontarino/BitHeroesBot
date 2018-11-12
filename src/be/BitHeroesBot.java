@@ -50,8 +50,10 @@ public class BitHeroesBot {
 			raid.start(false);
 			if(!running) {
 				System.out.println("Exit raid");
+				raid.reset();
 				break;
 			}
+			raid.reset();
 			System.out.println("Raid finished");
 			
 			System.out.println("Starting mission");
@@ -59,11 +61,13 @@ public class BitHeroesBot {
 			mission.start(false);
 			if(!running) {
 				System.out.println("Exit mission");
+				mission.reset();
 				break;
 			}
+			mission.reset();
 			System.out.println("Mission finished");
 			
-			System.out.println("Waiting 10 minutes...");
+			System.out.println("Waiting "+(WAIT_TIME/60000)+" minutes...");
 			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);
 			CustomRobot.getInstance().sleep(WAIT_TIME);
 		}

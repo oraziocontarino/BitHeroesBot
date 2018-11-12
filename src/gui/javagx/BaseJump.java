@@ -23,30 +23,55 @@ public class BaseJump extends Application {
 	private StopBotTask testTask;
 	private ExecutorService executorService;
 	private WebEngine engine;
+	private JavaBridge bridge;
+	private JSObject window;
+	private WebView webview;
+	private Stage stage;
+	private Scene scene;
+	
+	public static void main(String[] args) {
+		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
+		System.out.println(applicationPagePath);
+		launch(args);
+	}
+	
 	@Override
 	public void start(Stage stage) throws Exception {
-		final WebView webview = new WebView();
 		KeyBindingManager.getInstance().setApplication(this);
-		webview.setMaxHeight(700);
-		webview.setMinHeight(700);
-		webview.setMaxWidth(800);
-		webview.setMinWidth(800);
+		this.stage = stage;
+		this.webview = new WebView();
+		this.bridge = new JavaBridge(engine);
+		this.engine = this.webview.getEngine();
+		this.window = (JSObject) this.engine.executeScript("window");
+		this.initJavascriptBridges();
+		this.engine.load(this.applicationPagePath);
+		this.initWebview();
+	}	
+	
+	private void initWebview() {
+		this.webview.setMaxHeight(700);
+		this.webview.setMinHeight(700);
+		this.webview.setMaxWidth(800);
+		this.webview.setMinWidth(800);
+		this.initScene();
+	}
+	
+	private void initScene() {
 		VBox layout = new VBox();
-		layout.getChildren().addAll(webview);
-
-		engine = webview.getEngine();
-		initJavascriptBridges();
-		engine.load(applicationPagePath);
-		
-		Scene scene = new Scene(layout);
+		layout.getChildren().addAll(this.webview);
+		this.scene = new Scene(layout);
+		this.initStage();
+	}
+	
+	private void initStage() {
 		// stage.initStyle(StageStyle.UNDECORATED);
-		stage.setScene(scene);
-		stage.setMaxHeight(700);
-		stage.setMinHeight(700);
-		stage.setMaxWidth(800);
-		stage.setMinWidth(800);
-		stage.setResizable(false);
-		stage.setOnCloseRequest(event -> {
+		this.stage.setScene(scene);
+		this.stage.setMaxHeight(700);
+		this.stage.setMinHeight(700);
+		this.stage.setMaxWidth(800);
+		this.stage.setMinWidth(800);
+		this.stage.setResizable(false);
+		this.stage.setOnCloseRequest(event -> {
 			try {
 				GlobalScreen.unregisterNativeHook();
 			} catch (NativeHookException e) {
@@ -54,23 +79,17 @@ public class BaseJump extends Application {
 			}
 			System.exit(0);
 		});
-		stage.show();		
-	}	
-	public void initJavascriptBridges() {
+		this.stage.show();		
+	}
+	
+	private void initJavascriptBridges() {
 		ConfigurationRequestManager requestManager = new ConfigurationRequestManager();
 		engine.setOnAlert((WebEvent<String> event2) -> requestManager.handleRequest(engine, event2.getData()));
 		engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
 		{
-		    JSObject window = (JSObject) engine.executeScript("window");
-		    JavaBridge bridge = new JavaBridge(engine);
 		    window.setMember("java", bridge);
 		    engine.executeScript(bridge.getBridge());
 		});
-	}
-	public static void main(String[] args) {
-		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
-		System.out.println(applicationPagePath);
-		launch(args);
 	}
 
 	public void executeStopTask() {

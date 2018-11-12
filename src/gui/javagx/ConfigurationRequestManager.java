@@ -106,14 +106,14 @@ public class ConfigurationRequestManager {
 	public void getLogs(WebEngine engine, JSONObject payload) {
 		//System.out.println("Action: "+SET_STOP_BOT);
     	//System.out.println("Payload: "+payload.toString());
-    	try {
-			JSONObject logs = BitHeroesBot.getInstance().getLogs();
-			//System.out.println(logs.toString());
-	    	this.runScript(engine, GET_LOGS, logs.toString());
-		} catch (InterruptedException | AWTException e) {
-	    	this.runScript(engine, GET_LOGS, "{}");
-			e.printStackTrace();
-		}
+//    	try {
+//			JSONObject logs = BitHeroesBot.getInstance().getLogs();
+//			//System.out.println(logs.toString());
+//	    	this.runScript(engine, GET_LOGS, logs.toString());
+//		} catch (InterruptedException | AWTException e) {
+//	    	this.runScript(engine, GET_LOGS, "{}");
+//			e.printStackTrace();
+//		}
 	}
 	
 	public void getDefaultConfiguration(WebEngine engine, JSONObject payload) {
