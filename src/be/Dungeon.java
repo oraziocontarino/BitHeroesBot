@@ -12,6 +12,8 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected Color refuseButtonColor;
 	protected Point eroicoButton;
 	protected Point accettaSquadraButton;
+	protected Point selectorPrevButton;
+	protected Point selectorNextButton;
 	protected Point[] autoBox;
 	protected Color autoBoxEnabledColor;
 	protected CustomRobot customRobot;
@@ -30,6 +32,8 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		
 		//refuseButtonColor = "0xf49745";
 		this.refuseButtonColor = new Color(244, 141, 53);
+		this.selectorPrevButton = new Point();
+		this.selectorNextButton = new Point();
 		
 		this.setDungeonCoords();
 		this.reset();

@@ -24,7 +24,8 @@ function test(){
 	var payload = {
 			configuration: configuration
 	}
-	return getPromise(ENDPOINTS.TEST, payload);
+	console.log("hey");
+	//return getPromise(ENDPOINTS.TEST, payload);
 }
 
 function setCoords(){
@@ -92,6 +93,6 @@ function sendJavaMessage(action, payload){
 		payload: payload
 	}
 	alert(JSON.stringify(message));
-	//console.log(JSON.stringify(message));
+	//sendJavaRequest(JSON.stringify(message));
 }
 

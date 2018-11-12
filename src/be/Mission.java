@@ -8,15 +8,11 @@ public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
 	private String selectedZone;
-	private Point backZoneButton;
-	private Point nextZoneButton;
 	
 	public Mission() throws AWTException{
 		super();
 		this.missionButton = new Point();
 		this.selectedMission = new Point();
-		this.backZoneButton = new Point();
-		this.nextZoneButton = new Point();
 		this.setMissionCoords();
 	}
 	
@@ -27,21 +23,21 @@ public class Mission extends Dungeon {
 		if(this.selectedMission == null) {
 			this.selectedMission = new Point();
 		}
-		if(this.backZoneButton == null) {
-			this.backZoneButton = new Point();
+		if(this.selectorPrevButton == null) {
+			this.selectorPrevButton = new Point();
 		}
-		if(this.nextZoneButton == null) {
-			this.nextZoneButton = new Point();
+		if(this.selectorNextButton == null) {
+			this.selectorNextButton = new Point();
 		}
 		this.missionButton.setLocation(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.05))
 		);
-		this.backZoneButton.setLocation(
+		this.selectorPrevButton.setLocation(
 				(int) (this.topLeftCorner.x + (this.width*0.07)),
 				(int) (this.topLeftCorner.y + (this.height*0.53))
 		);
-		this.nextZoneButton.setLocation(
+		this.selectorNextButton.setLocation(
 				(int) (this.topLeftCorner.x + (this.width*0.92)),
 				(int) (this.topLeftCorner.y + (this.height*0.53))
 		);
@@ -81,13 +77,13 @@ public class Mission extends Dungeon {
 		this.state++;
 		this.customRobot.sleep(500);
 		for(int i = 0; i < 10; i++) {
-			this.customRobot.mouseClick(this.backZoneButton.x, this.backZoneButton.y);
+			this.customRobot.mouseClick(this.selectorPrevButton.x, this.selectorPrevButton.y);
 			this.customRobot.sleep(500);
 		}
 		String tmp = this.selectedZone.split("Z")[1];
 		int index = Integer.valueOf(tmp);
 		for(int i = 0; i < index-1; i++) {
-			this.customRobot.mouseClick(this.nextZoneButton.x, this.nextZoneButton.y);
+			this.customRobot.mouseClick(this.selectorNextButton.x, this.selectorNextButton.y);
 			this.customRobot.sleep(500);
 		}
 	}

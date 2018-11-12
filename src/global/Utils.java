@@ -20,93 +20,9 @@ import lib.CustomRobot;
 public class Utils {
 
 	public static void test(JSONObject configuration) {
-		//Should be removed... attributes of class
-		Point topLeftCorner = Utils.getGameTopLeftCorner(configuration);
-		Point bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
-		int width = Utils.getGameWidth(bottomRightCorner, topLeftCorner);
-		int height = Utils.getGameHeight(bottomRightCorner, topLeftCorner);
-		
-		Point selectorCoords = new Point(
-				(int) (topLeftCorner.x + (width*0.25)),
-				(int) (topLeftCorner.y + (height*0.82))
-		);
-		Dimension selectorSize = new Dimension(
-				(int) (width*0.50),
-				(int) (height*0.05)
-		);
-		int selectorPadding = (int) (width*0.025);
-		Color selectorColor = new Color(87, 255, 87);
-		//is different from mission netx button
-		Point nextRaidButton = new Point(
-				(int) (topLeftCorner.x + (width*0.80)),
-				(int) (topLeftCorner.y + (height*0.53))
-		);
-		//End of attributes of class
-		
-		initRaidSelector(selectorCoords, selectorSize, selectorPadding, selectorColor);
-		System.out.println("Scan completed! - Should be raid 1");
-		try {
-			System.out.println("Clcik on raid 2...");
-			CustomRobot.getInstance().mouseClick(nextRaidButton.x, nextRaidButton.y);
-			CustomRobot.getInstance().delay(2500);
-
-			System.out.println("Clcik on raid 3...");
-			CustomRobot.getInstance().mouseClick(nextRaidButton.x, nextRaidButton.y);
-			CustomRobot.getInstance().delay(2500);
-			
-			System.out.println("Clcik on raid 4...");
-			CustomRobot.getInstance().mouseClick(nextRaidButton.x, nextRaidButton.y);
-			CustomRobot.getInstance().delay(2500);
-			System.out.println("Done");
-		}catch(Exception e) {
-			
-		}
 	}
 	
-	public static void initRaidSelector(Point selectorCoords, Dimension selectorSize, int selectorPadding, Color selectorColor) {
-		Point prevCoords = null;
-		Point currentCoords = null;
-		boolean checkPreviusRaid = true;
-		
-		try {
-            do {
-    			BufferedImage image = CustomRobot.getInstance().createScreenCapture(
-    					new Rectangle(
-    							selectorCoords.x, 
-    							selectorCoords.y, 
-    							selectorSize.width, 
-    							selectorSize.height
-    					)
-    			);
-            	prevCoords = currentCoords;
-            	currentCoords = scanRaidSelector(image, selectorCoords, selectorPadding, selectorColor);
-            	if(prevCoords != null && currentCoords != null && prevCoords.equals(currentCoords)) {
-            		checkPreviusRaid = false;
-            	}
-            }while(checkPreviusRaid);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 	
-	private static Point scanRaidSelector(BufferedImage image, Point selectorCoords, int selectorPadding, Color selectorColor) throws InterruptedException, AWTException {
-		for (int y = 0; y < image.getHeight(); y++) {
-        	for (int x = 0; x < image.getWidth(); x++) {
-            	Color pixel = new Color(image.getRGB(x, y));
-            	boolean isGreen = CustomRobot.getInstance().comparePixel(pixel, selectorColor, 50);
-            	if(isGreen){
-            		CustomRobot.getInstance().mouseClick(
-            				selectorCoords.x + x - selectorPadding,
-            				selectorCoords.y + y
-            		);
-            		CustomRobot.getInstance().delay(250);
-            		return new Point(x, y);
-            	}
-            }
-        }
-		return null;
-	}
-
 	public static Point[] detectGamePoistion() throws AWTException {
 		System.out.println("Loading game position...");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();

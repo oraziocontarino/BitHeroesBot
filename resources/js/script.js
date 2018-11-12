@@ -24,6 +24,7 @@ function updateCheckedActions(key, value){
 
 function setConfigData(data){
 	//TAB - Main
+	$('.bot-action-checkbox').addClass('hidden');
 	if(data.stack.mission == true){
 		$('.bot-action-checkbox.mission-checked').removeClass("hidden");
 	}else{
@@ -58,6 +59,7 @@ function hideBitHeroesBotPanelWarning(){
 }
 
 function stopBotTask(){
+	console.log("STOP BOT TASK");
 	if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 		showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
 		return;
@@ -74,6 +76,7 @@ function stopBotTask(){
 	});
 }
 $(document).ready(function(){
+	console.log("test js bridge");
 	setBusy(true);
 	//localStorage.removeItem("configuration");
 	getDefaultConfiguration().promise.then(function(data){
@@ -122,6 +125,7 @@ $(document).ready(function(){
 		selectedMission = (selectedMission.zone+selectedMission.dungeon).toUpperCase();
 		configuration.selectedMission.id=selectedMission;
 		configuration.selectedMission.label=selectedMission;
+		configuration.stack.mission = true;
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		loadConfig();
 	});
@@ -134,6 +138,7 @@ $(document).ready(function(){
 
 		configuration.selectedRaid.id=selectedRaid;
 		configuration.selectedRaid.label=selectedRaid;
+		configuration.stack.raid = true;
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		loadConfig();
 	});

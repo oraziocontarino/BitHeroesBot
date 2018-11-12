@@ -14,6 +14,7 @@ import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lib.KeyBindingManager;
+import netscape.javascript.JSObject;
 
 @SuppressWarnings("restriction")
 public class BaseJump extends Application {
@@ -25,7 +26,7 @@ public class BaseJump extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
 		final WebView webview = new WebView();
-
+		KeyBindingManager.getInstance().setApplication(this);
 		webview.setMaxHeight(700);
 		webview.setMinHeight(700);
 		webview.setMaxWidth(800);
@@ -34,10 +35,9 @@ public class BaseJump extends Application {
 		layout.getChildren().addAll(webview);
 
 		engine = webview.getEngine();
+		initJavascriptBridges();
 		engine.load(applicationPagePath);
-		ConfigurationRequestManager requestManager = new ConfigurationRequestManager();
-		engine.setOnAlert((WebEvent<String> event2) -> requestManager.handleRequest(engine, event2.getData()));
-
+		
 		Scene scene = new Scene(layout);
 		// stage.initStyle(StageStyle.UNDECORATED);
 		stage.setScene(scene);
@@ -55,9 +55,18 @@ public class BaseJump extends Application {
 			System.exit(0);
 		});
 		stage.show();		
-		KeyBindingManager.getInstance().setApplication(this);
 	}	
-
+	public void initJavascriptBridges() {
+		ConfigurationRequestManager requestManager = new ConfigurationRequestManager();
+		engine.setOnAlert((WebEvent<String> event2) -> requestManager.handleRequest(engine, event2.getData()));
+		engine.getLoadWorker().stateProperty().addListener((observable, oldValue, newValue) ->
+		{
+		    JSObject window = (JSObject) engine.executeScript("window");
+		    JavaBridge bridge = new JavaBridge(engine);
+		    window.setMember("java", bridge);
+		    engine.executeScript(bridge.getBridge());
+		});
+	}
 	public static void main(String[] args) {
 		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
 		System.out.println(applicationPagePath);
@@ -79,5 +88,6 @@ public class BaseJump extends Application {
 		this.executorService.shutdown();
 	}
 	//TODO: bug update raid multiple checkboxes
-	//TODO: implement Test function in utils to select raid, it works!
+	//TODO: bug start D4
+	//TODO: stop bot bug, not working...
 }
