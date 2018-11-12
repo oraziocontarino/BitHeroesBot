@@ -40,8 +40,8 @@ public class BaseJump extends Application {
 		KeyBindingManager.getInstance().setApplication(this);
 		this.stage = stage;
 		this.webview = new WebView();
-		this.bridge = new JavaBridge(engine);
 		this.engine = this.webview.getEngine();
+		this.bridge = new JavaBridge(engine);
 		this.window = (JSObject) this.engine.executeScript("window");
 		this.initJavascriptBridges();
 		this.engine.load(this.applicationPagePath);
