@@ -106,6 +106,5 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}
-	//TODO: bug update raid/mission autocheck not working
 	//TODO: bug start D4
 }

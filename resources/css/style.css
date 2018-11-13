@@ -103,11 +103,11 @@
 	  margin-left: 60px;
 	}
 	
-	.active{
+	.selected{
 		background-color: #337ab7 !important;
 		color: #fff !important;
 	}
-	.active .glyphicon{
+	.selected .glyphicon{
 		color: #fff !important;
 	}
 	

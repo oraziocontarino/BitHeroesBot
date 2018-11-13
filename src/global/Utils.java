@@ -153,11 +153,9 @@ public class Utils {
 
 		JSONObject selectedRaid = new JSONObject().put("label", "R1 - Astorath").put("id", "R1");
 
-		JSONObject selectedActions = new JSONObject().put("mission", true).put("raid", true);
-
 		return new JSONObject().put("error", error).put("stack", stack).put("topLeft", topLeft)
 				.put("bottomRight", bottomRight).put("selectedMission", selectedMission)
-				.put("selectedRaid", selectedRaid).put("selectedActions", selectedActions);
+				.put("selectedRaid", selectedRaid);
 	}
 
 	public static JSONObject getSelectedMissionConfigurationNode(String label, String id) {

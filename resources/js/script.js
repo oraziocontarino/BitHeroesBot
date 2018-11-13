@@ -16,25 +16,11 @@ function loadConfig(){
 	updateConfiguration(storedConfiguration);
 }
 
-function updateCheckedActions(key, value){
-	storedConfiguration = JSON.parse(localStorage.getItem("configuration"));
-	storedConfiguration.selectedActions[key]=value;
-	updateConfiguration(storedConfiguration);
-}
-
 function setConfigData(data){
 	//TAB - Main
-	$('.bot-action-checkbox').addClass('hidden');
-	if(data.stack.mission == true){
-		$('.bot-action-checkbox.mission-checked').removeClass("hidden");
-	}else{
-		$('.bot-action-checkbox.mission-unchecked').removeClass("hidden");
-	}
-	if(data.stack.raid == true){
-		$('.bot-action-checkbox.raid-checked').removeClass("hidden");
-	}else{
-		$('.bot-action-checkbox.raid-unchecked').removeClass("hidden");
-	}
+	console.log(JSON.stringify(data));
+	$('.checkbox.bot-action .mission').bootstrapToggle(data.stack.mission == true ? 'on' : 'off');
+	$('.checkbox.bot-action .raid').bootstrapToggle(data.stack.raid == true ? 'on' : 'off');
 	
 	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
@@ -59,7 +45,6 @@ function hideBitHeroesBotPanelWarning(){
 }
 
 function stopBotTask(){
-	console.log("STOP BOT TASK");
 	if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 		showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");
 		return;
@@ -89,14 +74,16 @@ $(document).ready(function(){
 		//sendJavaMessage("test", configuration);
 	});
 	$('.navbar-primary-menu a').click(function(e) {
-		$('.navbar-primary-menu a.active').removeClass('active');
-		$(this).addClass('active');
+		$('.navbar-primary-menu a.selected').removeClass('selected');
+		$(this).addClass('selected');
 		$('.main-content').addClass('hidden');
 		$(".main-content."+$(this).attr("tab")).removeClass('hidden');
 		//sendJavaMessage("test", "123stella");
 	});
 	$('#test_btn').click(function(e){
-		test();
+		$('.checkbox.bot-action .raid').bootstrapToggle('on');
+		$('.checkbox.bot-action .mission').bootstrapToggle('on');
+		//test();
 	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);
@@ -167,14 +154,16 @@ $(document).ready(function(){
 		stopBotTask();
 	});
 
-	$('.bot-action-checkbox').click(function(e) {
-		//setBusy(true);
-		var stack = { missionSelector: null, raidSelector: null};
-		stack.missionSelector = $('.bot-action-checkbox.mission-checked').hasClass('hidden') ? '.bot-action-checkbox.mission-unchecked' : '.bot-action-checkbox.mission-checked';
-		stack.raidSelector = $('.bot-action-checkbox.raid-checked').hasClass('hidden') ? '.bot-action-checkbox.raid-unchecked' : '.bot-action-checkbox.raid-checked'; 
-		configuration.stack.mission = $(stack.missionSelector).prop('checked');
-		configuration.stack.raid = $(stack.raidSelector).prop('checked');
+	$('.checkbox.bot-action .raid').change(function() {
+		configuration.stack.raid = $(this).prop('checked');
 		localStorage.setItem("configuration", JSON.stringify(configuration));
+		console.log("stack mission updated!");
+	});
+	
+	$('.checkbox.bot-action .mission').change(function() {
+		configuration.stack.mission = $(this).prop('checked');
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		console.log("stack mission updated!");
 	});
 	
 	$('.clearConfiguration').click(function(e) {
