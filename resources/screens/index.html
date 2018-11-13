@@ -21,21 +21,21 @@
 					<span class="glyphicon glyphicon-flash"></span>
 					<span class="nav-label">BitHeroesBot</span>
 				</a>
-				<a href="#" tab="advanced-settings">
+				<a href="#" class="lock-if-bot-running" tab="advanced-settings">
 					<span class="glyphicon glyphicon-wrench"></span>
 					<span class="nav-label">Advanced Settings</span>
 				</a>
 				<!-- 
-				<a href="#" tab="mission-settings">
+				<a href="#" class="lock-if-bot-running" tab="mission-settings">
 					<span class="glyphicon glyphicon-envelope"></span>
 					<span class="nav-label">Mission Setings</span>
 				</a>
-				<a href="#" tab="raid-settings">
+				<a href="#" class="lock-if-bot-running" tab="raid-settings">
 					<span class="glyphicon glyphicon-cog"></span>
 					<span class="nav-label">Raid Settings</span>
 				</a>
 				 -->
-				<a href="#" tab="coming-soon">
+				<a href="#" class="lock-if-bot-running" tab="coming-soon">
 					<span class="glyphicon glyphicon-console"></span>
 					<span class="nav-label">Coming soon...</span>
 				</a>
@@ -95,14 +95,14 @@
 				<div class="col-sm-12">			
 					<div class="checkbox bot-action">
 					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="raid" value="raid">
-					    Raid
+					    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running" value="raid">
+					    <span class="raid-label">Raid</span>
 					  </label>
 					</div>
 					<div class="checkbox bot-action">
 					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="mission" value="mission">
-					    Mission
+					    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running" value="mission">
+					    <span class="mission-label">Mission</span>
 					  </label>
 					</div>
 				</div>	

@@ -20,7 +20,10 @@ function setConfigData(data){
 	//TAB - Main
 	console.log(JSON.stringify(data));
 	$('.checkbox.bot-action .mission').bootstrapToggle(data.stack.mission == true ? 'on' : 'off');
+	$('.checkbox.bot-action .mission-label').text("Mission - "+data.selectedMission.label);
+	
 	$('.checkbox.bot-action .raid').bootstrapToggle(data.stack.raid == true ? 'on' : 'off');
+	$('.checkbox.bot-action .raid-label').text("Raid - "+data.selectedRaid.label);
 	
 	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
@@ -52,6 +55,7 @@ function stopBotTask(){
 
 	setBusy(true);
 	stopBot().promise.then(function(data){
+		$('.lock-if-bot-running').attr("disabled", false);
 		//Enable start button
 		$(".launcher.startBot").removeClass("hidden");
 		if(!$(".launcher.stopBot").hasClass("hidden")){
@@ -140,6 +144,7 @@ $(document).ready(function(){
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
 		startBot(configuration).promise.then(function(data){
+			$('.lock-if-bot-running').attr("disabled", true);
 			//Enable stop button
 			$(".launcher.stopBot").removeClass("hidden");
 			if(!$(".launcher.stopBot").hasClass("hidden")){
@@ -168,14 +173,10 @@ $(document).ready(function(){
 	
 	$('.clearConfiguration').click(function(e) {
 		setBusy(true);
-		stopBot(configuration).promise.then(function(data){
-			//Enable start button
-			$(".launcher.startBot").removeClass("hidden");
-			if(!$(".launcher.stopBot").hasClass("hidden")){
-				$(".launcher.stopBot").addClass("hidden");
-			}
-			updateConfiguration(defaultConfiguration);
-			location.reload();
+		getDefaultConfiguration().promise.then(function(data){
+			configuration = defaultConfiguration = JSON.parse(data);
+			localStorage.setItem("configuration", data);
+			loadConfig();
 			setBusy(false);
 		});
 	});
