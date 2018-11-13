@@ -55,7 +55,7 @@ function stopBotTask(){
 
 	setBusy(true);
 	stopBot().promise.then(function(data){
-		$('.lock-if-bot-running').attr("disabled", false);
+		$('.lock-if-bot-running').addClass("hidden");
 		//Enable start button
 		$(".launcher.startBot").removeClass("hidden");
 		if(!$(".launcher.stopBot").hasClass("hidden")){
@@ -144,7 +144,7 @@ $(document).ready(function(){
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
 		startBot(configuration).promise.then(function(data){
-			$('.lock-if-bot-running').attr("disabled", true);
+			$('.lock-if-bot-running').removeClass("hidden");
 			//Enable stop button
 			$(".launcher.stopBot").removeClass("hidden");
 			if(!$(".launcher.stopBot").hasClass("hidden")){

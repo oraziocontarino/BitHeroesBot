@@ -21,21 +21,21 @@
 					<span class="glyphicon glyphicon-flash"></span>
 					<span class="nav-label">BitHeroesBot</span>
 				</a>
-				<a href="#" class="lock-if-bot-running" tab="advanced-settings">
+				<a href="#" tab="advanced-settings">
 					<span class="glyphicon glyphicon-wrench"></span>
 					<span class="nav-label">Advanced Settings</span>
 				</a>
 				<!-- 
-				<a href="#" class="lock-if-bot-running" tab="mission-settings">
+				<a href="#" tab="mission-settings">
 					<span class="glyphicon glyphicon-envelope"></span>
 					<span class="nav-label">Mission Setings</span>
 				</a>
-				<a href="#" class="lock-if-bot-running" tab="raid-settings">
+				<a href="#" tab="raid-settings">
 					<span class="glyphicon glyphicon-cog"></span>
 					<span class="nav-label">Raid Settings</span>
 				</a>
 				 -->
-				<a href="#" class="lock-if-bot-running" tab="coming-soon">
+				<a href="#" tab="coming-soon">
 					<span class="glyphicon glyphicon-console"></span>
 					<span class="nav-label">Coming soon...</span>
 				</a>
@@ -92,16 +92,19 @@
 				Bot Actions
 			</div>
 			<div class="panel-body">
+				<div class="lock-if-bot-running hidden panel-loader">
+					<span class="loader-image"></span>
+				</div>
 				<div class="col-sm-12">			
 					<div class="checkbox bot-action">
 					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running" value="raid">
+					    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running hidden" value="raid">
 					    <span class="raid-label">Raid</span>
 					  </label>
 					</div>
 					<div class="checkbox bot-action">
 					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running" value="mission">
+					    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running hidden" value="mission">
 					    <span class="mission-label">Mission</span>
 					  </label>
 					</div>
@@ -114,6 +117,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Coords management</div>
 			<div class="panel-body">
+				<div class="lock-if-bot-running hidden panel-loader"></div>
 				<form>
 					<div class="row form-group">
 						<div class="col-sm-6">
@@ -137,6 +141,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Mission management</div>
 			<div class="panel-body">
+				<div class="lock-if-bot-running hidden panel-loader"></div>
 				<form>
 					<div class="row form-group">
 						<div class="col-sm-4">
@@ -183,6 +188,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">Raid management</div>
 			<div class="panel-body">
+				<div class="lock-if-bot-running hidden panel-loader"></div>
 				<form>
 					<div class="row form-group">
 						<div class="col-sm-6">
@@ -215,6 +221,7 @@
 		<div class="panel panel-default">
 			<div class="panel-heading">System</div>
 			<div class="panel-body">
+			<div class="lock-if-bot-running hidden panel-loader"></div>
 				<form>
 					<div class="row form-group">	
 						<div class="col-sm-12">

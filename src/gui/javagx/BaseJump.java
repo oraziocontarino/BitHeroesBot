@@ -107,4 +107,5 @@ public class BaseJump extends Application {
 		this.executorService.shutdown();
 	}
 	//TODO: bug start D4
+	//TODO: fix raid full-name. rightnow only RX is show, name is missing
 }
