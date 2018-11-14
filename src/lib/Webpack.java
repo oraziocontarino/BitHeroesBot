@@ -22,7 +22,7 @@ public class Webpack {
 	};
 
 	private static final String TEMP_FOLDER = "/E:/Desktop/test";
-	
+	private static final String APP_TEMP_ANCHOR = "BitHeroesBotAnchor_";
 	public static void main(String[] argv) {
 		initFiles();
 	}
@@ -39,7 +39,15 @@ public class Webpack {
 		}
 	}
 	private static void initFiles() {
+		try{
+			String temp_absolute_folder = getAbsolutePath();
+			System.out.println(temp_absolute_folder);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
 		initFolders();
+		System.out.println("GONNA CRASH DUE TO MISSING FOLDERS THREE!");
 		for(String resource : resources) {
 			try {
 				File source = new File(resource);
@@ -56,5 +64,11 @@ public class Webpack {
 				e.printStackTrace();
 			}
 		}
+	}
+	
+	private static String getAbsolutePath() throws IOException{
+		//TODO: store string and delete file
+		File temp = File.createTempFile(APP_TEMP_ANCHOR, ".tmp");
+		return temp.getAbsolutePath();
 	}
 }
