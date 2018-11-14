@@ -1,5 +1,6 @@
 package gui.javagx;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,6 +32,9 @@ public class BaseJump extends Application {
 	
 	public static void main(String[] args) {
 		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
+		//TODO: load webpacked app - all in one string webapp
+		//File file = new File("resources/screens/index.html");
+		//applicationPagePath = file.getAbsolutePath();
 		System.out.println(applicationPagePath);
 		launch(args);
 	}
@@ -106,6 +110,7 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}
+	//TODO: load webpacked app - all in one string webapp
 	//TODO: bug start D4
 	//TODO: fix raid full-name. rightnow only RX is show, name is missing
 }
