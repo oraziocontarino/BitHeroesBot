@@ -15,6 +15,7 @@ import javafx.scene.web.WebEvent;
 import javafx.scene.web.WebView;
 import javafx.stage.Stage;
 import lib.KeyBindingManager;
+import lib.Webpack;
 import netscape.javascript.JSObject;
 
 @SuppressWarnings("restriction")
@@ -31,12 +32,13 @@ public class BaseJump extends Application {
 	private Scene scene;
 	
 	public static void main(String[] args) {
-		applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
-		//TODO: load webpacked app - all in one string webapp
-		//File file = new File("resources/screens/index.html");
-		//applicationPagePath = file.getAbsolutePath();
+
+		applicationPagePath = "file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html");
+
+		//applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
 		System.out.println(applicationPagePath);
 		launch(args);
+		
 	}
 	
 	@Override
@@ -93,6 +95,7 @@ public class BaseJump extends Application {
 		{
 		    window.setMember("java", bridge);
 		    engine.executeScript(bridge.getBridge());
+		    engine.executeScript("var assets = "+Webpack.getInstance().getAssetsMap().toString());
 		});
 	}
 
@@ -110,7 +113,8 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}
-	//TODO: load webpacked app - all in one string webapp
+	//TODO: webpack index, joining css and js files
+	
 	//TODO: bug start D4
 	//TODO: fix raid full-name. rightnow only RX is show, name is missing
 }
