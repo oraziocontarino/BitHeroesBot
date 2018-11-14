@@ -95,7 +95,6 @@ public class BaseJump extends Application {
 		{
 		    window.setMember("java", bridge);
 		    engine.executeScript(bridge.getBridge());
-		    engine.executeScript("var assets = "+Webpack.getInstance().getAssetsMap().toString());
 		});
 	}
 
@@ -112,9 +111,7 @@ public class BaseJump extends Application {
 		this.executorService = Executors.newFixedThreadPool(1);
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
-	}
-	//TODO: webpack index, joining css and js files
-	
+	}	
 	//TODO: bug start D4
 	//TODO: fix raid full-name. rightnow only RX is show, name is missing
 }
