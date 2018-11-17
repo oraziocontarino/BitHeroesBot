@@ -10,10 +10,10 @@ public class JavaBridge
 			"console.error = function(message) { java.error(message); };",
 			//"sendJavaRequest = function(message) { java.sendJavaRequest(message); };"
 	};
-	private WebEngine engine;
+	//private WebEngine engine;
 	
 	public JavaBridge(WebEngine engine) {
-		this.engine = engine;
+		//this.engine = engine;
 	}
 	public String getBridge() {
 		StringBuilder scriptList = new StringBuilder();

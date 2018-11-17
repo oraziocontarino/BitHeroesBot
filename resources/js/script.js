@@ -75,19 +75,16 @@ $(document).ready(function(){
 		}
 		loadConfig();
 		setBusy(false);
-		//sendJavaMessage("test", configuration);
 	});
 	$('.navbar-primary-menu a').click(function(e) {
 		$('.navbar-primary-menu a.selected').removeClass('selected');
 		$(this).addClass('selected');
 		$('.main-content').addClass('hidden');
 		$(".main-content."+$(this).attr("tab")).removeClass('hidden');
-		//sendJavaMessage("test", "123stella");
 	});
 	$('#test_btn').click(function(e){
 		$('.checkbox.bot-action .raid').bootstrapToggle('on');
 		$('.checkbox.bot-action .mission').bootstrapToggle('on');
-		//test();
 	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);
@@ -140,7 +137,6 @@ $(document).ready(function(){
 			return;
 		}
 		
-		//sendJavaMessage("test", JSON.stringify(configuration));
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
 		startBot(configuration).promise.then(function(data){
@@ -186,8 +182,6 @@ $(document).ready(function(){
 		return;
 		getLogs().promise.then(function(data){
 			data = JSON.parse(data);
-			//data = {"CURRENT_ACTION":"RAID","CURRENT_STATUS":"RUNNING","NEXT_ACTION":"MISSION"};
-			//sendJavaMessage("banana", data);
 			$(".currentStatus").text(data.CURRENT_STATUS);
 			$(".currentAction").text(data.CURRENT_ACTION);
 			$(".nextAction").text(data.NEXT_ACTION);

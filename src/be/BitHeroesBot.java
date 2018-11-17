@@ -1,12 +1,12 @@
 package be;
 
 import java.awt.AWTException;
-import java.awt.Point;
 
 import org.json.JSONObject;
 
+import be.dungeons.Mission;
+import be.dungeons.Raid;
 import global.LogsManager;
-import global.Utils;
 import lib.CustomRobot;
 
 public class BitHeroesBot {
@@ -41,7 +41,7 @@ public class BitHeroesBot {
 		mission.updateConfiguration(configuration);
 	}
 	
-	public void run() throws InterruptedException, AWTException {
+	public void run() throws Exception {
 		//CustomRobot.getInstance().detectGamePoistion();
 		running = true;
 		while(running) {

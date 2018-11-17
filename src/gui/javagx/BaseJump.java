@@ -1,6 +1,5 @@
 package gui.javagx;
 
-import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -20,8 +19,6 @@ import netscape.javascript.JSObject;
 
 @SuppressWarnings("restriction")
 public class BaseJump extends Application {
-	private static final String APPLICATION_PAGE = "/screens/index.html";
-	private static String applicationPagePath;
 	private StopBotTask testTask;
 	private ExecutorService executorService;
 	private WebEngine engine;
@@ -33,10 +30,9 @@ public class BaseJump extends Application {
 	
 	public static void main(String[] args) {
 
-		applicationPagePath = "file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html");
 
 		//applicationPagePath = BaseJump.class.getResource(APPLICATION_PAGE).toExternalForm();
-		System.out.println(applicationPagePath);
+		System.out.println("file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html"));
 		launch(args);
 		
 	}
@@ -50,7 +46,7 @@ public class BaseJump extends Application {
 		this.bridge = new JavaBridge(engine);
 		this.window = (JSObject) this.engine.executeScript("window");
 		this.initJavascriptBridges();
-		this.engine.load(this.applicationPagePath);
+		this.engine.load("file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html"));
 		this.initWebview();
 	}	
 	
@@ -85,6 +81,7 @@ public class BaseJump extends Application {
 			}
 			System.exit(0);
 		});
+		this.stage.setAlwaysOnTop(true);
 		this.stage.show();		
 	}
 	
@@ -112,6 +109,8 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}	
-	//TODO: bug start D4
+	//TODO: generalize trial/gauntlet
+	//TODO: optimize kill flags
+	//TODO: set delay for loop via config
 	//TODO: fix raid full-name. rightnow only RX is show, name is missing
 }

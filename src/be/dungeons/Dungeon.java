@@ -1,4 +1,4 @@
-package be;
+package be.dungeons;
 
 import java.awt.AWTException;
 import java.awt.Color;
@@ -6,6 +6,7 @@ import java.awt.Point;
 
 import org.json.JSONObject;
 
+import be.BitHeroesGlobal;
 import lib.CustomRobot;
 
 public abstract class Dungeon extends BitHeroesGlobal {
@@ -18,14 +19,10 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	protected Color autoBoxEnabledColor;
 	protected CustomRobot customRobot;
 	protected Point refuseExitDungeon;
-	protected boolean firstRun;
-	protected int running;
-	protected boolean enabled;
 	
 	protected Dungeon() throws AWTException {
 		super();
 		this.customRobot = CustomRobot.getInstance();
-		
 		
 		//autoBoxEnabledColor = "0x8dd61d";
 		this.autoBoxEnabledColor = new Color(141, 214, 29);
@@ -35,16 +32,13 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		this.selectorPrevButton = new Point();
 		this.selectorNextButton = new Point();
 		
-		this.setDungeonCoords();
+		this.updateJobCoords();
 		this.reset();
 		
 	}
-	protected abstract void updateConfiguration(JSONObject configuration);
-	protected abstract void state0() throws InterruptedException, AWTException;
-	protected abstract void state1() throws InterruptedException, AWTException;
-	
-	protected abstract void updateEnabledStatus(JSONObject configuration);
-	private void setDungeonCoords() {
+
+	@Override
+	protected void updateJobCoords() {
 		this.eroicoButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.75)),
 				(int) (this.topLeftCorner.y + (this.height*0.45))
@@ -70,12 +64,6 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		);
 	}
 	
-	@Override 
-	protected void updateCoords(JSONObject configuration) {
-		super.updateCoords(configuration);
-		this.setDungeonCoords();
-	}
-	
 	protected void state2() throws InterruptedException, AWTException {
 		this.customRobot.mouseClick(this.eroicoButton.x, this.eroicoButton.y);
 		this.state++;
@@ -99,7 +87,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 			this.customRobot.sleep(10000);
 		}
 	}
-	protected abstract void state5() throws InterruptedException, AWTException;
+	
 	
 	protected boolean isCompleted() throws InterruptedException, AWTException {
 		boolean autoDisabled = true;
@@ -159,33 +147,12 @@ public abstract class Dungeon extends BitHeroesGlobal {
 		}
 	}
 	
-	protected boolean stopDungeon(boolean loop) {
-		return (!loop && !this.firstRun);
-	}
 	
-	protected abstract void main() throws InterruptedException, AWTException;
-
-	public void start(boolean loop) throws InterruptedException, AWTException {
-		if(!this.enabled) {
-			return;
-		}
-		this.firstRun = true;
-		this.customRobot.sleep(1000);
-		this.restartGame();
-		this.running +=1;
-		while(this.running > 0) {
-			if(this.stopDungeon(loop)) {
-				return;
-			}
-			this.main();
-		}
-	}
+	public abstract void updateConfiguration(JSONObject configuration);
+	protected abstract void state0() throws InterruptedException, AWTException;
+	protected abstract void state1() throws InterruptedException, AWTException;
+	protected abstract void state5() throws InterruptedException, AWTException;
 	
-	public void stop() {
-		this.running =- 10;
-	}
-	public void reset() {
-		this.running = 0;
-	}
+	protected abstract void updateEnabledStatus(JSONObject configuration);
 }
 

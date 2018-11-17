@@ -1,11 +1,7 @@
-package be;
+package be.dungeons;
 
-import java.awt.Dimension;
 import java.awt.Point;
-import java.util.HashMap;
-
 import org.json.JSONObject;
-
 import global.GameDimension;
 import global.Utils;
 

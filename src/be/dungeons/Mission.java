@@ -1,4 +1,4 @@
-package be;
+package be.dungeons;
 
 import java.awt.AWTException;
 import java.awt.Point;
@@ -8,15 +8,19 @@ public class Mission extends Dungeon {
 	private Point missionButton;
 	private Point selectedMission;
 	private String selectedZone;
+	private Point enterDungeonButton;
 	
 	public Mission() throws AWTException{
 		super();
 		this.missionButton = new Point();
 		this.selectedMission = new Point();
-		this.setMissionCoords();
+		this.enterDungeonButton = new Point();
+		this.updateJobCoords();
 	}
 	
-	private void setMissionCoords() {
+	@Override
+	protected void updateJobCoords() {
+		super.updateJobCoords();
 		if(this.missionButton == null) {
 			this.missionButton = new Point();
 		}
@@ -28,6 +32,9 @@ public class Mission extends Dungeon {
 		}
 		if(this.selectorNextButton == null) {
 			this.selectorNextButton = new Point();
+		}
+		if(this.enterDungeonButton == null) {
+			this.enterDungeonButton = new Point();
 		}
 		this.missionButton.setLocation(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
@@ -41,18 +48,16 @@ public class Mission extends Dungeon {
 				(int) (this.topLeftCorner.x + (this.width*0.92)),
 				(int) (this.topLeftCorner.y + (this.height*0.53))
 		);
+		this.enterDungeonButton.setLocation(
+				(int) (this.topLeftCorner.x + (this.width*0.55)),
+				(int) (this.topLeftCorner.y + (this.height*0.88))
+		);
 		
 	}
     
 	@Override
 	protected void updateEnabledStatus(JSONObject configuration) {
 		this.enabled = configuration.getJSONObject("stack").getBoolean("mission");
-	}
-	
-	@Override 
-	protected void updateCoords(JSONObject configuration) {
-		super.updateCoords(configuration);
-		this.setMissionCoords();
 	}
 
 	private void setMission(JSONObject configuration) throws Exception {
@@ -97,13 +102,28 @@ public class Mission extends Dungeon {
 	}
 	
 	@Override
+	protected void state2() throws InterruptedException, AWTException {
+		if(this.selectedZone.endsWith("Z4")){
+			state2Z4();
+		}else {
+			super.state2();
+		}
+	}
+	
+	@Override
 	protected void state5() throws InterruptedException, AWTException {
 		//System.out.println("restart! 0");
 		this.customRobot.sleep(1000);
 	}
 	
+	private void state2Z4() throws InterruptedException {
+		this.customRobot.mouseClick(this.enterDungeonButton.x, this.enterDungeonButton.y);
+		this.state++;
+		this.customRobot.sleep(1000);
+	}
+	
 	@Override
-	public void main() throws InterruptedException, AWTException {
+	public void main() throws Exception{
 		switch(this.state){
 			case 0:
 				System.out.println("state 0");

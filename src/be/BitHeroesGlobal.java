@@ -9,7 +9,7 @@ import org.json.JSONObject;
 import global.Utils;
 import lib.CustomRobot;
 
-class BitHeroesGlobal {
+public abstract class BitHeroesGlobal {
 	protected int state;
 	protected Color fishingBarColor;
 	protected Color fishingCaputureColor;
@@ -20,6 +20,9 @@ class BitHeroesGlobal {
 	protected Point center;
 	protected int stepStartTime;
 	protected CustomRobot customRobot;
+	protected int running;
+	protected boolean enabled;
+	protected boolean firstRun;
 	protected BitHeroesGlobal() throws AWTException {
 		customRobot = CustomRobot.getInstance();
 		
@@ -44,6 +47,7 @@ class BitHeroesGlobal {
 		this.height = Utils.getGameHeight(this.bottomRightCorner, this.topLeftCorner);
 		
 		this.center = Utils.getGameCenter(this.topLeftCorner, this.width, this.height);
+		this.updateJobCoords();
 	}
 	public int getTimestamp() {
 		return (int) (System.currentTimeMillis() / 1000);
@@ -60,84 +64,36 @@ class BitHeroesGlobal {
 		this.state = 0;
 		this.stepStartTime = this.getTimestamp();
 	}
-	
-	public int getState() {
-		return state;
-	}
 
-	public void setState(int state) {
-		this.state = state;
-	}
-	
-	public void nextStep() {
-		this.state ++;
-	}
-
-	public Color getFishingBarColor() {
-		return fishingBarColor;
-	}
-
-	public void setFishingBarColor(Color fishingBarColor) {
-		this.fishingBarColor = fishingBarColor;
-	}
-
-	public Color getFishingCaputureColor() {
-		return fishingCaputureColor;
-	}
-
-	public void setFishingCaputureColor(Color fishingCaputureColor) {
-		this.fishingCaputureColor = fishingCaputureColor;
-	}
-
-	public Point getTopLeftCorner() {
-		return topLeftCorner;
-	}
-
-	public void setTopLeftCorner(Point topLeftCorner) {
-		this.topLeftCorner = topLeftCorner;
-	}
-
-	public Point getBottomRightCorner() {
-		return bottomRightCorner;
-	}
-
-	public void setBottomRightCorner(Point bottomRightCorner) {
-		this.bottomRightCorner = bottomRightCorner;
-	}
-
-	public int getWidth() {
-		return width;
-	}
-
-	public void setWidth(int width) {
-		this.width = width;
-	}
-
-	public int getHeight() {
-		return height;
-	}
-
-	public void setHeight(int height) {
-		this.height = height;
-	}
-
-	public Point getCenter() {
-		return center;
-	}
-
-	public void setCenter(Point center) {
-		this.center = center;
-	}
-
-	public int getStepStartTime() {
-		return stepStartTime;
-	}
-
-	public void setStepStartTime(int stepStartTime) {
-		this.stepStartTime = stepStartTime;
-	}
-	
 	public void updateStepStartTime() {
 		this.stepStartTime = this.getTimestamp();
 	}
+	
+	public void stop() {
+		this.running =- 10;
+	}
+	public void reset() {
+		this.running = 0;
+	}
+	protected boolean stopJob(boolean loop) {
+		return (!loop && !this.firstRun);
+	}
+	
+	public void start(boolean loop) throws Exception {
+		if(!this.enabled) {
+			return;
+		}
+		this.firstRun = true;
+		this.customRobot.sleep(1000);
+		this.restartGame();
+		this.running +=1;
+		while(this.running > 0) {
+			if(this.stopJob(loop)) {
+				return;
+			}
+			this.main();
+		}
+	}
+	protected abstract void main() throws Exception;
+	protected abstract void updateJobCoords();
 }

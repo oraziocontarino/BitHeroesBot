@@ -1,6 +1,5 @@
 package gui.javagx;
 
-import java.awt.AWTException;
 import org.json.JSONObject;
 import be.BitHeroesBot;
 

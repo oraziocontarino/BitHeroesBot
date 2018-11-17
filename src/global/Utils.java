@@ -7,12 +7,6 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map.Entry;
-
-import javax.imageio.ImageIO;
 import org.json.JSONObject;
 
 import lib.CustomRobot;

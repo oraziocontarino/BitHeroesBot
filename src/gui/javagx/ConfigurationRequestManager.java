@@ -1,11 +1,7 @@
 package gui.javagx;
 
-import java.awt.AWTException;
 import java.awt.Point;
-
 import org.json.JSONObject;
-
-import be.BitHeroesBot;
 import global.Utils;
 import javafx.scene.web.WebEngine;
 
