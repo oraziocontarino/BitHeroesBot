@@ -4,9 +4,9 @@ import java.awt.AWTException;
 
 import org.json.JSONObject;
 
-public class Gauntlet extends TrialAndGauntlet {
+public class Trial extends TrialAndGauntlet{
 
-	public Gauntlet() throws AWTException {
+	public Trial() throws AWTException {
 		super();
 		// TODO Auto-generated constructor stub
 	}
@@ -16,10 +16,10 @@ public class Gauntlet extends TrialAndGauntlet {
 	}
 	@Override
 	protected void updateCost(JSONObject configuration) {
-		this.selectedCost = configuration.getJSONObject("gauntlet").getInt("cost");
+		this.selectedCost = configuration.getJSONObject("trial").getInt("cost");
 	}
 	@Override
 	protected void updateDifficulty(JSONObject configuration) {
-		this.selectedDifficulty = configuration.getJSONObject("gauntlet").getInt("difficulty");
+		this.selectedDifficulty = configuration.getJSONObject("trial").getInt("difficulty");
 	}
 }

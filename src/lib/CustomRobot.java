@@ -51,6 +51,12 @@ public class CustomRobot extends Robot{
     	this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
     }
     
+    public void mouseClick(int x, int y, int timeMillis) throws InterruptedException {
+    	this.mouseMove(x, y);
+    	this.mousePress(InputEvent.BUTTON1_DOWN_MASK);
+    	Thread.sleep(timeMillis);
+    	this.mouseRelease(InputEvent.BUTTON1_DOWN_MASK);
+    }
     public void send(String key) throws InterruptedException {
     	Integer keyCode = null;
     	key = key.toLowerCase().trim();

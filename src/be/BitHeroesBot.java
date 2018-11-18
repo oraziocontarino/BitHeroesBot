@@ -6,6 +6,8 @@ import org.json.JSONObject;
 
 import be.dungeons.Mission;
 import be.dungeons.Raid;
+import be.events.Gauntlet;
+import be.events.Trial;
 import global.LogsManager;
 import lib.CustomRobot;
 
@@ -13,6 +15,8 @@ public class BitHeroesBot {
 	private static BitHeroesBot instance;
 	private Mission mission;
 	private Raid raid;
+	private Trial trial;
+	private Gauntlet gauntlet;
 	private boolean running;
 	
 	private LogsManager logs;
@@ -23,6 +27,10 @@ public class BitHeroesBot {
 		this.mission = new Mission();
 		
 		this.raid = new Raid();
+
+		this.trial = new Trial();
+		
+		this.gauntlet = new Gauntlet();
 		
 		this.logs = new LogsManager();
 		
@@ -39,12 +47,29 @@ public class BitHeroesBot {
 	public void updateBotConfiguration(JSONObject configuration) throws Exception {
 		raid.updateConfiguration(configuration);
 		mission.updateConfiguration(configuration);
+		trial.updateConfiguration(configuration);
+		gauntlet.updateConfiguration(configuration);
 	}
 	
 	public void run() throws Exception {
 		//CustomRobot.getInstance().detectGamePoistion();
 		running = true;
 		while(running) {
+			System.out.println("Starting trial");
+			logs.update(LogsManager.RUNNING, LogsManager.TRIAL, LogsManager.RAID);
+			trial.start(false);
+			if(!running) {
+				System.out.println("Exit trial");
+				trial.reset();
+				break;
+			}
+			logs.update(LogsManager.RUNNING, LogsManager.GAUNTLET, LogsManager.RAID);
+			gauntlet.start(false);
+			if(!running) {
+				System.out.println("Exit gauntlet");
+				gauntlet.reset();
+				break;
+			}
 			System.out.println("Starting raid");
 			logs.update(LogsManager.RUNNING, LogsManager.RAID, LogsManager.MISSION);
 			raid.start(false);

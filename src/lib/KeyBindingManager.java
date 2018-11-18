@@ -1,18 +1,13 @@
 package lib;
 
-import java.awt.AWTException;
-
 import java.util.logging.LogManager;
-
 import org.jnativehook.GlobalScreen;
 import org.jnativehook.NativeHookException;
 import org.jnativehook.SwingDispatchService;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-
-import be.BitHeroesBot;
-import gui.javagx.AsyncBot;
 import gui.javagx.BaseJump;
+
 @SuppressWarnings("restriction")
 public class KeyBindingManager  implements NativeKeyListener {
 	private static KeyBindingManager instance;

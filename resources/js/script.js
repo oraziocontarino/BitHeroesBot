@@ -24,6 +24,9 @@ function setConfigData(data){
 	
 	$('.checkbox.bot-action .raid').bootstrapToggle(data.stack.raid == true ? 'on' : 'off');
 	$('.checkbox.bot-action .raid-label').text("Raid - "+data.selectedRaid.label);
+
+	$('.checkbox.bot-action .trial').bootstrapToggle(data.stack.trial == true ? 'on' : 'off');
+	$('.checkbox.bot-action .gauntlet').bootstrapToggle(data.stack.gauntlet == true ? 'on' : 'off');
 	
 	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
@@ -160,11 +163,23 @@ $(document).ready(function(){
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		console.log("stack mission updated!");
 	});
-	
+
 	$('.checkbox.bot-action .mission').change(function() {
 		configuration.stack.mission = $(this).prop('checked');
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		console.log("stack mission updated!");
+	});
+
+	$('.checkbox.bot-action .trial').change(function() {
+		configuration.stack.trial = $(this).prop('checked');
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		console.log("stack trial updated!");
+	});
+	
+	$('.checkbox.bot-action .gauntlet').change(function() {
+		configuration.stack.gauntlet = $(this).prop('checked');
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		console.log("stack gauntlet updated!");
 	});
 	
 	$('.clearConfiguration').click(function(e) {

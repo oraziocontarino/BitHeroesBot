@@ -87,28 +87,58 @@
 				</form>
 			</div>
 		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">
-				Bot Actions
-			</div>
-			<div class="panel-body">
-				<div class="lock-if-bot-running hidden panel-loader">
-					<span class="loader-image"></span>
+		<div class="row">
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Static tasks
+					</div>
+					<div class="panel-body">			
+						<div class="lock-if-bot-running hidden panel-loader">
+							<span class="loader-image"></span>
+						</div>
+						<div class="col-sm-12">					
+							<div class="checkbox bot-action">
+							  <label>
+							    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running hidden" value="raid">
+							    <span class="raid-label">Raid</span>
+							  </label>
+							</div>
+							<div class="checkbox bot-action">
+							  <label>
+							    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running hidden" value="mission">
+							    <span class="mission-label">Mission</span>
+							  </label>
+							</div>
+						</div>	
+					</div>
 				</div>
-				<div class="col-sm-12">			
-					<div class="checkbox bot-action">
-					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running hidden" value="raid">
-					    <span class="raid-label">Raid</span>
-					  </label>
+			</div>
+			<div class="col-sm-6">
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Events tasks
 					</div>
-					<div class="checkbox bot-action">
-					  <label>
-					    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running hidden" value="mission">
-					    <span class="mission-label">Mission</span>
-					  </label>
+					<div class="panel-body">			
+						<div class="lock-if-bot-running hidden panel-loader">
+							<span class="loader-image"></span>
+						</div>
+						<div class="col-sm-12">			
+							<div class="checkbox bot-action">
+							  <label>
+							    <input type="checkbox" data-toggle="toggle" class="trial lock-if-bot-running hidden" value="trial">
+							    <span class="trial-label">Trial</span>
+							  </label>
+							</div>				
+							<div class="checkbox bot-action">
+							  <label>
+							    <input type="checkbox" data-toggle="toggle" class="gauntlet lock-if-bot-running hidden" value="gauntlet">
+							    <span class="gauntlet-label">Gauntlet</span>
+							  </label>
+							</div>			
+						</div>	
 					</div>
-				</div>	
+				</div>
 			</div>
 		</div>
 	</div>

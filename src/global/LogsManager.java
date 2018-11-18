@@ -10,6 +10,8 @@ public class LogsManager {
 	
 	public static final String RAID = "RAID";
 	public static final String MISSION = "MISSION";
+	public static final String TRIAL = "TRIAL";
+	public static final String GAUNTLET = "GAUNTLET";
 	public static final String FISHING = "FISHING";
 	public static final String NONE = "NONE";
 	public static final String RUNNING = "RUNNING";

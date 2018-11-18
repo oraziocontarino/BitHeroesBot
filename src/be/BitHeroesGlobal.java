@@ -96,4 +96,6 @@ public abstract class BitHeroesGlobal {
 	}
 	protected abstract void main() throws Exception;
 	protected abstract void updateJobCoords();
+	protected abstract void updateConfiguration(JSONObject configuration);
+	protected abstract void updateEnabledStatus(JSONObject configuration);
 }
