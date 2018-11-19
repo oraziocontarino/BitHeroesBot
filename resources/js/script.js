@@ -85,6 +85,16 @@ $(document).ready(function(){
 		$('.main-content').addClass('hidden');
 		$(".main-content."+$(this).attr("tab")).removeClass('hidden');
 	});
+	$('.advanced-settings ul li').click(function(e) {
+		$('.advanced-settings ul li.active').removeClass('active');
+		$(this).addClass('active');
+		$('.advanced-settings .panel.sub-menu').addClass('hidden');
+		$(".advanced-settings .panel.sub-menu."+$(this).attr("tab")).removeClass('hidden');
+	});
+	
+	$("input[type=number]").on("change", function(e){
+		$(this).val($(this).val());
+	});
 	$('#test_btn').click(function(e){
 		$('.checkbox.bot-action .raid').bootstrapToggle('on');
 		$('.checkbox.bot-action .mission').bootstrapToggle('on');

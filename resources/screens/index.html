@@ -145,127 +145,225 @@
 	
 	<div class="main-content advanced-settings hidden">	
 		<div class="panel panel-default">
-			<div class="panel-heading">Coords management</div>
-			<div class="panel-body">
-				<div class="lock-if-bot-running hidden panel-loader"></div>
-				<form>
-					<div class="row form-group">
-						<div class="col-sm-6">
-							<label>Top-left:</label>
-							<input type="text" readonly="true" class="form-control setTopLeft" placeholder="">
-						</div>
-						<div class="col-sm-6">
-							<label>Bottom-right:</label>
-							<input type="text" readonly="true" class="form-control setBottomRight" placeholder="">
-						</div>
-					</div>
-					<div class="row form-group">	
-						<div class="col-sm-12">
-							<button type="button" class="btn btn-primary btn-block updateCoords">Calculate coords</button>
-						</div>
-					</div>
-				</form>
+			<div class="panel-heading sub-menu">
+				<ul class="nav nav-tabs nav-justified">
+					<li role="presentation" class="active" tab="generic-settings"><a href="#">Generic</a></li>
+					<li role="presentation" tab="mission-settings"><a href="#">Mission</a></li>
+					<li role="presentation" tab="raid-settings"><a href="#">Raid</a></li>
+					<li role="presentation" tab="gauntlet-settings"><a href="#">Gauntlet</a></li>
+					<li role="presentation" tab="trial-settings"><a href="#">Trial</a></li>
+				</ul>
 			</div>
-		</div>
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">Mission management</div>
 			<div class="panel-body">
-				<div class="lock-if-bot-running hidden panel-loader"></div>
-				<form>
-					<div class="row form-group">
-						<div class="col-sm-4">
- 								<label>Zone list</label>
-							<select class="form-control setMissionZone">
-							  <option value="">Select Zone</option>
-							  <option value="Z1">Zone 1</option>
-							  <option value="Z2">Zone 2</option>
-							  <option value="Z3">Zone 3</option>
-							  <option value="Z4">Zone 4</option>
-							  <option value="Z5">Zone 5</option>
-							  <option value="Z6" disabled>Zone 6</option>
-							  <option value="Z7" disabled>Zone 7</option>
-							  <option value="Z8" disabled>Zone 8</option>
-							  <option value="Z9" disabled>Zone 9</option>
-							</select>
-						</div>
-						
-						<div class="col-sm-4">
- 								<label>Dungeon list</label>
-							<select class="form-control setMissionDungeon">
-							  <option value="">Select dungeon</option>
-							  <option value="D1">Dungeon 1</option>
-							  <option value="D2">Dungeon 2</option>
-							  <option value="D3">Dungeon 3</option>
-							  <option value="D4">Dungeon 4</option>
-							</select>
-						</div>
-						
-						<div class="col-sm-4">
-							<label>Selected mission:</label>
-							<input type="text" readonly="true" class="form-control selectedMission" placeholder="Z2D2">
-						</div>
+				<div class="panel panel-default generic-settings sub-menu">
+					<div class="panel-heading">Coords management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Top-left:</label>
+									<input type="text" readonly="true" class="form-control setTopLeft" placeholder="">
+								</div>
+								<div class="col-sm-6">
+									<label>Bottom-right:</label>
+									<input type="text" readonly="true" class="form-control setBottomRight" placeholder="">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateCoords">Calculate coords</button>
+								</div>
+							</div>
+						</form>
 					</div>
-					<div class="row form-group">	
-						<div class="col-sm-12">
-							<button type="button" class="btn btn-primary btn-block updateMission">Update mission</button>
-						</div>
+				</div>
+				
+				<div class="panel panel-default mission-settings sub-menu hidden">
+					<div class="panel-heading">Mission management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-4">
+		 								<label>Zone list</label>
+									<select class="form-control setMissionZone">
+									  <option value="">Select Zone</option>
+									  <option value="Z1">Zone 1</option>
+									  <option value="Z2">Zone 2</option>
+									  <option value="Z3">Zone 3</option>
+									  <option value="Z4">Zone 4</option>
+									  <option value="Z5">Zone 5</option>
+									  <option value="Z6" disabled>Zone 6</option>
+									  <option value="Z7" disabled>Zone 7</option>
+									  <option value="Z8" disabled>Zone 8</option>
+									  <option value="Z9" disabled>Zone 9</option>
+									</select>
+								</div>
+								
+								<div class="col-sm-4">
+		 								<label>Dungeon list</label>
+									<select class="form-control setMissionDungeon">
+									  <option value="">Select dungeon</option>
+									  <option value="D1">Dungeon 1</option>
+									  <option value="D2">Dungeon 2</option>
+									  <option value="D3">Dungeon 3</option>
+									  <option value="D4">Dungeon 4</option>
+									</select>
+								</div>
+								
+								<div class="col-sm-4">
+									<label>Selected mission:</label>
+									<input type="text" readonly="true" class="form-control selectedMission" placeholder="Z2D2">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateMission">Update mission</button>
+								</div>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-		</div>
-		
-		<div class="panel panel-default">
-			<div class="panel-heading">Raid management</div>
-			<div class="panel-body">
-				<div class="lock-if-bot-running hidden panel-loader"></div>
-				<form>
-					<div class="row form-group">
-						<div class="col-sm-6">
-							<label>Raid list</label>
-							<select class="form-control setRaid">
-							  <option value="">Select raid</option>
-							  <option value="R1">R1 - Astaroth</option>
-							  <option value="R2">R2 - Kaleido</option>
-							  <option value="R3">R3 - Woodbeard's Booty</option>
-							  <option value="R4">R4 - Unknown</option>
-							  <option value="R5">R5 - Unknown</option>
-							  <option value="R6">R6 - Unknown</option>
-							  <option value="R7">R7 - Unknown</option>
-							</select>
-						</div>
-						
-						<div class="col-sm-6">
-							<label>Selected raid:</label>
-							<input type="text" readonly="true" class="form-control selectedRaid" placeholder="R1">
-						</div>
+				</div>
+				
+				<div class="panel panel-default raid-settings sub-menu hidden">
+					<div class="panel-heading">Raid management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Raid list</label>
+									<select class="form-control setRaid">
+									  <option value="">Select raid</option>
+									  <option value="R1">R1 - Astaroth</option>
+									  <option value="R2">R2 - Kaleido</option>
+									  <option value="R3">R3 - Woodbeard's Booty</option>
+									  <option value="R4">R4 - Unknown</option>
+									  <option value="R5">R5 - Unknown</option>
+									  <option value="R6">R6 - Unknown</option>
+									  <option value="R7">R7 - Unknown</option>
+									</select>
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Selected raid:</label>
+									<input type="text" readonly="true" class="form-control selectedRaid" placeholder="R1">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateRaid">Update raid</button>
+								</div>
+							</div>
+						</form>
 					</div>
-					<div class="row form-group">	
-						<div class="col-sm-12">
-							<button type="button" class="btn btn-primary btn-block updateRaid">Update raid</button>
-						</div>
+				</div>
+				<div class="panel panel-default generic-settings sub-menu hidden">
+					<div class="panel-heading">System</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block clearConfiguration">Clear configuration</button>
+								</div>
+							</div>
+						</form>
 					</div>
-				</form>
-			</div>
-		</div>
-		<div class="panel panel-default">
-			<div class="panel-heading">System</div>
-			<div class="panel-body">
-			<div class="lock-if-bot-running hidden panel-loader"></div>
-				<form>
-					<div class="row form-group">	
-						<div class="col-sm-12">
-							<button type="button" class="btn btn-primary btn-block clearConfiguration">Clear configuration</button>
-						</div>
+				</div>
+				<div class="panel panel-default trial-settings sub-menu hidden">
+					<div class="panel-heading">Trial management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Cost list</label>
+									<select class="form-control cost">
+									  <option value="">Select cost</option>
+									  <option value="1">1 Token</option>
+									  <option value="2">2 Token</option>
+									  <option value="3">3 Token</option>
+									  <option value="4">4 Token</option>
+									  <option value="5">5 Token</option>
+									</select>
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Selected cost:</label>
+									<input type="text" readonly="true" class="form-control selectedCost" placeholder="">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Difficulty list</label>
+									<input class="form-control difficulty" type="number" value="1" min="1" max="211" placeholder="Type difficulty, i.e: 1">
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Selected difficulty:</label>
+									<input type="text" readonly="true" class="form-control selectedDifficulty" placeholder="">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateTrial">Update Trial</button>
+								</div>
+							</div>
+						</form>
 					</div>
-				</form>
+				</div>
+				<div class="panel panel-default gauntlet-settings sub-menu hidden">
+					<div class="panel-heading">Gauntlet management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Cost list</label>
+									<select class="form-control cost">
+									  <option value="">Select cost</option>
+									  <option value="1">1 Token</option>
+									  <option value="2">2 Token</option>
+									  <option value="3">3 Token</option>
+									  <option value="4">4 Token</option>
+									  <option value="5">5 Token</option>
+									</select>
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Selected cost:</label>
+									<input type="text" readonly="true" class="form-control selectedCost" placeholder="">
+								</div>
+							</div>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Difficulty list</label>
+									<input class="form-control difficulty" type="number" value="1" min="1" max="211" placeholder="Type difficulty, i.e: 1">
+								</div>
+								
+								<div class="col-sm-6">
+									<label>Selected difficulty:</label>
+									<input type="text" readonly="true" class="form-control selectedDifficulty" placeholder="">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateGauntlet">Update Gauntlet</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
-	<div class="main-content mission-settings hidden">mission-settings</div>
-	<div class="main-content raid-settings hidden">raid-settings</div>
 	<div class="main-content coming-soon hidden">coming-soon</div>
-	<div class="main-content test hidden"><button id="test_btn">TEST FUNCTION!</button></div>
+	<div class="main-content test hidden">
+	<button id="test_btn">TEST FUNCTION!</button>
+	
+	</div>
 	<!--  JQuery & Bootstrap  -->
 	<script	src="../js/jquery-3.3.1.min.js"></script>
 	<script src="../js/bootstrap-3.3.7.min.js"></script>

@@ -110,7 +110,7 @@ public class BaseJump extends Application {
 		this.executorService.shutdown();
 	}	
 	//TODO: finish start gauntlet/trials (click play button, detect trial/gauntlet end)
-	//TODO: set cost and difficulty of gauntlet/trials via GUI
+	//TODO: set cost and difficulty of gauntlet/trials via GUI(implement BE calls)
 	//TODO: remove mock difficulty and cost
 	//TODO: optimize kill flags
 	//TODO: set delay for loop via config
