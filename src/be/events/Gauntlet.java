@@ -8,7 +8,6 @@ public class Gauntlet extends TrialAndGauntlet {
 
 	public Gauntlet() throws AWTException {
 		super();
-		// TODO Auto-generated constructor stub
 	}
 	@Override
 	protected void updateEnabledStatus(JSONObject configuration) {

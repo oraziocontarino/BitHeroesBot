@@ -178,6 +178,42 @@
 						</form>
 					</div>
 				</div>
+				<div class="panel panel-default generic-settings sub-menu">
+					<div class="panel-heading">Delay management</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">
+								<div class="col-sm-6">
+									<label>Delay between Tasks (minutes):</label>
+									<input type="number" min="0" max="211" class="form-control delay" placeholder="">
+								</div>
+								<div class="col-sm-6">
+									<label>Selected delay:</label>
+									<input type="text" readonly="true" class="form-control selected-delay" placeholder="none">
+								</div>
+							</div>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block updateDelay">Update delay</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div class="panel panel-default generic-settings sub-menu">
+					<div class="panel-heading">System</div>
+					<div class="panel-body">
+						<div class="lock-if-bot-running hidden panel-loader"></div>
+						<form>
+							<div class="row form-group">	
+								<div class="col-sm-12">
+									<button type="button" class="btn btn-primary btn-block clearConfiguration">Clear configuration</button>
+								</div>
+							</div>
+						</form>
+					</div>
+				</div>
 				
 				<div class="panel panel-default mission-settings sub-menu hidden">
 					<div class="panel-heading">Mission management</div>
@@ -259,19 +295,7 @@
 						</form>
 					</div>
 				</div>
-				<div class="panel panel-default generic-settings sub-menu hidden">
-					<div class="panel-heading">System</div>
-					<div class="panel-body">
-						<div class="lock-if-bot-running hidden panel-loader"></div>
-						<form>
-							<div class="row form-group">	
-								<div class="col-sm-12">
-									<button type="button" class="btn btn-primary btn-block clearConfiguration">Clear configuration</button>
-								</div>
-							</div>
-						</form>
-					</div>
-				</div>
+				
 				<div class="panel panel-default trial-settings sub-menu hidden">
 					<div class="panel-heading">Trial management</div>
 					<div class="panel-body">

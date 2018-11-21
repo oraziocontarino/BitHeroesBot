@@ -34,9 +34,15 @@ function setConfigData(data){
 	
 	$('.selectedMission').attr("missionId", data.selectedMission.id);  
 	$('.selectedMission').val(data.selectedMission.label);  
-	
+
 	$('.selectedRaid').attr("raidId", data.selectedRaid.id);
 	$('.selectedRaid').val(data.selectedRaid.label);
+
+	$('.trial-settings .selectedCost').val(data.trial.cost);
+	$('.trial-settings .selectedDifficulty').val(data.trial.difficulty);
+
+	$('.gauntlet-settings .selectedCost').val(data.gauntlet.cost);
+	$('.gauntlet-settings .selectedDifficulty').val(data.gauntlet.difficulty);
 	
 }
 
@@ -143,7 +149,37 @@ $(document).ready(function(){
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		loadConfig();
 	});
+	
+	$('.updateGauntlet').click(function(e) {
+		var selectedCost = $('.gauntlet-settings .cost').val().toUpperCase();
+		var selectedDifficulty = $('.gauntlet-settings .difficulty').val().toUpperCase();
+		if(selectedCost == "" || selectedDifficulty == ""){
+			return;
+		}
+		$('.gauntlet-settings .selectedCost').val(selectedCost.toUpperCase());
+		$('.gauntlet-settings .selectedDifficulty').val(selectedDifficulty.toUpperCase());
 
+		configuration.gauntlet.difficulty = selectedDifficulty;
+		configuration.gauntlet.cost = selectedCost;
+		configuration.stack.gauntlet = true;
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		loadConfig();
+	});	
+	$('.updateTrial').click(function(e) {
+		var selectedCost = $('.trial-settings .cost').val().toUpperCase();
+		var selectedDifficulty = $('.trial-settings .difficulty').val().toUpperCase();
+		if(selectedCost == "" || selectedDifficulty == ""){
+			return;
+		}
+		$('.trial-settings .selectedCost').val(selectedCost.toUpperCase());
+		$('.trial-settings .selectedDifficulty').val(selectedDifficulty.toUpperCase());
+
+		configuration.trial.difficulty = selectedDifficulty;
+		configuration.trial.cost = selectedCost;
+		configuration.stack.trial = true;
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		loadConfig();
+	});
 	$('.startBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");

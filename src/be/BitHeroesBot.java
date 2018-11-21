@@ -106,6 +106,8 @@ public class BitHeroesBot {
 		this.running = false;
 		raid.stop();
 		mission.stop();
+		gauntlet.stop();
+		trial.stop();
 		System.out.println("Force stop!");
 		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
 	}

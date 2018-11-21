@@ -12,7 +12,7 @@ import lib.CustomRobot;
 public abstract class Dungeon extends BitHeroesGlobal {
 	protected Color refuseButtonColor;
 	protected Point eroicoButton;
-	protected Point accettaSquadraButton;
+	protected Point acceptTeamButton;
 	protected Point selectorPrevButton;
 	protected Point selectorNextButton;
 	protected Point[] autoBox;
@@ -44,7 +44,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 				(int) (this.topLeftCorner.y + (this.height*0.45))
 		);
 		
-		this.accettaSquadraButton = new Point(
+		this.acceptTeamButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.75)),
 				(int) (this.topLeftCorner.y + (this.height*0.90))
 		);
@@ -72,7 +72,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 
 	protected void state3() throws InterruptedException, AWTException {
 		this.customRobot.sleep(1000);
-		this.customRobot.mouseClick(this.accettaSquadraButton.x, this.accettaSquadraButton.y);
+		this.customRobot.mouseClick(this.acceptTeamButton.x, this.acceptTeamButton.y);
 		this.state++;
 		this.customRobot.sleep(1000);
 		this.updateStepStartTime();
