@@ -51,8 +51,8 @@ public class BaseJump extends Application {
 	}	
 	
 	private void initWebview() {
-		this.webview.setMaxHeight(700);
-		this.webview.setMinHeight(700);
+		this.webview.setMaxHeight(750);
+		this.webview.setMinHeight(750);
 		this.webview.setMaxWidth(800);
 		this.webview.setMinWidth(800);
 		this.initScene();
@@ -68,8 +68,8 @@ public class BaseJump extends Application {
 	private void initStage() {
 		// stage.initStyle(StageStyle.UNDECORATED);
 		this.stage.setScene(scene);
-		this.stage.setMaxHeight(700);
-		this.stage.setMinHeight(700);
+		this.stage.setMaxHeight(750);
+		this.stage.setMinHeight(750);
 		this.stage.setMaxWidth(800);
 		this.stage.setMinWidth(800);
 		this.stage.setResizable(false);
@@ -109,8 +109,9 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}	
+	//TODO: fix raid full-name. rightnow only RX is shown, name is missing
+	//TODO: implement task order management
+	//TODO: implement fishing event
 	//TODO: optimize kill flags
-	//TODO: set delay for loop via config
-	//TODO: fix log not updating GUI correctly
-	//TODO: fix raid full-name. rightnow only RX is show, name is missing
+	//TODO: LOG disabled to debug, comment 'return;' in script.js:257 to active log again!
 }

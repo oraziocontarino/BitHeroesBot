@@ -13,28 +13,24 @@ import lib.CustomRobot;
 
 public class BitHeroesBot {
 	private static BitHeroesBot instance;
-	private Mission mission;
-	private Raid raid;
-	private Trial trial;
-	private Gauntlet gauntlet;
 	private boolean running;
+	private int roundDelay;
+	private BitHeroesGlobal[] tasks;
 	
 	private LogsManager logs;
-	private final static int WAIT_TIME = 0;
-	//private final static int WAIT_TIME = 10*60*1000;
 	private BitHeroesBot() throws AWTException, InterruptedException {
-
-		this.mission = new Mission();
+		this.tasks = new BitHeroesGlobal[4];
 		
-		this.raid = new Raid();
-
-		this.trial = new Trial();
-		
-		this.gauntlet = new Gauntlet();
+		tasks[0] = new Trial();
+		tasks[1] = new Gauntlet();
+		tasks[2] = new Raid();
+		tasks[3] = new Mission();
 		
 		this.logs = new LogsManager();
 		
 		this.running = false;
+		
+		this.roundDelay = 0;
 	}
 	
 	public static BitHeroesBot getInstance() throws AWTException, InterruptedException{
@@ -45,75 +41,71 @@ public class BitHeroesBot {
 	}
 
 	public void updateBotConfiguration(JSONObject configuration) throws Exception {
-		raid.updateConfiguration(configuration);
-		mission.updateConfiguration(configuration);
-		trial.updateConfiguration(configuration);
-		gauntlet.updateConfiguration(configuration);
+		for(BitHeroesGlobal task : tasks) {
+			task.updateConfiguration(configuration);
+		}
+		this.updateRoundDelay(configuration);
 	}
 	
 	public void run() throws Exception {
 		//CustomRobot.getInstance().detectGamePoistion();
 		running = true;
 		while(running) {
-			System.out.println("Starting trial");
-			logs.update(LogsManager.RUNNING, LogsManager.TRIAL, LogsManager.RAID);
-			trial.start(false);
-			if(!running) {
-				System.out.println("Exit trial");
-				trial.reset();
-				break;
+			int index = 0;
+			for(BitHeroesGlobal task : tasks) {
+				String name = "", logCurrentTask = "", lognextTask = "";
+				if(task instanceof Raid) {
+					name = "Raid";
+					logCurrentTask = LogsManager.RAID;
+					lognextTask = LogsManager.MISSION;
+				}else if(task instanceof Mission) {
+					name = "Mission";
+					logCurrentTask = LogsManager.MISSION;
+					lognextTask = LogsManager.GAUNTLET;
+				}else if(task instanceof Gauntlet) {
+					name = "Gauntlet";
+					logCurrentTask = LogsManager.GAUNTLET;
+					lognextTask = LogsManager.RAID;
+				}else if(task instanceof Trial) {
+					name = "Trial";
+					logCurrentTask = LogsManager.RAID;
+					lognextTask = LogsManager.RAID;
+				}
+				System.out.println("Starting task["+index+"] "+name);
+				logs.update(LogsManager.RUNNING, logCurrentTask, lognextTask);
+				task.start(false);
+				if(!running) {
+					System.out.println("Exit "+name);
+					logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
+					task.reset();
+					System.out.println("THREAD DIED!");
+					return;
+				}
+				task.reset();
+				index ++;
 			}
-			logs.update(LogsManager.RUNNING, LogsManager.GAUNTLET, LogsManager.RAID);
-			gauntlet.start(false);
-			if(!running) {
-				System.out.println("Exit gauntlet");
-				gauntlet.reset();
-				break;
-			}
-			System.out.println("Starting raid");
-			logs.update(LogsManager.RUNNING, LogsManager.RAID, LogsManager.MISSION);
-			raid.start(false);
-			if(!running) {
-				System.out.println("Exit raid");
-				raid.reset();
-				break;
-			}
-			raid.reset();
-			System.out.println("Raid finished");
-			
-			System.out.println("Starting mission");
-			logs.update(LogsManager.RUNNING, LogsManager.MISSION, LogsManager.RAID);
-			mission.start(false);
-			if(!running) {
-				System.out.println("Exit mission");
-				mission.reset();
-				break;
-			}
-			mission.reset();
-			System.out.println("Mission finished");
-			
-			System.out.println("Waiting "+(WAIT_TIME/60000)+" minutes...");
+			System.out.println("Waiting "+this.roundDelay+" milliseconds...");
 			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);
-			CustomRobot.getInstance().sleep(WAIT_TIME);
+			CustomRobot.getInstance().sleep(this.roundDelay);
 		}
-		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
-		raid.reset();
-		mission.reset();
 		System.out.println("THREAD DIED!");
 	}
 	
 	public void stop() {
 		this.running = false;
-		raid.stop();
-		mission.stop();
-		gauntlet.stop();
-		trial.stop();
-		System.out.println("Force stop!");
+		System.out.println("Gonna stop all tasks...");
+		for(BitHeroesGlobal task : tasks) {
+			task.stop();
+		}
+		System.out.println("Tasks stopped!");
 		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
 	}
 	
 	public JSONObject getLogs() {
 		return this.logs.getLogs();
+	}
+	private void updateRoundDelay(JSONObject configuration) {
+		this.roundDelay = configuration.getJSONObject("delays").getInt("round");
 	}
 	
 }

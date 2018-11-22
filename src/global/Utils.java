@@ -135,24 +135,52 @@ public class Utils {
 
 	public static JSONObject getDefaultConfiguration() {
 
-		JSONObject error = new JSONObject().put("coords", false).put("mission", false).put("raid", false);
+		JSONObject error = new JSONObject()
+				.put("coords", false)
+				.put("mission", false)
+				.put("raid", false);
 
-		JSONObject stack = new JSONObject().put("mission", true).put("raid", true).put("trial", false).put("gauntlet", false);
+		JSONObject stack = new JSONObject()
+				.put("mission", true)
+				.put("raid", true)
+				.put("trial", false)
+				.put("gauntlet", false);
 
-		JSONObject topLeft = new JSONObject().put("x", 0).put("y", 0);
+		JSONObject topLeft = new JSONObject()
+				.put("x", 0)
+				.put("y", 0);
 
-		JSONObject bottomRight = new JSONObject().put("x", 0).put("y", 0);
+		JSONObject bottomRight = new JSONObject()
+				.put("x", 0)
+				.put("y", 0);
 
 		JSONObject selectedMission = getSelectedMissionConfigurationNode("Z1D1", "Z1D1");
 
-		JSONObject selectedRaid = new JSONObject().put("label", "R1 - Astorath").put("id", "R1");
+		JSONObject selectedRaid = new JSONObject()
+				.put("label", "R1 - Astorath")
+				.put("id", "R1");
 		
-		JSONObject trial = new JSONObject().put("cost", 5).put("difficulty", 1);
-		JSONObject gauntlet = new JSONObject().put("cost", 5).put("difficulty", 1);
-
-		return new JSONObject().put("error", error).put("stack", stack).put("topLeft", topLeft)
-				.put("bottomRight", bottomRight).put("selectedMission", selectedMission)
-				.put("selectedRaid", selectedRaid).put("trial", trial).put("gauntlet", gauntlet);
+		JSONObject trial = new JSONObject()
+				.put("cost", 5)
+				.put("difficulty", 1);
+		
+		JSONObject gauntlet = new JSONObject()
+				.put("cost", 5)
+				.put("difficulty", 1);
+		
+		JSONObject delays = new JSONObject()
+				.put("round", 0);
+		
+		return new JSONObject()
+				.put("error", error)
+				.put("stack", stack)
+				.put("topLeft", topLeft)
+				.put("bottomRight", bottomRight)
+				.put("selectedMission", selectedMission)
+				.put("selectedRaid", selectedRaid)
+				.put("trial", trial)
+				.put("gauntlet", gauntlet)
+				.put("delays", delays);
 	}
 
 	public static JSONObject getSelectedMissionConfigurationNode(String label, String id) {

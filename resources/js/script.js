@@ -27,21 +27,34 @@ function setConfigData(data){
 
 	$('.checkbox.bot-action .trial').bootstrapToggle(data.stack.trial == true ? 'on' : 'off');
 	$('.checkbox.bot-action .gauntlet').bootstrapToggle(data.stack.gauntlet == true ? 'on' : 'off');
+
+	$('.roundDelay').val(data.delays.round);
+	$('.selectedRoundDelay').val(data.delays.round);
 	
 	//TAB - Advanced setting
 	$('.setTopLeft').val(data.topLeft.x+", "+data.topLeft.y);
 	$('.setBottomRight').val(data.bottomRight.x+", "+data.bottomRight.y);
 	
+	var missionData = data.selectedMission.id.split("D");
+	$('.setMissionZone').val(missionData[0]);
+	$('.setMissionDungeon').val("D"+missionData[1]);
 	$('.selectedMission').attr("missionId", data.selectedMission.id);  
 	$('.selectedMission').val(data.selectedMission.label);  
-
+	
+	$('.setRaid').val(data.selectedRaid.id);
 	$('.selectedRaid').attr("raidId", data.selectedRaid.id);
 	$('.selectedRaid').val(data.selectedRaid.label);
 
+	$('.trial-settings .cost').val(data.trial.cost)
 	$('.trial-settings .selectedCost').val(data.trial.cost);
-	$('.trial-settings .selectedDifficulty').val(data.trial.difficulty);
 
+	$('.trial-settings .difficulty').val(data.trial.difficulty);
+	$('.trial-settings .selectedDifficulty').val(data.trial.difficulty);
+	
+	$('.gauntlet-settings .cost').val(data.gauntlet.cost)
 	$('.gauntlet-settings .selectedCost').val(data.gauntlet.cost);
+
+	$('.gauntlet-settings .difficulty').val(data.gauntlet.difficulty);
 	$('.gauntlet-settings .selectedDifficulty').val(data.gauntlet.difficulty);
 	
 }
@@ -180,6 +193,19 @@ $(document).ready(function(){
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		loadConfig();
 	});
+	
+	$('.updateDelay').click(function(e) {
+		var roundDelay = $('.roundDelay').val();
+		if(roundDelay == ""){
+			return;
+		}
+		$('.selectedRoundDelay').val(roundDelay);
+
+		configuration.delays.round = roundDelay;
+		localStorage.setItem("configuration", JSON.stringify(configuration));
+		loadConfig();
+	});
+	
 	$('.startBot').click(function(e) {
 		if(configuration.error.coords || configuration.error.mission || configuration.error.raid){
 			showBitHeroesBotPanelWarning("Error occurred while reading configuration! Please try again.");

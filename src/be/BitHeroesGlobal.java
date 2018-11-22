@@ -24,18 +24,18 @@ public abstract class BitHeroesGlobal {
 	protected boolean enabled;
 	protected boolean firstRun;
 	protected BitHeroesGlobal() throws AWTException {
-		customRobot = CustomRobot.getInstance();
+		this.customRobot = CustomRobot.getInstance();
 		
-		state = 0;
+		this.state = 0;
 		
-		fishingBarColor = new Color(35, 107, 167);
+		this.fishingBarColor = new Color(35, 107, 167);
 
-		fishingCaputureColor = new Color(77, 254, 0);
+		this.fishingCaputureColor = new Color(77, 254, 0);
 
 		this.updateCoords(Utils.getDefaultConfiguration());
 
 		
-		stepStartTime = 0;
+		this.stepStartTime = 0;
 	}
 	
 	protected void updateCoords(JSONObject configuration) {
@@ -94,8 +94,10 @@ public abstract class BitHeroesGlobal {
 			this.main();
 		}
 	}
+	
 	protected abstract void main() throws Exception;
 	protected abstract void updateJobCoords();
 	protected abstract void updateConfiguration(JSONObject configuration);
 	protected abstract void updateEnabledStatus(JSONObject configuration);
+
 }

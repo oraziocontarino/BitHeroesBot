@@ -185,12 +185,14 @@
 						<form>
 							<div class="row form-group">
 								<div class="col-sm-6">
-									<label>Delay between Tasks (minutes):</label>
-									<input type="number" min="0" max="211" class="form-control delay" placeholder="">
+									<label>Delay between tasks</label><br>
+									<small>*in milliseconds</small>
+									<input type="number" min="0" class="form-control roundDelay" placeholder="">
 								</div>
 								<div class="col-sm-6">
-									<label>Selected delay:</label>
-									<input type="text" readonly="true" class="form-control selected-delay" placeholder="none">
+									<label>Selected delay:</label><br>
+									<small>&nbsp;</small>
+									<input type="text" readonly="true" class="form-control selectedRoundDelay" placeholder="0">
 								</div>
 							</div>
 							<div class="row form-group">	

@@ -11,7 +11,7 @@ public class Gauntlet extends TrialAndGauntlet {
 	}
 	@Override
 	protected void updateEnabledStatus(JSONObject configuration) {
-		this.enabled = configuration.getJSONObject("stack").getBoolean("trial");
+		this.enabled = configuration.getJSONObject("stack").getBoolean("gauntlet");
 	}
 	@Override
 	protected void updateCost(JSONObject configuration) {
