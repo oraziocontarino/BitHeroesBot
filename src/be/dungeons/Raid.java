@@ -25,6 +25,7 @@ public class Raid extends Dungeon {
 	}
 	@Override
 	public void updateConfiguration(JSONObject configuration) {
+		System.out.println("Update raid config...");
 		this.updateCoords(configuration);
 		this.updateEnabledStatus(configuration);
 		this.updateSelectedRaid(configuration);
@@ -102,7 +103,9 @@ public class Raid extends Dungeon {
 		}
 	}
 	
+	@Override
 	protected void updateJobCoords() {
+		super.updateJobCoords();
 		this.raidButton = new Point(
 				(int) (this.topLeftCorner.x + (this.width*0.05)),
 				(int) (this.topLeftCorner.y + (this.height*0.65))

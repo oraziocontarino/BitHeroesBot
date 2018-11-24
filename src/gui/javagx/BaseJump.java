@@ -109,6 +109,9 @@ public class BaseJump extends Application {
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
 	}	
+	//TODO: raid is not working anymore, check mission too
+	//TODO: handle reconnect
+	//TODO: handle midnight event reset
 	//TODO: fix raid full-name. rightnow only RX is shown, name is missing
 	//TODO: implement task order management
 	//TODO: implement fishing event

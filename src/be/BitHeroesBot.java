@@ -40,48 +40,48 @@ public class BitHeroesBot {
 		return instance;
 	}
 
-	public void updateBotConfiguration(JSONObject configuration) throws Exception {
-		for(BitHeroesGlobal task : tasks) {
-			task.updateConfiguration(configuration);
+	private void updateBotConfiguration(JSONObject configuration) throws Exception {
+		for(int i = 0; i<tasks.length; i++) {
+			tasks[i].updateConfiguration(configuration);
 		}
 		this.updateRoundDelay(configuration);
 	}
 	
-	public void run() throws Exception {
-		//CustomRobot.getInstance().detectGamePoistion();
+	public void run(JSONObject configuration) throws Exception {
+		this.updateBotConfiguration(configuration);
 		running = true;
 		while(running) {
 			int index = 0;
-			for(BitHeroesGlobal task : tasks) {
+			for(int i = 0; i<tasks.length; i++) {
 				String name = "", logCurrentTask = "", lognextTask = "";
-				if(task instanceof Raid) {
+				if(tasks[i] instanceof Raid) {
 					name = "Raid";
 					logCurrentTask = LogsManager.RAID;
 					lognextTask = LogsManager.MISSION;
-				}else if(task instanceof Mission) {
+				}else if(tasks[i] instanceof Mission) {
 					name = "Mission";
 					logCurrentTask = LogsManager.MISSION;
 					lognextTask = LogsManager.GAUNTLET;
-				}else if(task instanceof Gauntlet) {
+				}else if(tasks[i] instanceof Gauntlet) {
 					name = "Gauntlet";
 					logCurrentTask = LogsManager.GAUNTLET;
 					lognextTask = LogsManager.RAID;
-				}else if(task instanceof Trial) {
+				}else if(tasks[i] instanceof Trial) {
 					name = "Trial";
 					logCurrentTask = LogsManager.RAID;
 					lognextTask = LogsManager.RAID;
 				}
 				System.out.println("Starting task["+index+"] "+name);
 				logs.update(LogsManager.RUNNING, logCurrentTask, lognextTask);
-				task.start(false);
+				tasks[i].start(false);
 				if(!running) {
 					System.out.println("Exit "+name);
 					logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
-					task.reset();
+					tasks[i].reset();
 					System.out.println("THREAD DIED!");
 					return;
 				}
-				task.reset();
+				tasks[i].reset();
 				index ++;
 			}
 			System.out.println("Waiting "+this.roundDelay+" milliseconds...");
@@ -94,8 +94,8 @@ public class BitHeroesBot {
 	public void stop() {
 		this.running = false;
 		System.out.println("Gonna stop all tasks...");
-		for(BitHeroesGlobal task : tasks) {
-			task.stop();
+		for(int i = 0; i<tasks.length; i++) {
+			tasks[i].stop();
 		}
 		System.out.println("Tasks stopped!");
 		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);

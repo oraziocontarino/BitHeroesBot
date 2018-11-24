@@ -28,10 +28,10 @@ public class AsyncBot {
 		this.thread = new Thread(new Runnable() {
 	        public void run(){
 	        	try {
-	        		System.out.println("Setting configuration...");
-	        		BitHeroesBot.getInstance().updateBotConfiguration(configuration);
+	        		//System.out.println("Setting configuration...");
+	        		//BitHeroesBot.getInstance().updateBotConfiguration(configuration);
 	        		System.out.println("Running bot...");
-					BitHeroesBot.getInstance().run();
+					BitHeroesBot.getInstance().run(configuration);
 				} catch (Exception e) {
 					System.out.println("Error occurred while starting bot!");
 					e.printStackTrace();
