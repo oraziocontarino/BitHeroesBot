@@ -83,7 +83,7 @@ public class Webpack {
 		}
 		return instance;		
 	}
-
+	
 	public JSONObject getAssetsMap() {
 		JSONObject assets = new JSONObject();
 		for(String resource : RESOURCES) {

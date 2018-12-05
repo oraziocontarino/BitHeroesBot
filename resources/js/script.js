@@ -115,8 +115,12 @@ $(document).ready(function(){
 		$(this).val($(this).val());
 	});
 	$('#test_btn').click(function(e){
-		$('.checkbox.bot-action .raid').bootstrapToggle('on');
-		$('.checkbox.bot-action .mission').bootstrapToggle('on');
+		setBusy(true);
+		setTimeout(function(){
+			test().promise.then(function(data){
+				setBusy(false);
+			});
+		}, 1000);
 	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);

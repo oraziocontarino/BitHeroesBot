@@ -1,5 +1,6 @@
 package gui.javagx;
 
+import java.io.File;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -27,6 +28,7 @@ public class BaseJump extends Application {
 	private WebView webview;
 	private Stage stage;
 	private Scene scene;
+	private String indexPath;
 	
 	public static void main(String[] args) {
 
@@ -46,7 +48,10 @@ public class BaseJump extends Application {
 		this.bridge = new JavaBridge(engine);
 		this.window = (JSObject) this.engine.executeScript("window");
 		this.initJavascriptBridges();
-		this.engine.load("file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html"));
+
+		//this.engine.load("file:/"+Webpack.getInstance().getAssetsMap().getString("screens/index.html"));
+		File index = new File(Webpack.getInstance().getAssetsMap().getString("screens/index.html"));
+		this.engine.load(index.toURI().toString());
 		this.initWebview();
 	}	
 	

@@ -24,8 +24,7 @@ function test(){
 	var payload = {
 			configuration: configuration
 	}
-	console.log("hey");
-	//return getPromise(ENDPOINTS.TEST, payload);
+	return getPromise(ENDPOINTS.TEST, payload);
 }
 
 function setCoords(){
