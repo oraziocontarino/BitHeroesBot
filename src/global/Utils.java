@@ -7,6 +7,8 @@ import java.awt.Point;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
 import java.awt.image.BufferedImage;
+import java.util.Calendar;
+
 import org.json.JSONObject;
 
 import lib.CustomRobot;
@@ -14,11 +16,25 @@ import lib.CustomRobot;
 public class Utils {
 
 	public static void test(JSONObject configuration) {
+		try {
+			long start = Calendar.getInstance().getTimeInMillis();
+			Point[] test1 = detectGamePoistion();
+			long delta = Calendar.getInstance().getTimeInMillis() - start;
+			System.out.println("TEST 1 TIME: "+delta);
+			System.out.println("TEST 1 POINT[0]: "+test1[0]);
+			System.out.println("TEST 1 POINT[1]: "+test1[1]);
+			
+		} catch (AWTException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
 	}
-	
 	
 	public static Point[] detectGamePoistion() throws AWTException {
 		System.out.println("Loading game position...");
+		long start = Calendar.getInstance().getTimeInMillis();
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		int width = (int) screenSize.getWidth();
 		int height = (int) screenSize.getHeight();
@@ -32,7 +48,7 @@ public class Utils {
 			for (int y = 0; y < image.getHeight(); y++) {
 				if (coords[0] == null) {
 					coords[0] = calculateTopLeftMatrix(patternSize, x, y, borderColor, tolerance, image);
-				} else if (coords[1] == null) {
+				} else if (coords[1] == null  && isBlack(x + patternSize - 1, y + patternSize - 1, borderColor, tolerance, image)) {
 					coords[1] = calculateBottomRightMatrix(patternSize, x, y, borderColor, tolerance, image);
 					if (coords[1] != null && Math.abs(coords[1].y - coords[0].y) < 100) {
 						coords[1] = null;
@@ -46,43 +62,45 @@ public class Utils {
 		 * if(coords[1] != null) {
 		 * System.out.println("Found bottomRight! x:"+coords[1].x+"; y:"+coords[1].y); }
 		 */
-		System.out.println("Done!");
+		long delta = Calendar.getInstance().getTimeInMillis() - start;
+		System.out.println("Done in: "+delta+" ms");
 		return coords;
+	}
+	private static boolean isBlack(int x, int y, Color borderColor, int tolerance, BufferedImage image) {
+		try {
+			return CustomRobot.getInstance().comparePixel(new Color(image.getRGB(x, y)), borderColor, tolerance);
+		} catch (Exception e) {
+			return false;
+		}
 	}
 
 	private static Point calculateTopLeftMatrix(int patternSize, int x, int y, Color borderColor, int tolerance,
 			BufferedImage image) {
-		Boolean[][] topLeftCorner = new Boolean[patternSize][patternSize];
+		//Boolean[][] topLeftCorner = new Boolean[patternSize][patternSize];
 		Point coords = null;
+		boolean success = false;
 		try {
+			int localX, localY;
 			for (int i = 0; i < patternSize; i++) {
 				for (int j = 0; j < patternSize; j++) {
+					localX = x+i;
+					localY = y+j;
 					if (i == 0) {
 						// i=0, first row is black!
-						topLeftCorner[i][j] = CustomRobot.getInstance()
-								.comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor, tolerance);
+						success = isBlack(localX, localY, borderColor, tolerance, image);
 					} else if (j == 0) {
 						// i>0, first element is black!
-						topLeftCorner[i][j] = CustomRobot.getInstance()
-								.comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor, tolerance);
+						success = isBlack(localX, localY, borderColor, tolerance, image);
 					} else {
 						// i>0, j>0, should not find black
-						topLeftCorner[i][j] = !CustomRobot.getInstance()
-								.comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor, tolerance);
+						success = !isBlack(localX, localY, borderColor, tolerance, image);
+					}
+					if(!success) {
+						return null;
 					}
 				}
 			}
-
-			boolean success = true;
-			for (int i = 0; i < patternSize; i++) {
-				for (int j = 0; j < patternSize; j++) {
-					success = success && topLeftCorner[i][j];
-				}
-			}
-
-			if (success) {
-				coords = new Point(x, y);
-			}
+			coords = new Point(x, y);
 		} catch (Exception e) {
 			// Out of bound, ignore it
 		}
@@ -91,48 +109,41 @@ public class Utils {
 
 	private static Point calculateBottomRightMatrix(int patternSize, int x, int y, Color borderColor, int tolerance,
 			BufferedImage image) {
-		Boolean[][] bottomRightCorner = new Boolean[patternSize][patternSize];
 		Point coords = null;
 		int badPixel = 0;
+		boolean success = false;
 		try {
+			int localX, localY;
 			for (int i = 0; i < patternSize; i++) {
 				for (int j = 0; j < patternSize; j++) {
+					localX = x+i;
+					localY = y+j;
 					if (i == patternSize - 1) {
 						// i = patternSize-1, last row is black!
-						bottomRightCorner[i][j] = CustomRobot.getInstance()
-								.comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor, tolerance);
+						success = isBlack(localX, localY, borderColor, tolerance, image);
 					} else if (j == patternSize - 1) {
 						// i < patternSize, last element is black!
-						bottomRightCorner[i][j] = CustomRobot.getInstance()
-								.comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor, tolerance);
+						success = isBlack(localX, localY, borderColor, tolerance, image);
 					} else {
 						// i < patternSize, j < patternSize, should not find black
-						if (CustomRobot.getInstance().comparePixel(new Color(image.getRGB(x + i, y + j)), borderColor,
-								tolerance)) {
+						if (isBlack(localX, localY, borderColor, tolerance, image)) {
 							badPixel++;
 						}
-						bottomRightCorner[i][j] = true;
+						success = true;
+					}
+					if(!success || badPixel >= 4) {
+						return null;
 					}
 				}
 			}
 
-			boolean success = true;
-			for (int i = 0; i < patternSize; i++) {
-				for (int j = 0; j < patternSize; j++) {
-					success = success && bottomRightCorner[i][j];
-				}
-			}
+			coords = new Point(x + patternSize, y + patternSize);
 
-			if (success && badPixel < 4) {
-				coords = new Point(x + patternSize, y + patternSize);
-				// System.out.println("BAD PIXEL:"+badPixel);
-			}
 		} catch (Exception e) {
 			// Out of bound, ignore it
 		}
 		return coords;
 	}
-
 	public static JSONObject getDefaultConfiguration() {
 
 		JSONObject error = new JSONObject()
