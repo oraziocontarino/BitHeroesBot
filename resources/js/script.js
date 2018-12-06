@@ -116,25 +116,21 @@ $(document).ready(function(){
 	});
 	$('#test_btn').click(function(e){
 		setBusy(true);
-		setTimeout(function(){
-			test().promise.then(function(data){
-				setBusy(false);
-			});
-		}, 1000);
+		test().promise.then(function(data){
+			setBusy(false);
+		});
 	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);
-		setTimeout(function(){
-			setCoords().promise.then(function(data){
-				var data = JSON.parse(data);
-				configuration.error.coords = data.error;
-				configuration.topLeft = data.topLeft;
-				configuration.bottomRight = data.bottomRight;
-				localStorage.setItem("configuration", JSON.stringify(configuration));
-				loadConfig();
-				setBusy(false);
-			});
-		}, 1000);
+		setCoords().promise.then(function(data){
+			var data = JSON.parse(data);
+			configuration.error.coords = data.error;
+			configuration.topLeft = data.topLeft;
+			configuration.bottomRight = data.bottomRight;
+			localStorage.setItem("configuration", JSON.stringify(configuration));
+			loadConfig();
+			setBusy(false);
+		});
 	});
 
 	$('.updateMission').click(function(e) {
