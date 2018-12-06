@@ -25,7 +25,6 @@ public class Utils {
 			System.out.println("TEST 1 POINT[1]: "+test1[1]);
 			
 		} catch (AWTException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -97,20 +97,30 @@
 						<div class="lock-if-bot-running hidden panel-loader">
 							<span class="loader-image"></span>
 						</div>
-						<div class="col-sm-12">					
-							<div class="checkbox bot-action">
-							  <label>
-							    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running hidden" value="raid">
-							    <span class="raid-label">Raid</span>
-							  </label>
+						<div class="col-sm-12 no-padding-left no-padding-right">				
+							<div class="col-sm-3 checkbox-container no-padding-left">
+								<div class="checkbox bot-action">
+								  <label>
+								    <input type="checkbox" data-toggle="toggle" class="raid lock-if-bot-running hidden" value="raid">
+								  </label>
+								</div>
+							</div>	
+							<div class="col-sm-8 checkbox-container-label padding-sm-left no-padding-right">
+								<span class="raid-label"><p>Raid</p><small>No raid selected...</small></span>
 							</div>
-							<div class="checkbox bot-action">
-							  <label>
-							    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running hidden" value="mission">
-							    <span class="mission-label">Mission</span>
-							  </label>
+						</div>
+						<div class="col-sm-12 no-padding-left no-padding-right">				
+							<div class="col-sm-3 checkbox-container no-padding-left">
+								<div class="checkbox bot-action">
+								  <label>
+								    <input type="checkbox" data-toggle="toggle" class="mission lock-if-bot-running hidden" value="mission">
+								  </label>
+								</div>
+							</div>	
+							<div class="col-sm-8 checkbox-container-label padding-sm-left no-padding-right">
+								<span class="mission-label"><p>Mission</p><small>No mission selected...</small></span>
 							</div>
-						</div>	
+						</div>
 					</div>
 				</div>
 			</div>
@@ -123,20 +133,31 @@
 						<div class="lock-if-bot-running hidden panel-loader">
 							<span class="loader-image"></span>
 						</div>
-						<div class="col-sm-12">			
-							<div class="checkbox bot-action">
-							  <label>
-							    <input type="checkbox" data-toggle="toggle" class="trial lock-if-bot-running hidden" value="trial">
-							    <span class="trial-label">Trial</span>
-							  </label>
-							</div>				
-							<div class="checkbox bot-action">
-							  <label>
-							    <input type="checkbox" data-toggle="toggle" class="gauntlet lock-if-bot-running hidden" value="gauntlet">
-							    <span class="gauntlet-label">Gauntlet</span>
-							  </label>
-							</div>			
-						</div>	
+						<div class="col-sm-12 no-padding-left no-padding-right">				
+							<div class="col-sm-3 checkbox-container no-padding-left">
+								<div class="checkbox bot-action">
+								  <label>
+								    <input type="checkbox" data-toggle="toggle" class="trial lock-if-bot-running hidden" value="trial">
+								  </label>
+								</div>
+							</div>	
+							<div class="col-sm-8 checkbox-container-label padding-sm-left no-padding-right">
+								<span class="trial-label"><p>Trial</p><small>Not yet implemented...</small></span>
+							</div>
+						</div>
+						
+						<div class="col-sm-12 no-padding-left no-padding-right">				
+							<div class="col-sm-3 checkbox-container no-padding-left">
+								<div class="checkbox bot-action">
+								  <label>
+								    <input type="checkbox" data-toggle="toggle" class="gauntlet lock-if-bot-running hidden" value="gauntlet">
+								  </label>
+								</div>
+							</div>	
+							<div class="col-sm-8 checkbox-container-label padding-sm-left no-padding-right">
+								<span class="gauntlet-label"><p>Gauntlet</p><small>Not yet implemented...</small></span>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -274,13 +295,13 @@
 									<label>Raid list</label>
 									<select class="form-control setRaid">
 									  <option value="">Select raid</option>
-									  <option value="R1">R1 - Astaroth</option>
-									  <option value="R2">R2 - Kaleido</option>
-									  <option value="R3">R3 - Woodbeard's Booty</option>
-									  <option value="R4">R4 - Unknown</option>
-									  <option value="R5">R5 - Unknown</option>
-									  <option value="R6">R6 - Unknown</option>
-									  <option value="R7">R7 - Unknown</option>
+									  <option value="R1" label="Astaroth">R1 - Astaroth</option>
+									  <option value="R2" label="Kaleido">R2 - Kaleido</option>
+									  <option value="R3" label="Woodbeard's Booty">R3 - Woodbeard's Booty</option>
+									  <option value="R4" label="Unknown">R4 - Unknown</option>
+									  <option value="R5" label="Unknown">R5 - Unknown</option>
+									  <option value="R6" label="Unknown">R6 - Unknown</option>
+									  <option value="R7" label="Unknown">R7 - Unknown</option>
 									</select>
 								</div>
 								

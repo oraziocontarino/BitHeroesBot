@@ -20,14 +20,17 @@ function setConfigData(data){
 	//TAB - Main
 	console.log(JSON.stringify(data));
 	$('.checkbox.bot-action .mission').bootstrapToggle(data.stack.mission == true ? 'on' : 'off');
-	$('.checkbox.bot-action .mission-label').text("Mission - "+data.selectedMission.label);
+	$('.mission-label small').text(data.selectedMission.label);
 	
 	$('.checkbox.bot-action .raid').bootstrapToggle(data.stack.raid == true ? 'on' : 'off');
-	$('.checkbox.bot-action .raid-label').text("Raid - "+data.selectedRaid.label);
+	$('.raid-label small').text(data.selectedRaid.label);
 
 	$('.checkbox.bot-action .trial').bootstrapToggle(data.stack.trial == true ? 'on' : 'off');
+	$('.trial-label small').text("Difficulty: "+data.trial.difficulty+" | Ticket: "+data.trial.cost);
+	
 	$('.checkbox.bot-action .gauntlet').bootstrapToggle(data.stack.gauntlet == true ? 'on' : 'off');
-
+	$('.gauntlet-label small').text("Difficulty: "+data.gauntlet.difficulty+" | Ticket: "+data.gauntlet.cost);
+	
 	$('.roundDelay').val(data.delays.round);
 	$('.selectedRoundDelay').val(data.delays.round);
 	
@@ -152,12 +155,13 @@ $(document).ready(function(){
 	
 	$('.updateRaid').click(function(e) {
 		var selectedRaid = $('.setRaid').val().toUpperCase();
-		if(selectedRaid == ""){
+		var selectedRaidLabel = selectedRaid+" - "+$('.setRaid option:selected').attr('label');
+		if(selectedRaid == "" || selectedRaidLabel == ""){
 			return;
 		}
 
 		configuration.selectedRaid.id=selectedRaid;
-		configuration.selectedRaid.label=selectedRaid;
+		configuration.selectedRaid.label=selectedRaidLabel;
 		configuration.stack.raid = true;
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		loadConfig();

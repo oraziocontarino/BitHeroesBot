@@ -1,4 +1,43 @@
-.navbar-global {
+	.no-padding-left{
+		padding-left: 0px;
+	}
+	.no-padding-right{
+		padding-right: 0px;
+	}
+	.no-padding-top{
+		padding-top: 0px;
+	}
+	.no-padding-bottom{
+		padding-left: 0px;
+	}
+	
+	.padding-sm-left{
+		padding-left: 20px;
+	}
+	.padding-sm-right{
+		padding-right: 20px;
+	}
+	.padding-sm-top{
+		padding-top: 20px;
+	}
+	.padding-sm-bottom{
+		padding-left: 20px;
+	}
+	
+	.no-margin-left{
+		margin-left: 0px;
+	}
+	.no-margin-right{
+		margin-right: 0px;
+	}
+	.no-margin-top{
+		margin-top: 0px;
+	}
+	.no-margin-bottom{
+		margin-left: 0px;
+	}
+	
+	.navbar-global {
 	  background-color: indigo;
 	}
 	
@@ -144,3 +183,35 @@
 		padding-bottom: 0px;
 	    border-bottom: 0px;
 	}
+	.raid-label, 
+	.mission-label,
+	.trial-label,
+	.gauntlet-label{
+		display: inline-table;
+	}
+	
+	.raid-label p, 
+	.mission-label p,
+	.trial-label p,
+	.gauntlet-label p{
+		margin-bottom: -8px;
+	}
+	
+	.raid-label small, 
+	.mission-label small,
+	.trial-label small,
+	.gauntlet-label small{
+		color: #777;
+	}
+	
+	.checkbox-container, .checkbox-container-label{
+		display: inline-block;
+    	float: none;
+	}
+
+	.checkbox-container-label{
+	    vertical-align: middle;
+	}
+	
+
+		
