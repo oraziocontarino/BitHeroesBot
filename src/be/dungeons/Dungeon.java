@@ -120,18 +120,21 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	}
 	
 	protected void refuseEventCheck() throws AWTException, InterruptedException {
-		Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
-		if(searchedPixel != null){
-			System.out.println("FOUND! at: ["+searchedPixel.x+", "+searchedPixel.y+"]");
-			this.customRobot.mouseClick(searchedPixel.x, searchedPixel.y);
-			this.customRobot.sleep(1000);
-			this.customRobot.send("{enter}");
-			this.customRobot.sleep(1000);
-			this.customRobot.send("{esc}");
-			this.customRobot.sleep(1000);
-			this.customRobot.mouseMove(0, 0);
-			this.customRobot.sleep(1000);
-			searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+//TODO: refactorize merchant refuse algoritm, rightnow it causes equipment swap issue due to random "searchpixel" click
+//		Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+//		if(searchedPixel != null){
+//			//System.out.println("FOUND! at: ["+searchedPixel.x+", "+searchedPixel.y+"]");
+//			super.closeItemBoxes();
+//			this.customRobot.mouseClick(searchedPixel.x, searchedPixel.y);
+//			this.customRobot.sleep(1000);
+//			this.customRobot.send("{enter}");
+//			this.customRobot.sleep(1000);
+//			this.customRobot.send("{esc}");
+//			this.customRobot.sleep(1000);
+//			this.customRobot.mouseMove(0, 0);
+//			this.customRobot.sleep(1000);
+//			super.closeItemBoxes();
+			Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
 			if(searchedPixel != null) {
 				//Familar Capture
 				this.customRobot.send("{enter}");
@@ -142,9 +145,7 @@ public abstract class Dungeon extends BitHeroesGlobal {
 				this.customRobot.mouseClick(this.refuseExitDungeon.x, this.refuseExitDungeon.y);
 				this.customRobot.sleep(1000);
 			}
-		}else {
-			System.out.println("NOT FOUND!");
-		}
+//		}
 	}
 	
 	

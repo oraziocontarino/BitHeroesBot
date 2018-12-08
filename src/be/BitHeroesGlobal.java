@@ -11,16 +11,16 @@ import lib.CustomRobot;
 
 public abstract class BitHeroesGlobal {
 	protected int state;
+	protected int running;
+	protected CustomRobot customRobot;
 	protected Color fishingBarColor;
 	protected Color fishingCaputureColor;
 	protected Point topLeftCorner;
 	protected Point bottomRightCorner;
+	protected Point center;
 	protected int width; 
 	protected int height;
-	protected Point center;
 	protected int stepStartTime;
-	protected CustomRobot customRobot;
-	protected int running;
 	protected boolean enabled;
 	protected boolean firstRun;
 	protected BitHeroesGlobal() throws AWTException {
@@ -29,9 +29,9 @@ public abstract class BitHeroesGlobal {
 		this.state = 0;
 		
 		this.fishingBarColor = new Color(35, 107, 167);
-
+		
 		this.fishingCaputureColor = new Color(77, 254, 0);
-
+		
 		this.updateCoords(Utils.getDefaultConfiguration());
 
 		
@@ -43,8 +43,8 @@ public abstract class BitHeroesGlobal {
 		
 		this.bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
 		
-		this.width = Utils.getGameWidth(this.bottomRightCorner, this.topLeftCorner);
-		this.height = Utils.getGameHeight(this.bottomRightCorner, this.topLeftCorner);
+		this.width = Utils.getGameWidth(this.topLeftCorner, this.bottomRightCorner);
+		this.height = Utils.getGameHeight(this.topLeftCorner, this.bottomRightCorner);
 		
 		this.center = Utils.getGameCenter(this.topLeftCorner, this.width, this.height);
 		this.updateJobCoords();

@@ -95,8 +95,8 @@ public class MissionList {
 		}
 		Point topLeftCorner = Utils.getGameTopLeftCorner(configuration);
 		Point bottomRightCorner = Utils.getGameBottomRightCorner(configuration);
-		int width = Utils.getGameWidth(bottomRightCorner, topLeftCorner);
-		int height = Utils.getGameHeight(bottomRightCorner, topLeftCorner);
+		int width = Utils.getGameWidth(topLeftCorner, bottomRightCorner);
+		int height = Utils.getGameHeight(topLeftCorner, bottomRightCorner);
 		System.out.println("key::"+key);
 		System.out.println(configuration);
 		return new Point(

@@ -17,6 +17,13 @@ public class Utils {
 
 	public static void test(JSONObject configuration) {
 		try {
+			//DO NOT DELETE THIS BLOCK
+			Point topLeftCorner = getGameTopLeftCorner(configuration);
+			Point bottomRightCorner = getGameBottomRightCorner(configuration);
+			int width = getGameWidth(topLeftCorner, bottomRightCorner);
+			int height = getGameHeight(topLeftCorner, bottomRightCorner);
+			//END OF BLOCK
+
 			long start = Calendar.getInstance().getTimeInMillis();
 			Point[] test1 = detectGamePoistion();
 			long delta = Calendar.getInstance().getTimeInMillis() - start;
@@ -207,11 +214,11 @@ public class Utils {
 				configuration.getJSONObject("bottomRight").getInt("y"));
 	}
 
-	public static int getGameWidth(Point bottomRightCorner, Point topLeftCorner) {
+	public static int getGameWidth(Point topLeftCorner, Point bottomRightCorner) {
 		return bottomRightCorner.x - topLeftCorner.x;
 	}
 
-	public static int getGameHeight(Point bottomRightCorner, Point topLeftCorner) {
+	public static int getGameHeight(Point topLeftCorner, Point bottomRightCorner) {
 		return bottomRightCorner.y - topLeftCorner.y;
 	}
 
