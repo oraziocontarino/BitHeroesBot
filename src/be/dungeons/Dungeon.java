@@ -90,62 +90,87 @@ public abstract class Dungeon extends BitHeroesGlobal {
 	
 	
 	protected boolean isCompleted() throws InterruptedException, AWTException {
-		boolean autoDisabled = true;
-		int maxTries = 20;
-		int currentTry = 0;
-		refuseEventCheck();
-		this.customRobot.sleep(1000);
-		
-		this.customRobot.send("{enter}");
-		this.customRobot.sleep(500);
+		int maxTries = 5;		
+		boolean isAutoPlaying = false;
+		boolean wasAutoPlaying = false; 
+		for(int i = 0; i<maxTries; i++) {
 
-		while(autoDisabled && currentTry < maxTries) {
-			if(this.running <= 0) {
-				return true;
+			//Init autoplay status
+			wasAutoPlaying = this.isAutoPlaying();
+			
+			//Force change autoplay status
+			this.customRobot.send("{enter}");
+			this.customRobot.sleep(500);
+			
+			//Familiar capture
+			for(int j=0; j < 3; j++) {
+				isAutoPlaying = this.isAutoPlaying();
+				if(wasAutoPlaying != isAutoPlaying) {
+					break;
+				}
+				
+				this.customRobot.send("{enter}");
+				this.customRobot.sleep(500);	
+				wasAutoPlaying = isAutoPlaying;
 			}
-			if(this.customRobot.pixelSearch(this.autoBox[0].x, this.autoBox[0].y, this.autoBox[1].x, this.autoBox[1].y, this.autoBoxEnabledColor, 10) != null) {
-				autoDisabled = false;
-			}else {
-				this.customRobot.sleep(500);
+			
+			//Verify status, ensure state = auto (green box)
+			if(!isAutoPlaying) {
 				this.customRobot.send("{enter}");
 				this.customRobot.sleep(500);
-				currentTry++;
+			}
+			//Found autoplay enabled, dungeon is running
+			if(this.isAutoPlaying()) {
+				return isCompletedCounter() || false;
 			}
 		}
-	   if(currentTry == maxTries) {
-		  return true;
-	   } else {
-		  return false;
-	   }
+		
+		//Found autoplay not enabled, dungeon has been completed
+		return isCompletedCounter() || true;
+	}
+	
+	private boolean isAutoPlaying() {
+		return this.customRobot.pixelSearch(this.autoBox[0].x, this.autoBox[0].y, this.autoBox[1].x, this.autoBox[1].y, this.autoBoxEnabledColor, 10) != null;
+	}
+	
+	private boolean isCompletedCounter() {
+		return this.running <= 0;
 	}
 	
 	protected void refuseEventCheck() throws AWTException, InterruptedException {
 //TODO: refactorize merchant refuse algoritm, rightnow it causes equipment swap issue due to random "searchpixel" click
-//		Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
-//		if(searchedPixel != null){
-//			//System.out.println("FOUND! at: ["+searchedPixel.x+", "+searchedPixel.y+"]");
-//			super.closeItemBoxes();
-//			this.customRobot.mouseClick(searchedPixel.x, searchedPixel.y);
-//			this.customRobot.sleep(1000);
-//			this.customRobot.send("{enter}");
-//			this.customRobot.sleep(1000);
-//			this.customRobot.send("{esc}");
-//			this.customRobot.sleep(1000);
-//			this.customRobot.mouseMove(0, 0);
-//			this.customRobot.sleep(1000);
-//			super.closeItemBoxes();
-			Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+/*
+		Point searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
+		if(searchedPixel != null){
+			//System.out.println("FOUND! at: ["+searchedPixel.x+", "+searchedPixel.y+"]");
+			super.closeItemBoxes();
+			this.customRobot.mouseClick(searchedPixel.x, searchedPixel.y);
+			this.customRobot.sleep(1000);
+			this.customRobot.send("{enter}");
+			this.customRobot.sleep(1000);
+			this.customRobot.send("{esc}");
+			this.customRobot.sleep(1000);
+			this.customRobot.mouseMove(0, 0);
+			this.customRobot.sleep(1000);
+			super.closeItemBoxes();
+			searchedPixel = this.customRobot.pixelSearch(this.topLeftCorner.x, this.topLeftCorner.y, this.bottomRightCorner.x, this.bottomRightCorner.y, this.refuseButtonColor, 10);
 			if(searchedPixel != null) {
 				//Familar Capture
 				this.customRobot.send("{enter}");
 				this.customRobot.sleep(1000);
 				this.customRobot.send("{enter}");
 				this.customRobot.sleep(1000);
+				//last or first enter may be missed, try again (faster then before) to ensure capture
+				this.customRobot.send("{enter}");
+				this.customRobot.sleep(500);
+				this.customRobot.send("{enter}");
+				this.customRobot.sleep(500);
 			}else {
 				this.customRobot.mouseClick(this.refuseExitDungeon.x, this.refuseExitDungeon.y);
 				this.customRobot.sleep(1000);
 			}
-//		}
+		}
+		*/
 	}
 	
 	

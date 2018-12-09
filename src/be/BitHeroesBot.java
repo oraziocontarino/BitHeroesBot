@@ -18,6 +18,8 @@ public class BitHeroesBot {
 	private BitHeroesGlobal[] tasks;
 	
 	private LogsManager logs;
+	private int currentTaskIndex;
+	
 	private BitHeroesBot() throws AWTException, InterruptedException {
 		this.tasks = new BitHeroesGlobal[4];
 		
@@ -31,6 +33,7 @@ public class BitHeroesBot {
 		this.running = false;
 		
 		this.roundDelay = 0;
+		this.currentTaskIndex = 0;
 	}
 	
 	public static BitHeroesBot getInstance() throws AWTException, InterruptedException{
@@ -51,38 +54,46 @@ public class BitHeroesBot {
 		this.updateBotConfiguration(configuration);
 		running = true;
 		while(running) {
-			int index = 0;
-			for(int i = 0; i<tasks.length; i++) {
+			for(currentTaskIndex = 0; currentTaskIndex < tasks.length; currentTaskIndex++) {
 				String name = "", logCurrentTask = "", lognextTask = "";
-				if(tasks[i] instanceof Raid) {
+				if(tasks[currentTaskIndex] instanceof Raid) {
 					name = "Raid";
 					logCurrentTask = LogsManager.RAID;
 					lognextTask = LogsManager.MISSION;
-				}else if(tasks[i] instanceof Mission) {
+				}else if(tasks[currentTaskIndex] instanceof Mission) {
 					name = "Mission";
 					logCurrentTask = LogsManager.MISSION;
 					lognextTask = LogsManager.GAUNTLET;
-				}else if(tasks[i] instanceof Gauntlet) {
+				}else if(tasks[currentTaskIndex] instanceof Gauntlet) {
 					name = "Gauntlet";
 					logCurrentTask = LogsManager.GAUNTLET;
 					lognextTask = LogsManager.RAID;
-				}else if(tasks[i] instanceof Trial) {
+				}else if(tasks[currentTaskIndex] instanceof Trial) {
 					name = "Trial";
 					logCurrentTask = LogsManager.RAID;
 					lognextTask = LogsManager.RAID;
 				}
-				System.out.println("Starting task["+index+"] "+name);
+				
+				if(!tasks[currentTaskIndex].isEnabled()) {
+					System.out.println("Skip | Task["+currentTaskIndex+"] | "+name);
+					continue;
+				}
+				
+				System.out.println("Start | Task["+currentTaskIndex+"] | "+name);
 				logs.update(LogsManager.RUNNING, logCurrentTask, lognextTask);
-				tasks[i].start(false);
+				tasks[currentTaskIndex].start(false);
+				tasks[currentTaskIndex].reset();
+				System.out.println("End   | Task["+currentTaskIndex+"] | "+name);
 				if(!running) {
-					System.out.println("Exit "+name);
 					logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
-					tasks[i].reset();
 					System.out.println("THREAD DIED!");
 					return;
 				}
-				tasks[i].reset();
-				index ++;
+			}
+			if(!running) {
+				logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
+				System.out.println("THREAD DIED!");
+				return;
 			}
 			System.out.println("Waiting "+this.roundDelay+" milliseconds...");
 			logs.update(LogsManager.WAITING, LogsManager.NONE, LogsManager.RAID);
@@ -93,12 +104,9 @@ public class BitHeroesBot {
 	
 	public void stop() {
 		this.running = false;
-		System.out.println("Gonna stop all tasks...");
-		for(int i = 0; i<tasks.length; i++) {
-			tasks[i].stop();
-		}
-		System.out.println("Tasks stopped!");
+		tasks[currentTaskIndex].stop();
 		logs.update(LogsManager.IDLE, LogsManager.NONE, LogsManager.NONE);
+		System.out.println("Tasks stopped!");
 	}
 	
 	public JSONObject getLogs() {

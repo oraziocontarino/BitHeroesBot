@@ -94,7 +94,9 @@ public abstract class BitHeroesGlobal {
 			this.main();
 		}
 	}
-	
+	public boolean isEnabled() {
+		return this.enabled;
+	}
 	protected abstract void main() throws Exception;
 	protected abstract void updateJobCoords();
 	protected abstract void updateConfiguration(JSONObject configuration);

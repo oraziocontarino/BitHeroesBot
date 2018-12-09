@@ -113,8 +113,11 @@ public class BaseJump extends Application {
 		this.executorService = Executors.newFixedThreadPool(1);
 		this.executorService.execute(testTask);
 		this.executorService.shutdown();
-	}	
-	//TODO: optimize kill flags
+	}
+	//TODO: Implement watchdog for tasks to avoid action stuck
+	//TODO: check kill flags
+	//TODO: handle merchant refuse case if not deactived by game settings...
+	//TODO: optimize kill flags / maybe releted to "stop" button, via {tab} hotkey works fine!
 	//TODO: implement task order management
 	//TODO: implement fishing event
 	//TODO: handle reconnect
