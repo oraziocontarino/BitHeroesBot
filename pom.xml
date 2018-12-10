@@ -5,6 +5,14 @@
 	<groupId>BitHeroesBot</groupId>
 	<artifactId>BitHeroesBot</artifactId>
 	<version>0.0.3-SNAPSHOT</version>
+	<repositories>
+		<repository>
+			<id>maven-restlet</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.restlet.com</url>
+		</repository>
+	</repositories>
+	
 	<dependencies>
 		<!-- https://mvnrepository.com/artifact/com.1stleg/jnativehook -->
 		<dependency>
@@ -29,6 +37,16 @@
 			<artifactId>json</artifactId>
 			<version>20180813</version>
 		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.restlet.jee/org.restlet -->
+		<!-- https://mvnrepository.com/artifact/org.restlet.jee/org.restlet -->
+		<dependency>
+			<groupId>org.restlet.jee</groupId>
+			<artifactId>org.restlet</artifactId>
+			<version>2.3-SNAPSHOT</version>
+		</dependency>
+
+
+
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>

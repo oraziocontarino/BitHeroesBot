@@ -61,6 +61,7 @@ public class Webpack {
 			"js/jquery-3.3.1.min.js",
 			"js/script.js",
 			
+			"screens/popup.html",
 			"screens/index.html"
 	};
 
