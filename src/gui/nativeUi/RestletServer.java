@@ -9,11 +9,13 @@ import org.restlet.data.Protocol;
 import org.restlet.routing.Router;
 import org.restlet.service.CorsService;
 
+import gui.nativeUi.request.CheckServerAliveRequest;
 import gui.nativeUi.request.GetDefaultConfigurationRequest;
 import gui.nativeUi.request.GetLogsRequest;
 import gui.nativeUi.request.SetCoordsRequest;
 import gui.nativeUi.request.StartBotRequest;
 import gui.nativeUi.request.StopBotRequest;
+import gui.nativeUi.request.StopServerRequest;
 import gui.nativeUi.request.TestRequest;
 
 public class RestletServer extends Application {
@@ -42,7 +44,7 @@ public class RestletServer extends Application {
     	component.getServers().add(Protocol.HTTP, 12345);
     	router = new Router();
     	CorsService corsService = new CorsService();         
-        corsService.setAllowedOrigins(new HashSet(Arrays.asList("*")));
+        corsService.setAllowedOrigins(new HashSet<String>(Arrays.asList("*")));
         corsService.setAllowedCredentials(true);
     	super.setContext(component.getContext().createChildContext());
         getServices().add(corsService);
@@ -56,6 +58,8 @@ public class RestletServer extends Application {
     	router.attach("/setCoords", SetCoordsRequest.class);
     	router.attach("/startBot", StartBotRequest.class);
     	router.attach("/stopBot", StopBotRequest.class);
+    	router.attach("/isAlive", CheckServerAliveRequest.class);
+    	router.attach("/stopServer", StopServerRequest.class);
     	router.attach("/test", TestRequest.class);
         return router;
     }

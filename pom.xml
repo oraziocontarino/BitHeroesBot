@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>BitHeroesBot</groupId>
 	<artifactId>BitHeroesBot</artifactId>
-	<version>0.0.3-SNAPSHOT</version>
+	<version>0.0.4-SNAPSHOT</version>
 	<repositories>
 		<repository>
 			<id>maven-restlet</id>
@@ -20,17 +20,6 @@
 			<artifactId>jnativehook</artifactId>
 			<version>2.0.2</version>
 		</dependency>
-		<dependency>
-			<groupId>com.jfoenix</groupId>
-			<artifactId>jfoenix</artifactId>
-			<version>9.0.4</version>
-		</dependency>
-
-		<dependency>
-			<groupId>com.jfoenix</groupId>
-			<artifactId>jfoenix</artifactId>
-			<version>8.0.4</version>
-		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.json/json -->
 		<dependency>
 			<groupId>org.json</groupId>
@@ -38,15 +27,17 @@
 			<version>20180813</version>
 		</dependency>
 		<!-- https://mvnrepository.com/artifact/org.restlet.jee/org.restlet -->
-		<!-- https://mvnrepository.com/artifact/org.restlet.jee/org.restlet -->
 		<dependency>
 			<groupId>org.restlet.jee</groupId>
 			<artifactId>org.restlet</artifactId>
-			<version>2.3-SNAPSHOT</version>
+		    <version>2.4.0</version>
 		</dependency>
-
-
-
+		<!-- https://mvnrepository.com/artifact/org.restlet.jee/org.restlet.ext.json -->
+		<dependency>
+		    <groupId>org.restlet.jee</groupId>
+		    <artifactId>org.restlet.ext.json</artifactId>
+		    <version>2.3.12</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
@@ -76,7 +67,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>gui.javagx.BaseJump</mainClass>
+							<mainClass>gui.nativeUi.MyApplication</mainClass>
 						</manifest>
 					</archive>
 				</configuration>

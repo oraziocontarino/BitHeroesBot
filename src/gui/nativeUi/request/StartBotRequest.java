@@ -1,23 +1,21 @@
 package gui.nativeUi.request;
 import org.json.JSONObject;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
-import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
-import gui.javagx.AsyncBot;
+import be.AsyncBot;
 
 public class StartBotRequest extends ServerResource {
 
-	@Get ("json") // add the get annotation so it knows this is for gets
-    // method is pretty self explanatory
-    public Representation handleRequest() {
-		String tmp = getQuery().getValues("payload");
-		JSONObject payload = new JSONObject(tmp);
+	@Post
+    public Representation doPost(JsonRepresentation entity) throws Exception{
+		JSONObject payload = entity.getJsonObject().getJSONObject("payload");
+		System.out.println(payload.toString());
 		AsyncBot.getInstance().setConfiguration(payload.getJSONObject("configuration"));
 		AsyncBot.getInstance().run();
-        Representation result = new StringRepresentation("");
-        System.out.println(result);        
-        return result;
+        return new StringRepresentation("");
     }
 }

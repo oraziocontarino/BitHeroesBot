@@ -1,7 +1,6 @@
-package gui.javagx;
+package be;
 
 import org.json.JSONObject;
-import be.BitHeroesBot;
 
 public class AsyncBot {
 	private static AsyncBot instance;

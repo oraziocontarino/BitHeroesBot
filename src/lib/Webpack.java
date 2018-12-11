@@ -60,8 +60,9 @@ public class Webpack {
 			"js/java-requests.js",
 			"js/jquery-3.3.1.min.js",
 			"js/script.js",
-			
-			"screens/popup.html",
+
+			"screens/popup-open.html",
+			"screens/popup-close.html",
 			"screens/index.html"
 	};
 

@@ -18,10 +18,10 @@ public class Utils {
 	public static void test(JSONObject configuration) {
 		try {
 			//DO NOT DELETE THIS BLOCK
-			Point topLeftCorner = getGameTopLeftCorner(configuration);
-			Point bottomRightCorner = getGameBottomRightCorner(configuration);
-			int width = getGameWidth(topLeftCorner, bottomRightCorner);
-			int height = getGameHeight(topLeftCorner, bottomRightCorner);
+//			Point topLeftCorner = getGameTopLeftCorner(configuration);
+//			Point bottomRightCorner = getGameBottomRightCorner(configuration);
+//			int width = getGameWidth(topLeftCorner, bottomRightCorner);
+//			int height = getGameHeight(topLeftCorner, bottomRightCorner);
 			//END OF BLOCK
 
 			long start = Calendar.getInstance().getTimeInMillis();

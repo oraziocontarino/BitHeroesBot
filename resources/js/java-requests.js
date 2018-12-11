@@ -1,57 +1,82 @@
 var ENDPOINTS = {
-	"SET_COORDS": "SET_COORDS",
-	"SET_MISSION": "SET_MISSION",
-	"SET_RAID": "SET_RAID",
-	"START_BOT": "START_BOT",
-	"STOP_BOT": "STOP_BOT",
-	"GET_LOGS": "GET_LOGS",
-	"GET_DEFAULT_CONFIGURATION": "GET_DEFAULT_CONFIGURATION",
-	"TEST": "TEST"
+	"SET_COORDS": "/setCoords",
+	"START_BOT": "/startBot",
+	"STOP_BOT": "/stopBot",
+	"GET_LOGS": "/getLogs",
+	"GET_DEFAULT_CONFIGURATION": "/getDefaultConfiguration",
+	"IS_ALIVE": "/isAlive",
+	"STOP_SERVER": "/stopServer",
+	"TEST": "/test"
 }
 
-var REQUESTS = {
-	"SET_COORDS": null,
-	"SET_MISSION": null,
-	"SET_RAID": null,
-	"START_BOT": null,
-	"STOP_BOT": null,
-	"GET_LOGS": null,
-	"GET_DEFAULT_CONFIGURATION": null,
-	"TEST": null,
-}
 
 function test(){
 	var payload = {
 			configuration: configuration
 	}
-	return getPromise(ENDPOINTS.TEST, payload);
+	return sendRequest(ENDPOINTS.TEST, payload);
+}
+
+function stopServer(){
+	var payload = {
+			configuration: configuration
+	}
+	return sendRequest(ENDPOINTS.STOP_SERVER, payload);
+}
+
+function isAlive(){
+	var payload = {}
+	return sendRequest(ENDPOINTS.IS_ALIVE, payload);
 }
 
 function setCoords(){
 	var payload = {}
-	return getPromise(ENDPOINTS.SET_COORDS, payload);
+	return sendRequest(ENDPOINTS.SET_COORDS, payload);
 }
 
 function startBot(configuration){
 	var payload = {
 			configuration: configuration
 	}
-	return getPromise(ENDPOINTS.START_BOT, payload);
+	return sendRequest(ENDPOINTS.START_BOT, payload);
 }
 
 function stopBot(){
 	var payload = {}
-	return getPromise(ENDPOINTS.STOP_BOT, payload);
+	return sendRequest(ENDPOINTS.STOP_BOT, payload);
 }
 
 function getLogs(){
 	var payload = {}
-	return getPromise(ENDPOINTS.GET_LOGS, payload);
+	return sendRequest(ENDPOINTS.GET_LOGS, payload);
 }
 
 function getDefaultConfiguration(){
 	var payload = {}
-	return getPromise(ENDPOINTS.GET_DEFAULT_CONFIGURATION, payload);
+	return sendRequest(ENDPOINTS.GET_DEFAULT_CONFIGURATION, payload);
+}
+
+function buildJavaMessage(action, payload){
+	var message = {
+		action: action,
+		payload: payload
+	}
+	return JSON.stringify(message);
+}
+
+function sendRequest(action, payload) {
+	var message = buildJavaMessage(action, payload);
+	return new Promise(function(resolve, reject){
+		$.ajax({
+			type: "POST",
+			url: "http://localhost:12345"+action,
+			data: message,
+			contentType: "application/json",
+			dataType: "text",
+			success: (data) => resolve(data),
+			error: (data) => reject(data)
+		});
+	});
 }
 
 function setBusy(showLoader){
@@ -60,38 +85,5 @@ function setBusy(showLoader){
 	}else{
 		$("#loader").addClass("hidden");
 	}
-}
-
-function getPromise(action, payload) {
-	var deferred = {
-		promise: null,
-		resolve: null,
-		reject: null
-	};
-	deferred.promise = new Promise((resolve, reject) => {
-		deferred.resolve = resolve;
-		deferred.reject = reject;
-		sendJavaMessage(action, payload);
-	});
-	REQUESTS[action] = deferred;
-	return deferred;
-}
-
-function resolvePromise(action, payload){
-	var timer = setInterval(function(){
-		if(REQUESTS[action] != null){
-			clearInterval(timer);
-			REQUESTS[action].resolve(payload);
-		}
-	}, 200);
-}
-
-function sendJavaMessage(action, payload){
-	var message = {
-		action: action,
-		payload: payload
-	}
-	alert(JSON.stringify(message));
-	//sendJavaRequest(JSON.stringify(message));
 }
 

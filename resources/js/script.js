@@ -79,7 +79,7 @@ function stopBotTask(){
 	}
 
 	setBusy(true);
-	stopBot().promise.then(function(data){
+	stopBot().then(function(data){
 		$('.lock-if-bot-running').addClass("hidden");
 		//Enable start button
 		$(".launcher.startBot").removeClass("hidden");
@@ -90,10 +90,14 @@ function stopBotTask(){
 	});
 }
 $(document).ready(function(){
-	console.log("test js bridge");
 	setBusy(true);
+	window.onbeforeunload = function (e) {
+	    window.open('../screens/popup-close.html','height=0,width=0');
+	    stopServer();
+	};
+	
 	//localStorage.removeItem("configuration");
-	getDefaultConfiguration().promise.then(function(data){
+	getDefaultConfiguration().then(function(data){
 		configuration = defaultConfiguration = JSON.parse(data);
 		if(localStorage.getItem("configuration") == null){
 			localStorage.setItem("configuration", data);
@@ -119,13 +123,13 @@ $(document).ready(function(){
 	});
 	$('#test_btn').click(function(e){
 		setBusy(true);
-		test().promise.then(function(data){
+		test().then(function(data){
 			setBusy(false);
 		});
 	});
 	$('.updateCoords').click(function(e) {
 		setBusy(true);
-		setCoords().promise.then(function(data){
+		setCoords().then(function(data){
 			var data = JSON.parse(data);
 			configuration.error.coords = data.error;
 			configuration.topLeft = data.topLeft;
@@ -218,7 +222,7 @@ $(document).ready(function(){
 		
 		localStorage.setItem("configuration", JSON.stringify(configuration));
 		setBusy(true);
-		startBot(configuration).promise.then(function(data){
+		startBot(configuration).then(function(data){
 			$('.lock-if-bot-running').removeClass("hidden");
 			//Enable stop button
 			$(".launcher.stopBot").removeClass("hidden");
@@ -260,7 +264,7 @@ $(document).ready(function(){
 	
 	$('.clearConfiguration').click(function(e) {
 		setBusy(true);
-		getDefaultConfiguration().promise.then(function(data){
+		getDefaultConfiguration().then(function(data){
 			configuration = defaultConfiguration = JSON.parse(data);
 			localStorage.setItem("configuration", data);
 			loadConfig();
@@ -270,8 +274,8 @@ $(document).ready(function(){
 	
 	
 	setInterval(function(){
-		return;
-		getLogs().promise.then(function(data){
+		//return;
+		getLogs().then(function(data){
 			data = JSON.parse(data);
 			$(".currentStatus").text(data.CURRENT_STATUS);
 			$(".currentAction").text(data.CURRENT_ACTION);
@@ -283,6 +287,9 @@ $(document).ready(function(){
 				}
 			}
 		});
-	}, 1000);
+		isAlive().catch(function(){
+			window.close();
+		});
+	}, 500);
 });
 

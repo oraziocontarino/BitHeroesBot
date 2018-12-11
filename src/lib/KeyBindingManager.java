@@ -6,12 +6,11 @@ import org.jnativehook.NativeHookException;
 import org.jnativehook.SwingDispatchService;
 import org.jnativehook.keyboard.NativeKeyEvent;
 import org.jnativehook.keyboard.NativeKeyListener;
-import gui.javagx.BaseJump;
 
-@SuppressWarnings("restriction")
+import be.AsyncBot;
+
 public class KeyBindingManager  implements NativeKeyListener {
 	private static KeyBindingManager instance;
-	private BaseJump application;
 	private KeyBindingManager() {
 		initKeyBinding();
 	}
@@ -24,9 +23,6 @@ public class KeyBindingManager  implements NativeKeyListener {
 	}
 	
 	/* KEY EVENTS */
-    public void setApplication(BaseJump application) {
-    	this.application = application;
-    }
     
 	private void initKeyBinding() {
 		try {
@@ -49,9 +45,7 @@ public class KeyBindingManager  implements NativeKeyListener {
 		//System.out.println("Key Pressed: " + NativeKeyEvent.getKeyText(e.getKeyCode()));
 
 		if (e.getKeyCode() == NativeKeyEvent.VC_TAB) {
-			if(this.application != null) {
-				application.executeStopTask();
-			}
+			AsyncBot.getInstance().interrupt();
 		}
 	}
 

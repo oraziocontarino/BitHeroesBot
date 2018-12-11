@@ -1,19 +1,19 @@
 package gui.nativeUi.request;
 import java.awt.Point;
-
 import org.json.JSONObject;
+import org.restlet.ext.json.JsonRepresentation;
 import org.restlet.representation.Representation;
 import org.restlet.representation.StringRepresentation;
-import org.restlet.resource.Get;
+import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
 import global.Utils;
 
 public class SetCoordsRequest extends ServerResource {
-
-	@Get ("json") // add the get annotation so it knows this is for gets
-    // method is pretty self explanatory
-    public Representation handleRequest() {
+	
+	@Post
+	public Representation doPost(JsonRepresentation entity) throws Exception{
+		//JSONObject payload = entity.getJsonObject().getJSONObject("payload");
 		JSONObject topLeft = new JSONObject();
 		JSONObject bottomRight = new JSONObject();
 		boolean error = false;
@@ -45,8 +45,6 @@ public class SetCoordsRequest extends ServerResource {
 		response.put("topLeft", topLeft);
 		response.put("bottomRight", bottomRight);
     	
-        Representation result = new StringRepresentation(response.toString());
-        System.out.println(result);        
-        return result;
+        return new StringRepresentation(response.toString());
     }
 }
