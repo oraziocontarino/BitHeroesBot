@@ -2,9 +2,12 @@ package be;
 
 import org.json.JSONObject;
 
+import lib.CustomRobot;
+
 public class AsyncBot {
 	private static AsyncBot instance;
-	private Thread thread;
+	private Thread bitHeroesBotThread;
+	private Thread watchdogThread;
 	private JSONObject configuration;
 	private AsyncBot() {}
 
@@ -20,11 +23,11 @@ public class AsyncBot {
 		this.configuration = configuration;
 	}
 	
-	public void run() {
-		if(this.thread != null && this.thread.isAlive()) {
-			this.thread.interrupt();
+	private void runBitHeroesBotThread() {
+		if(this.bitHeroesBotThread != null && this.bitHeroesBotThread.isAlive()) {
+			this.bitHeroesBotThread.interrupt();
 		}
-		this.thread = new Thread(new Runnable() {
+		this.bitHeroesBotThread = new Thread(new Runnable() {
 	        public void run(){
 	        	try {
 	        		//System.out.println("Setting configuration...");
@@ -32,18 +35,42 @@ public class AsyncBot {
 	        		System.out.println("Running bot...");
 					BitHeroesBot.getInstance().run(configuration);
 				} catch (Exception e) {
-					System.out.println("Error occurred while starting bot!");
+					System.out.println("Error occurred while starting bot thread!");
 					e.printStackTrace();
 				}
 	        }
 	    });
-		thread.start();
+		bitHeroesBotThread.start();
+	}
+	private void runWatchdogThread() {
+		if(this.watchdogThread!= null && this.watchdogThread.isAlive()) {
+			this.watchdogThread.interrupt();
+		}
+		this.watchdogThread = new Thread(new Runnable() {
+	        public void run(){
+	        	try {
+	        		CustomRobot customRobot = CustomRobot.getInstance();
+	        		while(true) {
+	        			//TODO: implement watchdog logic here...
+	        			customRobot.delay(10000);
+	        		}
+				} catch (Exception e) {
+					System.out.println("Error occurred while starting watchdog thread!");
+					e.printStackTrace();
+				}
+	        }
+	    });
+		bitHeroesBotThread.start();
+	}
+	public void run() {
+		runBitHeroesBotThread();
+		runWatchdogThread();
 	}
 	
 	public void interrupt() {
 		try {
 			BitHeroesBot.getInstance().stop();
-			thread.interrupt();
+			bitHeroesBotThread.interrupt();
 		}catch(Exception e) {
 			//...
 		}
@@ -51,17 +78,17 @@ public class AsyncBot {
 	
 	public void resume() {
 		if(this.isAlive()) {
-			thread.notifyAll();
+			bitHeroesBotThread.notifyAll();
 		}
 	}
 	
 	public void pause() throws InterruptedException {
 		if(this.isAlive()) {
-			thread.wait();
+			bitHeroesBotThread.wait();
 		}
 	}
 	
 	private boolean isAlive() {
-		return (this.thread != null && this.thread.isAlive());
+		return (this.bitHeroesBotThread != null && this.bitHeroesBotThread.isAlive());
 	}
 }
